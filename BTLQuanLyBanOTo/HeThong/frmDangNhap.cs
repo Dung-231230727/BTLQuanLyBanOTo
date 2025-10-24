@@ -7,6 +7,7 @@ namespace BTLQuanLyBanOTo.HeThong
     public partial class frmDangNhap : Form
     {
         DataProcesser dt;
+        public bool LoginSuccessful { get; private set; }
         public frmDangNhap()
         {
             InitializeComponent();
@@ -14,12 +15,7 @@ namespace BTLQuanLyBanOTo.HeThong
 
         private void frmDangNhap_Load(object sender, System.EventArgs e)
         {
-            if (frmMain.ktraDN == false)
-            {
-
-            }
-            string connStr = "Server=Dung;Database=QuanLyCuaHangOto;Integrated Security=True";
-            dt = new DataProcesser(connStr);
+            dt = new DataProcesser();
         }
 
         private bool kiemTra()
@@ -42,6 +38,7 @@ namespace BTLQuanLyBanOTo.HeThong
                    MessageBoxButtons.OK,
                    MessageBoxIcon.Warning
                 );
+                LoginSuccessful = false;
                 return;
             }
 
@@ -60,7 +57,7 @@ namespace BTLQuanLyBanOTo.HeThong
                    MessageBoxButtons.OK,
                    MessageBoxIcon.Information
                 );
-                frmMain.ktraDN = true;
+                LoginSuccessful = true;
                 this.Close();
             }
             else
@@ -71,6 +68,8 @@ namespace BTLQuanLyBanOTo.HeThong
                    MessageBoxButtons.OK,
                    MessageBoxIcon.Warning
                 );
+                LoginSuccessful = false;
+                return;
             }
         }
 
@@ -84,7 +83,8 @@ namespace BTLQuanLyBanOTo.HeThong
                 );
             if (r == DialogResult.Yes)
             {
-                Application.Exit();
+                LoginSuccessful = false;
+                this.Close();
             }
         }
     }

@@ -7,13 +7,17 @@ namespace BTLQuanLyBanOTo.Classes
     {
         //
         private SqlConnection conn;
-        private string connectionString;
+        private string connectionString = "Server=Dung;Database=QuanLyCuaHangOto;Integrated Security=True";
+
+        public DataProcesser()
+        {
+            conn = new SqlConnection(connectionString);
+        }
 
         //hàm tạo có đối nhân chuỗi kết nối
         public DataProcesser(string connStr)
         {
             //gán và khởi tạo
-            connectionString = connStr;
             conn = new SqlConnection(connStr);
         }
 

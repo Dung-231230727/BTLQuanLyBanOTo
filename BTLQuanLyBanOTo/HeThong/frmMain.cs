@@ -10,48 +10,47 @@ namespace BTLQuanLyBanOTo
         public frmMain()
         {
             InitializeComponent();
-            IsLogginOut = false;
+            IsLoggingOut = false;
+            this.FormClosing += frmMain_FormClosing;
         }
         //biến
-        public static bool ktraDN = false;
-        public bool IsLogginOut { get; private set; }
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-            //
-            frmDangNhap frm = new frmDangNhap();
-            frm.ShowDialog();
-            if (!ktraDN)
-            {
-                Application.Exit();
-            }
-
-            //
-        }
-
-        private void mnuQlyHeThong_Click(object sender, EventArgs e)
-        {
-
-        }
+        public bool IsLoggingOut { get; private set; }
 
         private void mnuHTThoat_Click(object sender, EventArgs e)
         {
-            Function f = new Function();
-            f.Thoat(this);
+            IsLoggingOut = false;
+            this.Close();
         }
 
         private void mnuHTDangXuat_Click(object sender, EventArgs e)
         {
             DialogResult r = MessageBox.Show(
                 "Bạn có chắc muốn đăng xuất?",
-                "Thông báo",
+                "Xác nhận",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
+                MessageBoxIcon.Warning
                 );
             if (r == DialogResult.Yes)
             {
-                IsLogginOut = true;
-                ktraDN = false;
-                frmMain_Load(sender, e);
+                IsLoggingOut = true;
+                this.Close();
+            }
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!IsLoggingOut)
+            {
+                DialogResult r = MessageBox.Show(
+                    "Bạn có chắc muốn thoát khỏi chương trình không?",
+                    "Xác nhận",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                    );
+                if (r == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }

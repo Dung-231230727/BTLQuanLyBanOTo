@@ -34,13 +34,9 @@
             this.mnuHTThoat = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuQLyDanhMuc = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMSP = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuQlyNghiepVu = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuQlyBCTK = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuQlyTroGiup = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMNV = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMKH = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMNCC = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuNVBH = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMDMC = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMCCV = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMCDX = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,9 +46,13 @@
             this.mnuDMCNSX = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMCSCN = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDMCTT = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuQlyNghiepVu = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuNVBH = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNVNH = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuQlyBCTK = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBCTKDT = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBCTKTK = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuQlyTroGiup = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTGTT = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuQLy.SuspendLayout();
             this.SuspendLayout();
@@ -79,19 +79,18 @@
             this.mnuQlyHeThong.Name = "mnuQlyHeThong";
             this.mnuQlyHeThong.Size = new System.Drawing.Size(69, 20);
             this.mnuQlyHeThong.Text = "Hệ thống";
-            this.mnuQlyHeThong.Click += new System.EventHandler(this.mnuQlyHeThong_Click);
             // 
             // mnuHTDangXuat
             // 
             this.mnuHTDangXuat.Name = "mnuHTDangXuat";
-            this.mnuHTDangXuat.Size = new System.Drawing.Size(180, 22);
+            this.mnuHTDangXuat.Size = new System.Drawing.Size(127, 22);
             this.mnuHTDangXuat.Text = "Đăng xuất";
             this.mnuHTDangXuat.Click += new System.EventHandler(this.mnuHTDangXuat_Click);
             // 
             // mnuHTThoat
             // 
             this.mnuHTThoat.Name = "mnuHTThoat";
-            this.mnuHTThoat.Size = new System.Drawing.Size(180, 22);
+            this.mnuHTThoat.Size = new System.Drawing.Size(127, 22);
             this.mnuHTThoat.Text = "Thoát";
             this.mnuHTThoat.Click += new System.EventHandler(this.mnuHTThoat_Click);
             // 
@@ -113,32 +112,6 @@
             this.mnuDMSP.Size = new System.Drawing.Size(190, 22);
             this.mnuDMSP.Text = "Quản lý sản phẩm";
             // 
-            // mnuQlyNghiepVu
-            // 
-            this.mnuQlyNghiepVu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuNVBH,
-            this.mnuNVNH});
-            this.mnuQlyNghiepVu.Name = "mnuQlyNghiepVu";
-            this.mnuQlyNghiepVu.Size = new System.Drawing.Size(74, 20);
-            this.mnuQlyNghiepVu.Text = "Nghiệp vụ";
-            // 
-            // mnuQlyBCTK
-            // 
-            this.mnuQlyBCTK.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuBCTKDT,
-            this.mnuBCTKTK});
-            this.mnuQlyBCTK.Name = "mnuQlyBCTK";
-            this.mnuQlyBCTK.Size = new System.Drawing.Size(126, 20);
-            this.mnuQlyBCTK.Text = "Báo cáo và thống kê";
-            // 
-            // mnuQlyTroGiup
-            // 
-            this.mnuQlyTroGiup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuTGTT});
-            this.mnuQlyTroGiup.Name = "mnuQlyTroGiup";
-            this.mnuQlyTroGiup.Size = new System.Drawing.Size(63, 20);
-            this.mnuQlyTroGiup.Text = "Trợ giúp";
-            // 
             // mnuDMNV
             // 
             this.mnuDMNV.Name = "mnuDMNV";
@@ -156,12 +129,6 @@
             this.mnuDMNCC.Name = "mnuDMNCC";
             this.mnuDMNCC.Size = new System.Drawing.Size(190, 22);
             this.mnuDMNCC.Text = "Quản lý nhà cung cấp";
-            // 
-            // mnuNVBH
-            // 
-            this.mnuNVBH.Name = "mnuNVBH";
-            this.mnuNVBH.Size = new System.Drawing.Size(180, 22);
-            this.mnuNVBH.Text = "Bán hàng";
             // 
             // mnuDMDMC
             // 
@@ -181,73 +148,105 @@
             // mnuDMCCV
             // 
             this.mnuDMCCV.Name = "mnuDMCCV";
-            this.mnuDMCCV.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCCV.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCCV.Text = "Công việc";
             // 
             // mnuDMCDX
             // 
             this.mnuDMCDX.Name = "mnuDMCDX";
-            this.mnuDMCDX.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCDX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCDX.Text = "Đời xe";
             // 
             // mnuDMCHSX
             // 
             this.mnuDMCHSX.Name = "mnuDMCHSX";
-            this.mnuDMCHSX.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCHSX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCHSX.Text = "Hãng sản xuất";
             // 
             // mnuDMCLX
             // 
             this.mnuDMCLX.Name = "mnuDMCLX";
-            this.mnuDMCLX.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCLX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCLX.Text = "Loại xe";
             // 
             // mnuDMCMS
             // 
             this.mnuDMCMS.Name = "mnuDMCMS";
-            this.mnuDMCMS.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCMS.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCMS.Text = "Màu sắc";
             // 
             // mnuDMCNSX
             // 
             this.mnuDMCNSX.Name = "mnuDMCNSX";
-            this.mnuDMCNSX.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCNSX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCNSX.Text = "Nước sản xuất";
             // 
             // mnuDMCSCN
             // 
             this.mnuDMCSCN.Name = "mnuDMCSCN";
-            this.mnuDMCSCN.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCSCN.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCSCN.Text = "Số chỗ ngồi";
             // 
             // mnuDMCTT
             // 
             this.mnuDMCTT.Name = "mnuDMCTT";
-            this.mnuDMCTT.Size = new System.Drawing.Size(180, 22);
+            this.mnuDMCTT.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCTT.Text = "Tình trạng";
+            // 
+            // mnuQlyNghiepVu
+            // 
+            this.mnuQlyNghiepVu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuNVBH,
+            this.mnuNVNH});
+            this.mnuQlyNghiepVu.Name = "mnuQlyNghiepVu";
+            this.mnuQlyNghiepVu.Size = new System.Drawing.Size(74, 20);
+            this.mnuQlyNghiepVu.Text = "Nghiệp vụ";
+            // 
+            // mnuNVBH
+            // 
+            this.mnuNVBH.Name = "mnuNVBH";
+            this.mnuNVBH.Size = new System.Drawing.Size(133, 22);
+            this.mnuNVBH.Text = "Bán hàng";
             // 
             // mnuNVNH
             // 
             this.mnuNVNH.Name = "mnuNVNH";
-            this.mnuNVNH.Size = new System.Drawing.Size(180, 22);
+            this.mnuNVNH.Size = new System.Drawing.Size(133, 22);
             this.mnuNVNH.Text = "Nhập hàng";
+            // 
+            // mnuQlyBCTK
+            // 
+            this.mnuQlyBCTK.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuBCTKDT,
+            this.mnuBCTKTK});
+            this.mnuQlyBCTK.Name = "mnuQlyBCTK";
+            this.mnuQlyBCTK.Size = new System.Drawing.Size(126, 20);
+            this.mnuQlyBCTK.Text = "Báo cáo và thống kê";
             // 
             // mnuBCTKDT
             // 
             this.mnuBCTKDT.Name = "mnuBCTKDT";
-            this.mnuBCTKDT.Size = new System.Drawing.Size(180, 22);
+            this.mnuBCTKDT.Size = new System.Drawing.Size(174, 22);
             this.mnuBCTKDT.Text = "Báo cáo doanh thu";
             // 
             // mnuBCTKTK
             // 
             this.mnuBCTKTK.Name = "mnuBCTKTK";
-            this.mnuBCTKTK.Size = new System.Drawing.Size(180, 22);
+            this.mnuBCTKTK.Size = new System.Drawing.Size(174, 22);
             this.mnuBCTKTK.Text = "Báo cáo tồn kho";
+            // 
+            // mnuQlyTroGiup
+            // 
+            this.mnuQlyTroGiup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuTGTT});
+            this.mnuQlyTroGiup.Name = "mnuQlyTroGiup";
+            this.mnuQlyTroGiup.Size = new System.Drawing.Size(63, 20);
+            this.mnuQlyTroGiup.Text = "Trợ giúp";
             // 
             // mnuTGTT
             // 
             this.mnuTGTT.Name = "mnuTGTT";
-            this.mnuTGTT.Size = new System.Drawing.Size(180, 22);
+            this.mnuTGTT.Size = new System.Drawing.Size(126, 22);
             this.mnuTGTT.Text = "Thông tin";
             // 
             // frmMain
@@ -259,7 +258,7 @@
             this.MainMenuStrip = this.mnuQLy;
             this.Name = "frmMain";
             this.Text = "Quản lý cửa hàng bán Ô tô";
-            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.mnuQLy.ResumeLayout(false);
             this.mnuQLy.PerformLayout();
             this.ResumeLayout(false);
