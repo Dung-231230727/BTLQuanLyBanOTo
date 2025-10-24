@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
+{
+    public partial class frmCongViec : Form
+    {
+        public frmCongViec()
+        {
+            InitializeComponent();
+        }
+    }
+}
