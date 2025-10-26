@@ -1,4 +1,4 @@
-﻿using BTLQuanLyBanOTo.DanhMuc;
+﻿using BTLQuanLyBanOTo.HeThong;
 using System;
 using System.Windows.Forms;
 
@@ -14,35 +14,35 @@ namespace BTLQuanLyBanOTo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmSanPham());
-            //bool keepRunning = true; // Biến kiểm soát vòng lặp chính
+            //Application.Run(new frmBanHang());
 
-            //while (keepRunning)
-            //{
-            //    frmDangNhap fLogin = new frmDangNhap();
-            //    fLogin.ShowDialog(); // 1. Hiển thị form Đăng nhập
+            bool keepRunning = true;
 
-            //    // 2. Nếu đăng nhập thành công
-            //    if (fLogin.LoginSuccessful)
-            //    {
-            //        frmMain fMain = new frmMain();
-            //        fMain.ShowDialog(); // 3. Hiển thị form Chính
+            while (keepRunning)
+            {
+                frmDangNhap fLogin = new frmDangNhap();
+                fLogin.ShowDialog();
 
-            //        // 4. Sau khi form Chính đóng, kiểm tra xem có phải là đăng xuất không
-            //        if (fMain.IsLoggingOut)
-            //        {
-            //            keepRunning = true; // Nếu là đăng xuất, tiếp tục vòng lặp (để hiện lại fLogin)
-            //        }
-            //        else
-            //        {
-            //            keepRunning = false; // Nếu là Thoát (hoặc nhấn 'X'), dừng vòng lặp
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // 5. Nếu đăng nhập không thành công (nhấn 'Thoát' hoặc 'X' trên fLogin)
-            //        keepRunning = false; // Dừng vòng lặp
-            //    }
+                if (fLogin.LoginSuccessful)
+                {
+                    frmMain fMain = new frmMain(fLogin.MaNhanVien, fLogin.TenNhanVien);
+
+                    fMain.ShowDialog();
+
+                    if (fMain.IsLoggingOut)
+                    {
+                        keepRunning = true;
+                    }
+                    else
+                    {
+                        keepRunning = false;
+                    }
+                }
+                else
+                {
+                    keepRunning = false;
+                }
+            }
         }
     }
 }

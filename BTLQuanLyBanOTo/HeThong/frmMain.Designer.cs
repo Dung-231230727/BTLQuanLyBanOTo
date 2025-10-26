@@ -111,24 +111,28 @@
             this.mnuDMSP.Name = "mnuDMSP";
             this.mnuDMSP.Size = new System.Drawing.Size(190, 22);
             this.mnuDMSP.Text = "Quản lý sản phẩm";
+            this.mnuDMSP.Click += new System.EventHandler(this.mnuDMSP_Click);
             // 
             // mnuDMNV
             // 
             this.mnuDMNV.Name = "mnuDMNV";
             this.mnuDMNV.Size = new System.Drawing.Size(190, 22);
             this.mnuDMNV.Text = "Quản lý nhân viên";
+            this.mnuDMNV.Click += new System.EventHandler(this.mnuDMNV_Click);
             // 
             // mnuDMKH
             // 
             this.mnuDMKH.Name = "mnuDMKH";
             this.mnuDMKH.Size = new System.Drawing.Size(190, 22);
             this.mnuDMKH.Text = "Quản lý khách hàng";
+            this.mnuDMKH.Click += new System.EventHandler(this.mnuDMKH_Click);
             // 
             // mnuDMNCC
             // 
             this.mnuDMNCC.Name = "mnuDMNCC";
             this.mnuDMNCC.Size = new System.Drawing.Size(190, 22);
             this.mnuDMNCC.Text = "Quản lý nhà cung cấp";
+            this.mnuDMNCC.Click += new System.EventHandler(this.mnuDMNCC_Click);
             // 
             // mnuDMDMC
             // 
@@ -150,48 +154,56 @@
             this.mnuDMCCV.Name = "mnuDMCCV";
             this.mnuDMCCV.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCCV.Text = "Công việc";
+            this.mnuDMCCV.Click += new System.EventHandler(this.mnuDMCCV_Click);
             // 
             // mnuDMCDX
             // 
             this.mnuDMCDX.Name = "mnuDMCDX";
             this.mnuDMCDX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCDX.Text = "Đời xe";
+            this.mnuDMCDX.Click += new System.EventHandler(this.mnuDMCDX_Click);
             // 
             // mnuDMCHSX
             // 
             this.mnuDMCHSX.Name = "mnuDMCHSX";
             this.mnuDMCHSX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCHSX.Text = "Hãng sản xuất";
+            this.mnuDMCHSX.Click += new System.EventHandler(this.mnuDMCHSX_Click);
             // 
             // mnuDMCLX
             // 
             this.mnuDMCLX.Name = "mnuDMCLX";
             this.mnuDMCLX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCLX.Text = "Loại xe";
+            this.mnuDMCLX.Click += new System.EventHandler(this.mnuDMCLX_Click);
             // 
             // mnuDMCMS
             // 
             this.mnuDMCMS.Name = "mnuDMCMS";
             this.mnuDMCMS.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCMS.Text = "Màu sắc";
+            this.mnuDMCMS.Click += new System.EventHandler(this.mnuDMCMS_Click);
             // 
             // mnuDMCNSX
             // 
             this.mnuDMCNSX.Name = "mnuDMCNSX";
             this.mnuDMCNSX.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCNSX.Text = "Nước sản xuất";
+            this.mnuDMCNSX.Click += new System.EventHandler(this.mnuDMCNSX_Click);
             // 
             // mnuDMCSCN
             // 
             this.mnuDMCSCN.Name = "mnuDMCSCN";
             this.mnuDMCSCN.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCSCN.Text = "Số chỗ ngồi";
+            this.mnuDMCSCN.Click += new System.EventHandler(this.mnuDMCSCN_Click);
             // 
             // mnuDMCTT
             // 
             this.mnuDMCTT.Name = "mnuDMCTT";
             this.mnuDMCTT.Size = new System.Drawing.Size(149, 22);
             this.mnuDMCTT.Text = "Tình trạng";
+            this.mnuDMCTT.Click += new System.EventHandler(this.mnuDMCTT_Click);
             // 
             // mnuQlyNghiepVu
             // 
@@ -207,6 +219,7 @@
             this.mnuNVBH.Name = "mnuNVBH";
             this.mnuNVBH.Size = new System.Drawing.Size(133, 22);
             this.mnuNVBH.Text = "Bán hàng";
+            this.mnuNVBH.Click += new System.EventHandler(this.mnuNVBH_Click);
             // 
             // mnuNVNH
             // 
@@ -258,7 +271,7 @@
             this.MainMenuStrip = this.mnuQLy;
             this.Name = "frmMain";
             this.Text = "Quản lý cửa hàng bán Ô tô";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.mnuQLy.ResumeLayout(false);
             this.mnuQLy.PerformLayout();
             this.ResumeLayout(false);

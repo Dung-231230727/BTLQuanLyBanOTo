@@ -8,6 +8,8 @@ namespace BTLQuanLyBanOTo.HeThong
     {
         DataProcesser dt;
         public bool LoginSuccessful { get; private set; }
+        public string MaNhanVien { get; private set; }
+        public string TenNhanVien { get; private set; }
         public frmDangNhap()
         {
             InitializeComponent();
@@ -42,22 +44,29 @@ namespace BTLQuanLyBanOTo.HeThong
                 return;
             }
 
-            //loc trung
-            string sql = "select count(*) from NhanVien where MaNV=@ma and MatKhau=@mk";
-            int count = (int)dt.ExecuteScalar(sql, new SqlParameter[]
+            //loc
+            string sql = "select TenNV from NhanVien where MaNV=@ma and MatKhau=@mk";
+            SqlParameter[] prms = new SqlParameter[]
             {
                 new SqlParameter("@ma", txtTDN.Text),
                 new SqlParameter("@mk", txtMK.Text)
-            });
-            if (count > 0)
+            };
+
+            // Dùng ExecuteScalar để lấy TenNV
+            object tenNV_Result = dt.ExecuteScalar(sql, prms);
+
+            if (tenNV_Result != null)
             {
                 MessageBox.Show(
-                   "Đăng nhập thành công.",
-                   "Thông báo",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Information
+                    "Đăng nhập thành công.",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
                 );
+
                 LoginSuccessful = true;
+                MaNhanVien = txtTDN.Text;
+                TenNhanVien = tenNV_Result.ToString();
                 this.Close();
             }
             else

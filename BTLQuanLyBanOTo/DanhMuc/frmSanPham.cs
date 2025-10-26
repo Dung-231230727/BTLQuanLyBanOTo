@@ -336,16 +336,16 @@ namespace BTLQuanLyBanOTo.DanhMuc
             safeSetValue(txtMa, row.Cells["MaHang"].Value);
             safeSetValue(txtTen, row.Cells["TenHang"].Value);
             safeSetValue(numSoLuong, row.Cells["SoLuong"].Value);
-            safeSetValue(txtDGN, row.Cells["DonGiaNhap"].Value); // Giả sử tên là txtDGN
-            safeSetValue(txtDGB, row.Cells["DonGiaBan"].Value); // Giả sử tên là txtDGB
-            safeSetValue(txtTGBH, row.Cells["ThoiGianBaoHanh"].Value); // Giả sử tên là txtTGBH
+            safeSetValue(txtDGN, row.Cells["DonGiaNhap"].Value);
+            safeSetValue(txtDGB, row.Cells["DonGiaBan"].Value);
+            safeSetValue(txtTGBH, row.Cells["ThoiGianBaoHanh"].Value);
 
-            // 6. Gán giá trị cho 7 ComboBox (dùng các cột Mã đã SELECT)
+            // 6. Gán giá trị cho 7 ComboBox 
             safeSetValue(cboHangSX, row.Cells["MaHangSX"].Value);
-            safeSetValue(cboLoaiXe, row.Cells["MaLoai"].Value); // Giả sử tên là cboLoaiXe
-            safeSetValue(cboMauSac, row.Cells["MaMau"].Value); // Giả sử tên là cboMauSac
-            safeSetValue(cboDoiXe, row.Cells["MaDoi"].Value); // Giả sử tên là cboDoiXe
-            safeSetValue(cboSoCho, row.Cells["MaSoCho"].Value); // Giả sử tên là cboSoCho
+            safeSetValue(cboLoaiXe, row.Cells["MaLoai"].Value);
+            safeSetValue(cboMauSac, row.Cells["MaMau"].Value);
+            safeSetValue(cboDoiXe, row.Cells["MaDoi"].Value);
+            safeSetValue(cboSoCho, row.Cells["MaSoCho"].Value);
             safeSetValue(cboNuocSX, row.Cells["MaNuocSX"].Value);
             safeSetValue(cboTinhTrang, row.Cells["MaTinhTrang"].Value);
 
