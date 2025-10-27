@@ -144,5 +144,11 @@ namespace BTLQuanLyBanOTo
             frmBanHang f = new frmBanHang();
             f.ShowDialog();
         }
+
+        private void mnuNVNH_Click(object sender, EventArgs e)
+        {
+            frmNhapHang f = new frmNhapHang();
+            f.ShowDialog();
+        }
     }
 }

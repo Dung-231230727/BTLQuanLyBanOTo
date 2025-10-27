@@ -14,7 +14,7 @@ namespace BTLQuanLyBanOTo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new frmBanHang());
+            //Application.Run(new frmNhapHang());
 
             bool keepRunning = true;
 

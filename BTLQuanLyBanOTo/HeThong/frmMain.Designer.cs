@@ -217,15 +217,16 @@
             // mnuNVBH
             // 
             this.mnuNVBH.Name = "mnuNVBH";
-            this.mnuNVBH.Size = new System.Drawing.Size(133, 22);
+            this.mnuNVBH.Size = new System.Drawing.Size(180, 22);
             this.mnuNVBH.Text = "Bán hàng";
             this.mnuNVBH.Click += new System.EventHandler(this.mnuNVBH_Click);
             // 
             // mnuNVNH
             // 
             this.mnuNVNH.Name = "mnuNVNH";
-            this.mnuNVNH.Size = new System.Drawing.Size(133, 22);
+            this.mnuNVNH.Size = new System.Drawing.Size(180, 22);
             this.mnuNVNH.Text = "Nhập hàng";
+            this.mnuNVNH.Click += new System.EventHandler(this.mnuNVNH_Click);
             // 
             // mnuQlyBCTK
             // 

@@ -42,7 +42,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             // 3. Gán bảng tạm (đang trống) này làm Nguồn dữ liệu
             dgvGioHang.DataSource = tblChiTietDonHang;
 
-            // 4. (Tùy chọn) Định dạng cột
+            // 4.Định dạng cột
             dgvGioHang.Columns["MaHang"].HeaderText = "Mã hàng";
             dgvGioHang.Columns["TenHang"].HeaderText = "Tên hàng";
             dgvGioHang.Columns["SoLuong"].HeaderText = "Số lượng";
@@ -400,10 +400,9 @@ namespace BTLQuanLyBanOTo.NghiepVu
             //ktra trống
             if (cboMaKH.SelectedIndex == -1 || cboMaNV.SelectedIndex == -1)
             {
-                MessageBox.Show("Vui lòng chọn Nhân viên và Khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //lọc trùng
 
             //ktra du lieu trong dgv
             if (tblChiTietDonHang.Rows.Count == 0)
@@ -425,7 +424,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
                     // Tính toán tổng tiền cuối cùng (từ Label)
                     decimal tongTien = 0;
-                    decimal.TryParse(lblTongTien.Text.Replace(",", ""), out tongTien); // Xóa dấu phẩy
+                    decimal.TryParse(txtTongTien.Text.Replace(",", ""), out tongTien);
 
                     string sqlDonHang = @"INSERT INTO DonDatHang(SoDDH, MaNV, MaKhach, NgayDat, NgayGiao, DatCoc, Thue, TongTien)
                                           VALUES(@soDDH, @maNV, @maKhach, @ngayDat, @ngayGiao, @datCoc, @thue, @tongTien)";
