@@ -655,7 +655,7 @@
             // 
             // dgvGioHang
             // 
-            this.dgvGioHang.BackgroundColor = System.Drawing.SystemColors.ScrollBar;
+            this.dgvGioHang.BackgroundColor = System.Drawing.Color.White;
             this.dgvGioHang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGioHang.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvGioHang.Location = new System.Drawing.Point(0, 0);
@@ -703,7 +703,8 @@
             this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmBanHang";
-            this.Text = "frmBanHang";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Hóa đơn bán hàng";
             this.Load += new System.EventHandler(this.frmBanHang_Load);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

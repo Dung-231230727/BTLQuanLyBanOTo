@@ -65,6 +65,7 @@
             // dgvCongViec
             // 
             this.dgvCongViec.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCongViec.BackgroundColor = System.Drawing.Color.White;
             this.dgvCongViec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCongViec.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCongViec.Location = new System.Drawing.Point(0, 0);
@@ -167,7 +168,7 @@
             // 
             // txtLuong
             // 
-            this.txtLuong.Location = new System.Drawing.Point(199, 86);
+            this.txtLuong.Location = new System.Drawing.Point(199, 90);
             this.txtLuong.Name = "txtLuong";
             this.txtLuong.Size = new System.Drawing.Size(292, 22);
             this.txtLuong.TabIndex = 5;
@@ -175,7 +176,7 @@
             // lblLuong
             // 
             this.lblLuong.AutoSize = true;
-            this.lblLuong.Location = new System.Drawing.Point(94, 89);
+            this.lblLuong.Location = new System.Drawing.Point(94, 93);
             this.lblLuong.Name = "lblLuong";
             this.lblLuong.Size = new System.Drawing.Size(80, 16);
             this.lblLuong.TabIndex = 4;
@@ -183,14 +184,14 @@
             // 
             // txtTen
             // 
-            this.txtTen.Location = new System.Drawing.Point(199, 51);
+            this.txtTen.Location = new System.Drawing.Point(199, 55);
             this.txtTen.Name = "txtTen";
             this.txtTen.Size = new System.Drawing.Size(292, 22);
             this.txtTen.TabIndex = 3;
             // 
             // txtMa
             // 
-            this.txtMa.Location = new System.Drawing.Point(199, 16);
+            this.txtMa.Location = new System.Drawing.Point(199, 20);
             this.txtMa.Name = "txtMa";
             this.txtMa.Size = new System.Drawing.Size(292, 22);
             this.txtMa.TabIndex = 2;
@@ -198,7 +199,7 @@
             // lblTen
             // 
             this.lblTen.AutoSize = true;
-            this.lblTen.Location = new System.Drawing.Point(94, 54);
+            this.lblTen.Location = new System.Drawing.Point(94, 58);
             this.lblTen.Name = "lblTen";
             this.lblTen.Size = new System.Drawing.Size(92, 16);
             this.lblTen.TabIndex = 1;
@@ -207,7 +208,7 @@
             // lblMa
             // 
             this.lblMa.AutoSize = true;
-            this.lblMa.Location = new System.Drawing.Point(94, 19);
+            this.lblMa.Location = new System.Drawing.Point(94, 23);
             this.lblMa.Name = "lblMa";
             this.lblMa.Size = new System.Drawing.Size(87, 16);
             this.lblMa.TabIndex = 0;
@@ -226,6 +227,7 @@
             // 
             this.lblTieuDe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTieuDe.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
             this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
             this.lblTieuDe.Name = "lblTieuDe";
             this.lblTieuDe.Size = new System.Drawing.Size(584, 50);
@@ -237,6 +239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.PaleTurquoise;
             this.ClientSize = new System.Drawing.Size(584, 411);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -244,7 +247,8 @@
             this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(600, 450);
             this.Name = "frmCongViec";
-            this.Text = "frmCongViec";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Công việc";
             this.Load += new System.EventHandler(this.frmCongViec_Load);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCongViec)).EndInit();

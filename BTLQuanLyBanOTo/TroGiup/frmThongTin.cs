@@ -16,5 +16,19 @@ namespace BTLQuanLyBanOTo.TroGiup
         {
             InitializeComponent();
         }
+
+        private void btnDong_Click(object sender, EventArgs e)
+        {
+            DialogResult r = MessageBox.Show(
+                 "Bạn có chắc muốn thoát không?",
+                 "Xác nhận",
+                 MessageBoxButtons.YesNo,
+                 MessageBoxIcon.Warning
+                 );
+            if (r == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
     }
 }

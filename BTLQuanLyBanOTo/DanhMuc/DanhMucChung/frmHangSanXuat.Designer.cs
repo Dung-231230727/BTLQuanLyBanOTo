@@ -64,6 +64,7 @@
             // 
             this.lblTieuDe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTieuDe.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
             this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
             this.lblTieuDe.Name = "lblTieuDe";
             this.lblTieuDe.Size = new System.Drawing.Size(584, 50);
@@ -205,6 +206,7 @@
             // dgvHangSX
             // 
             this.dgvHangSX.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvHangSX.BackgroundColor = System.Drawing.Color.White;
             this.dgvHangSX.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHangSX.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvHangSX.Location = new System.Drawing.Point(0, 0);
@@ -217,14 +219,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.PaleTurquoise;
             this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.grbNhapLieu);
             this.Controls.Add(this.panel1);
+            this.MaximumSize = new System.Drawing.Size(600, 400);
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "frmHangSanXuat";
-            this.Text = "frmHangSanXuat";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Hãng sản xuất";
             this.Load += new System.EventHandler(this.frmHangSanXuat_Load);
             this.panel1.ResumeLayout(false);
             this.grbNhapLieu.ResumeLayout(false);

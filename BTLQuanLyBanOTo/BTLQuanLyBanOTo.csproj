@@ -164,6 +164,12 @@
     <Compile Include="TroGiup\frmThongTin.Designer.cs">
       <DependentUpon>frmThongTin.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BaoCaoThongKe\frmBaoCaoDoanhThu.resx">
+      <DependentUpon>frmBaoCaoDoanhThu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaoCaoThongKe\frmBaoCaoTonKho.resx">
+      <DependentUpon>frmBaoCaoTonKho.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DanhMuc\DanhMucChung\frmCongViec.resx">
       <DependentUpon>frmCongViec.cs</DependentUpon>
     </EmbeddedResource>
@@ -221,6 +227,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TroGiup\frmThongTin.resx">
+      <DependentUpon>frmThongTin.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="bin\Debug\BTLQuanLyBanOTo.exe.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,6 +1,8 @@
-﻿using BTLQuanLyBanOTo.DanhMuc;
+﻿using BTLQuanLyBanOTo.BaoCaoThongKe;
+using BTLQuanLyBanOTo.DanhMuc;
 using BTLQuanLyBanOTo.DanhMuc.DanhMucChung;
 using BTLQuanLyBanOTo.NghiepVu;
+using BTLQuanLyBanOTo.TroGiup;
 using System;
 using System.Windows.Forms;
 
@@ -148,6 +150,24 @@ namespace BTLQuanLyBanOTo
         private void mnuNVNH_Click(object sender, EventArgs e)
         {
             frmNhapHang f = new frmNhapHang();
+            f.ShowDialog();
+        }
+
+        private void mnuBCTKTK_Click(object sender, EventArgs e)
+        {
+            frmBaoCaoTonKho f = new frmBaoCaoTonKho();
+            f.ShowDialog();
+        }
+
+        private void mnuBCTKDT_Click(object sender, EventArgs e)
+        {
+            frmBaoCaoDoanhThu f = new frmBaoCaoDoanhThu();
+            f.ShowDialog();
+        }
+
+        private void mnuTGTT_Click(object sender, EventArgs e)
+        {
+            frmThongTin f = new frmThongTin();
             f.ShowDialog();
         }
     }

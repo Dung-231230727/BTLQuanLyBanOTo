@@ -42,7 +42,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Aqua;
+            this.panel1.BackColor = System.Drawing.Color.PaleTurquoise;
             this.panel1.Controls.Add(this.btnThoat);
             this.panel1.Controls.Add(this.btnDN);
             this.panel1.Controls.Add(this.txtMK);
@@ -58,7 +58,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // btnThoat
             // 
             this.btnThoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnThoat.Location = new System.Drawing.Point(278, 183);
+            this.btnThoat.Location = new System.Drawing.Point(274, 180);
             this.btnThoat.Name = "btnThoat";
             this.btnThoat.Size = new System.Drawing.Size(120, 38);
             this.btnThoat.TabIndex = 11;
@@ -69,7 +69,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // btnDN
             // 
             this.btnDN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDN.Location = new System.Drawing.Point(87, 183);
+            this.btnDN.Location = new System.Drawing.Point(91, 180);
             this.btnDN.Name = "btnDN";
             this.btnDN.Size = new System.Drawing.Size(120, 38);
             this.btnDN.TabIndex = 10;
@@ -80,7 +80,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // txtMK
             // 
             this.txtMK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.txtMK.Location = new System.Drawing.Point(188, 99);
+            this.txtMK.Location = new System.Drawing.Point(188, 109);
             this.txtMK.Name = "txtMK";
             this.txtMK.Size = new System.Drawing.Size(249, 26);
             this.txtMK.TabIndex = 9;
@@ -88,7 +88,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // txtTDN
             // 
             this.txtTDN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.txtTDN.Location = new System.Drawing.Point(188, 40);
+            this.txtTDN.Location = new System.Drawing.Point(188, 50);
             this.txtTDN.Name = "txtTDN";
             this.txtTDN.Size = new System.Drawing.Size(249, 26);
             this.txtTDN.TabIndex = 8;
@@ -97,7 +97,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // 
             this.lblMK.AutoSize = true;
             this.lblMK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblMK.Location = new System.Drawing.Point(48, 102);
+            this.lblMK.Location = new System.Drawing.Point(48, 112);
             this.lblMK.Name = "lblMK";
             this.lblMK.Size = new System.Drawing.Size(75, 20);
             this.lblMK.TabIndex = 7;
@@ -107,7 +107,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // 
             this.lblTDN.AutoSize = true;
             this.lblTDN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblTDN.Location = new System.Drawing.Point(48, 40);
+            this.lblTDN.Location = new System.Drawing.Point(48, 50);
             this.lblTDN.Name = "lblTDN";
             this.lblTDN.Size = new System.Drawing.Size(116, 20);
             this.lblTDN.TabIndex = 6;
@@ -120,6 +120,8 @@ namespace BTLQuanLyBanOTo.HeThong
             this.ClientSize = new System.Drawing.Size(484, 261);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximumSize = new System.Drawing.Size(500, 300);
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "frmDangNhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đăng nhập hệ thống";
