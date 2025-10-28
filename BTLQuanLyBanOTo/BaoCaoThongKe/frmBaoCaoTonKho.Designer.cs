@@ -47,7 +47,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(784, 80);
+            this.panel1.Size = new System.Drawing.Size(1184, 80);
             this.panel1.TabIndex = 0;
             // 
             // lblTieuDe
@@ -57,7 +57,7 @@
             this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
             this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
             this.lblTieuDe.Name = "lblTieuDe";
-            this.lblTieuDe.Size = new System.Drawing.Size(784, 80);
+            this.lblTieuDe.Size = new System.Drawing.Size(1184, 80);
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "BÁO CÁO TỒN KHO";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -67,15 +67,15 @@
             this.panel2.Controls.Add(this.btnDong);
             this.panel2.Controls.Add(this.btnLamMoi);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 501);
+            this.panel2.Location = new System.Drawing.Point(0, 701);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(784, 60);
+            this.panel2.Size = new System.Drawing.Size(1184, 60);
             this.panel2.TabIndex = 1;
             // 
             // btnDong
             // 
             this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(656, 12);
+            this.btnDong.Location = new System.Drawing.Point(1060, 10);
             this.btnDong.Name = "btnDong";
             this.btnDong.Size = new System.Drawing.Size(112, 38);
             this.btnDong.TabIndex = 13;
@@ -85,7 +85,7 @@
             // btnLamMoi
             // 
             this.btnLamMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnLamMoi.Location = new System.Drawing.Point(530, 12);
+            this.btnLamMoi.Location = new System.Drawing.Point(934, 10);
             this.btnLamMoi.Name = "btnLamMoi";
             this.btnLamMoi.Size = new System.Drawing.Size(112, 38);
             this.btnLamMoi.TabIndex = 12;
@@ -98,7 +98,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 80);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(784, 421);
+            this.panel3.Size = new System.Drawing.Size(1184, 621);
             this.panel3.TabIndex = 2;
             // 
             // dgvTonKho
@@ -110,7 +110,7 @@
             this.dgvTonKho.Location = new System.Drawing.Point(0, 0);
             this.dgvTonKho.Name = "dgvTonKho";
             this.dgvTonKho.ReadOnly = true;
-            this.dgvTonKho.Size = new System.Drawing.Size(784, 421);
+            this.dgvTonKho.Size = new System.Drawing.Size(1184, 621);
             this.dgvTonKho.TabIndex = 0;
             // 
             // frmBaoCaoTonKho
@@ -118,12 +118,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.MaximumSize = new System.Drawing.Size(800, 600);
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmBaoCaoTonKho";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Báo cáo tồn kho";

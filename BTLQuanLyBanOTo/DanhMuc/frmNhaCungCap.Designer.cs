@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNhaCungCap));
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnDong = new System.Windows.Forms.Button();
             this.btnBoQua = new System.Windows.Forms.Button();
@@ -64,17 +65,17 @@
             this.panel2.Controls.Add(this.btnSua);
             this.panel2.Controls.Add(this.btnThem);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 490);
+            this.panel2.Location = new System.Drawing.Point(0, 681);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(784, 71);
+            this.panel2.Size = new System.Drawing.Size(1184, 80);
             this.panel2.TabIndex = 10;
             // 
             // btnDong
             // 
             this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(651, 16);
+            this.btnDong.Location = new System.Drawing.Point(651, 20);
             this.btnDong.Name = "btnDong";
-            this.btnDong.Size = new System.Drawing.Size(112, 38);
+            this.btnDong.Size = new System.Drawing.Size(112, 40);
             this.btnDong.TabIndex = 11;
             this.btnDong.Text = "Đóng";
             this.btnDong.UseVisualStyleBackColor = true;
@@ -83,9 +84,9 @@
             // btnBoQua
             // 
             this.btnBoQua.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnBoQua.Location = new System.Drawing.Point(525, 16);
+            this.btnBoQua.Location = new System.Drawing.Point(525, 20);
             this.btnBoQua.Name = "btnBoQua";
-            this.btnBoQua.Size = new System.Drawing.Size(112, 38);
+            this.btnBoQua.Size = new System.Drawing.Size(112, 40);
             this.btnBoQua.TabIndex = 10;
             this.btnBoQua.Text = "Bỏ qua";
             this.btnBoQua.UseVisualStyleBackColor = true;
@@ -94,9 +95,9 @@
             // btnLuu
             // 
             this.btnLuu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnLuu.Location = new System.Drawing.Point(399, 16);
+            this.btnLuu.Location = new System.Drawing.Point(399, 20);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(112, 38);
+            this.btnLuu.Size = new System.Drawing.Size(112, 40);
             this.btnLuu.TabIndex = 9;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = true;
@@ -105,9 +106,9 @@
             // btnXoa
             // 
             this.btnXoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnXoa.Location = new System.Drawing.Point(273, 16);
+            this.btnXoa.Location = new System.Drawing.Point(273, 20);
             this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(112, 38);
+            this.btnXoa.Size = new System.Drawing.Size(112, 40);
             this.btnXoa.TabIndex = 8;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = true;
@@ -116,9 +117,9 @@
             // btnSua
             // 
             this.btnSua.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnSua.Location = new System.Drawing.Point(147, 16);
+            this.btnSua.Location = new System.Drawing.Point(147, 20);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(112, 38);
+            this.btnSua.Size = new System.Drawing.Size(112, 40);
             this.btnSua.TabIndex = 7;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = true;
@@ -127,9 +128,9 @@
             // btnThem
             // 
             this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnThem.Location = new System.Drawing.Point(21, 16);
+            this.btnThem.Location = new System.Drawing.Point(21, 20);
             this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(112, 38);
+            this.btnThem.Size = new System.Drawing.Size(112, 40);
             this.btnThem.TabIndex = 6;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = true;
@@ -137,22 +138,22 @@
             // 
             // txtDiaChi
             // 
-            this.txtDiaChi.Location = new System.Drawing.Point(530, 76);
+            this.txtDiaChi.Location = new System.Drawing.Point(519, 80);
             this.txtDiaChi.Multiline = true;
             this.txtDiaChi.Name = "txtDiaChi";
-            this.txtDiaChi.Size = new System.Drawing.Size(226, 74);
+            this.txtDiaChi.Size = new System.Drawing.Size(226, 60);
             this.txtDiaChi.TabIndex = 13;
             // 
             // txtTen
             // 
-            this.txtTen.Location = new System.Drawing.Point(148, 76);
+            this.txtTen.Location = new System.Drawing.Point(137, 80);
             this.txtTen.Name = "txtTen";
             this.txtTen.Size = new System.Drawing.Size(226, 22);
             this.txtTen.TabIndex = 12;
             // 
             // txtMa
             // 
-            this.txtMa.Location = new System.Drawing.Point(148, 27);
+            this.txtMa.Location = new System.Drawing.Point(137, 31);
             this.txtMa.Name = "txtMa";
             this.txtMa.Size = new System.Drawing.Size(226, 22);
             this.txtMa.TabIndex = 11;
@@ -160,7 +161,7 @@
             // lblDiaChi
             // 
             this.lblDiaChi.AutoSize = true;
-            this.lblDiaChi.Location = new System.Drawing.Point(430, 79);
+            this.lblDiaChi.Location = new System.Drawing.Point(419, 83);
             this.lblDiaChi.Name = "lblDiaChi";
             this.lblDiaChi.Size = new System.Drawing.Size(47, 16);
             this.lblDiaChi.TabIndex = 7;
@@ -169,7 +170,7 @@
             // lblDienThoai
             // 
             this.lblDienThoai.AutoSize = true;
-            this.lblDienThoai.Location = new System.Drawing.Point(429, 30);
+            this.lblDienThoai.Location = new System.Drawing.Point(418, 34);
             this.lblDienThoai.Name = "lblDienThoai";
             this.lblDienThoai.Size = new System.Drawing.Size(66, 16);
             this.lblDienThoai.TabIndex = 6;
@@ -178,7 +179,7 @@
             // lblTen
             // 
             this.lblTen.AutoSize = true;
-            this.lblTen.Location = new System.Drawing.Point(29, 79);
+            this.lblTen.Location = new System.Drawing.Point(18, 83);
             this.lblTen.Name = "lblTen";
             this.lblTen.Size = new System.Drawing.Size(114, 16);
             this.lblTen.TabIndex = 1;
@@ -187,7 +188,7 @@
             // lblMa
             // 
             this.lblMa.AutoSize = true;
-            this.lblMa.Location = new System.Drawing.Point(29, 30);
+            this.lblMa.Location = new System.Drawing.Point(18, 34);
             this.lblMa.Name = "lblMa";
             this.lblMa.Size = new System.Drawing.Size(109, 16);
             this.lblMa.TabIndex = 0;
@@ -199,7 +200,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 250);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(784, 311);
+            this.panel3.Size = new System.Drawing.Size(1184, 511);
             this.panel3.TabIndex = 11;
             // 
             // dgvNhaCungCap
@@ -210,7 +211,7 @@
             this.dgvNhaCungCap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNhaCungCap.Location = new System.Drawing.Point(0, 0);
             this.dgvNhaCungCap.Name = "dgvNhaCungCap";
-            this.dgvNhaCungCap.Size = new System.Drawing.Size(784, 311);
+            this.dgvNhaCungCap.Size = new System.Drawing.Size(1184, 511);
             this.dgvNhaCungCap.TabIndex = 0;
             this.dgvNhaCungCap.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvNhaCungCap_CellClick);
             // 
@@ -228,14 +229,14 @@
             this.grbNhapLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.grbNhapLieu.Location = new System.Drawing.Point(0, 80);
             this.grbNhapLieu.Name = "grbNhapLieu";
-            this.grbNhapLieu.Size = new System.Drawing.Size(784, 170);
+            this.grbNhapLieu.Size = new System.Drawing.Size(1184, 170);
             this.grbNhapLieu.TabIndex = 9;
             this.grbNhapLieu.TabStop = false;
             this.grbNhapLieu.Text = "Thông tin nhà cung cấp";
             // 
             // txtDienThoai
             // 
-            this.txtDienThoai.Location = new System.Drawing.Point(530, 27);
+            this.txtDienThoai.Location = new System.Drawing.Point(519, 31);
             this.txtDienThoai.Name = "txtDienThoai";
             this.txtDienThoai.Size = new System.Drawing.Size(226, 22);
             this.txtDienThoai.TabIndex = 16;
@@ -246,7 +247,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(784, 80);
+            this.panel1.Size = new System.Drawing.Size(1184, 80);
             this.panel1.TabIndex = 8;
             // 
             // lblTieuDe
@@ -256,7 +257,7 @@
             this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
             this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
             this.lblTieuDe.Name = "lblTieuDe";
-            this.lblTieuDe.Size = new System.Drawing.Size(784, 80);
+            this.lblTieuDe.Size = new System.Drawing.Size(1184, 80);
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "QUẢN LÝ NHÀ CUNG CẤP";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -266,12 +267,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.grbNhapLieu);
             this.Controls.Add(this.panel1);
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmNhaCungCap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý nhà cung cấp";

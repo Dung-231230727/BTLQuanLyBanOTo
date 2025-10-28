@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSanPham));
             this.btnDong = new System.Windows.Forms.Button();
             this.btnBoQua = new System.Windows.Forms.Button();
             this.btnLuu = new System.Windows.Forms.Button();
@@ -80,9 +81,9 @@
             // btnDong
             // 
             this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(1060, 16);
+            this.btnDong.Location = new System.Drawing.Point(654, 20);
             this.btnDong.Name = "btnDong";
-            this.btnDong.Size = new System.Drawing.Size(112, 38);
+            this.btnDong.Size = new System.Drawing.Size(112, 40);
             this.btnDong.TabIndex = 11;
             this.btnDong.Text = "Đóng";
             this.btnDong.UseVisualStyleBackColor = true;
@@ -91,9 +92,9 @@
             // btnBoQua
             // 
             this.btnBoQua.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnBoQua.Location = new System.Drawing.Point(934, 16);
+            this.btnBoQua.Location = new System.Drawing.Point(528, 20);
             this.btnBoQua.Name = "btnBoQua";
-            this.btnBoQua.Size = new System.Drawing.Size(112, 38);
+            this.btnBoQua.Size = new System.Drawing.Size(112, 40);
             this.btnBoQua.TabIndex = 10;
             this.btnBoQua.Text = "Bỏ qua";
             this.btnBoQua.UseVisualStyleBackColor = true;
@@ -102,9 +103,9 @@
             // btnLuu
             // 
             this.btnLuu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnLuu.Location = new System.Drawing.Point(808, 16);
+            this.btnLuu.Location = new System.Drawing.Point(402, 20);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(112, 38);
+            this.btnLuu.Size = new System.Drawing.Size(112, 40);
             this.btnLuu.TabIndex = 9;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = true;
@@ -113,9 +114,9 @@
             // btnXoa
             // 
             this.btnXoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnXoa.Location = new System.Drawing.Point(682, 16);
+            this.btnXoa.Location = new System.Drawing.Point(276, 20);
             this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(112, 38);
+            this.btnXoa.Size = new System.Drawing.Size(112, 40);
             this.btnXoa.TabIndex = 8;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = true;
@@ -124,9 +125,9 @@
             // btnThem
             // 
             this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnThem.Location = new System.Drawing.Point(430, 16);
+            this.btnThem.Location = new System.Drawing.Point(24, 20);
             this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(112, 38);
+            this.btnThem.Size = new System.Drawing.Size(112, 40);
             this.btnThem.TabIndex = 6;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = true;
@@ -140,7 +141,7 @@
             this.dgvSanPham.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSanPham.Location = new System.Drawing.Point(0, 0);
             this.dgvSanPham.Name = "dgvSanPham";
-            this.dgvSanPham.Size = new System.Drawing.Size(1184, 275);
+            this.dgvSanPham.Size = new System.Drawing.Size(1184, 266);
             this.dgvSanPham.TabIndex = 0;
             this.dgvSanPham.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSanPham_CellClick);
             // 
@@ -154,9 +155,9 @@
             // btnSua
             // 
             this.btnSua.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnSua.Location = new System.Drawing.Point(556, 16);
+            this.btnSua.Location = new System.Drawing.Point(150, 20);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(112, 38);
+            this.btnSua.Size = new System.Drawing.Size(112, 40);
             this.btnSua.TabIndex = 7;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = true;
@@ -258,7 +259,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 415);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1184, 275);
+            this.panel3.Size = new System.Drawing.Size(1184, 266);
             this.panel3.TabIndex = 7;
             // 
             // panel2
@@ -270,9 +271,9 @@
             this.panel2.Controls.Add(this.btnSua);
             this.panel2.Controls.Add(this.btnThem);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 690);
+            this.panel2.Location = new System.Drawing.Point(0, 681);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1184, 71);
+            this.panel2.Size = new System.Drawing.Size(1184, 80);
             this.panel2.TabIndex = 6;
             // 
             // grbNhapLieu
@@ -420,6 +421,7 @@
             // 
             // picAnh
             // 
+            this.picAnh.BackColor = System.Drawing.Color.White;
             this.picAnh.Location = new System.Drawing.Point(938, 83);
             this.picAnh.Name = "picAnh";
             this.picAnh.Size = new System.Drawing.Size(226, 216);
@@ -487,7 +489,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.grbNhapLieu);
             this.Controls.Add(this.panel1);
-            this.MaximumSize = new System.Drawing.Size(1200, 800);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmSanPham";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

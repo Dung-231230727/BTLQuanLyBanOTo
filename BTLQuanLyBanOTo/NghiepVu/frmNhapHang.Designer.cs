@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNhapHang));
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.grbTTC = new System.Windows.Forms.GroupBox();
@@ -650,6 +651,7 @@
             this.Controls.Add(this.grbCTMH);
             this.Controls.Add(this.grbTTC);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmNhapHang";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

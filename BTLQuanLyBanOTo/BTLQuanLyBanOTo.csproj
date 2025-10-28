@@ -226,6 +226,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="TroGiup\frmThongTin.resx">
       <DependentUpon>frmThongTin.cs</DependentUpon>
@@ -247,9 +248,12 @@
   <ItemGroup>
     <Content Include="bin\Debug\BTLQuanLyBanOTo.exe" />
     <Content Include="bin\Debug\BTLQuanLyBanOTo.pdb" />
+    <None Include="Resources\avt.jpg" />
+    <None Include="bin\Debug\Images\HinhNen\hinhnen1.jpg" />
+    <None Include="bin\Debug\Images\HinhNen\hinhnen2.png" />
+    <None Include="bin\Debug\Images\HinhNen\hinhnen.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\Images\HinhNen\" />
     <Folder Include="bin\Debug\Images\Icons\" />
     <Folder Include="bin\Debug\Images\NhanVien\" />
     <Folder Include="bin\Debug\Images\Oto\" />

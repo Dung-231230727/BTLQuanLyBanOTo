@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBanHang));
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -701,6 +702,7 @@
             this.Controls.Add(this.grbTTC);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmBanHang";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

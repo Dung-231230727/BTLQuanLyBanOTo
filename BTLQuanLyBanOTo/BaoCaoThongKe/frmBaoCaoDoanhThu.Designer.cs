@@ -65,15 +65,15 @@
             this.panel2.Controls.Add(this.btnDong);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.panel2.Location = new System.Drawing.Point(0, 501);
+            this.panel2.Location = new System.Drawing.Point(0, 701);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(784, 60);
+            this.panel2.Size = new System.Drawing.Size(1184, 60);
             this.panel2.TabIndex = 4;
             // 
             // btnDong
             // 
             this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(657, 11);
+            this.btnDong.Location = new System.Drawing.Point(1060, 10);
             this.btnDong.Name = "btnDong";
             this.btnDong.Size = new System.Drawing.Size(112, 38);
             this.btnDong.TabIndex = 13;
@@ -87,7 +87,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(784, 80);
+            this.panel1.Size = new System.Drawing.Size(1184, 80);
             this.panel1.TabIndex = 3;
             // 
             // lblTieuDe
@@ -97,7 +97,7 @@
             this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
             this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
             this.lblTieuDe.Name = "lblTieuDe";
-            this.lblTieuDe.Size = new System.Drawing.Size(784, 80);
+            this.lblTieuDe.Size = new System.Drawing.Size(1184, 80);
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "BÁO CÁO DOANH THU BÁN HÀNG";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -109,7 +109,7 @@
             this.panel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.panel3.Location = new System.Drawing.Point(0, 80);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(784, 100);
+            this.panel3.Size = new System.Drawing.Size(1184, 100);
             this.panel3.TabIndex = 5;
             // 
             // splitContainer1
@@ -130,7 +130,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.btnXem);
-            this.splitContainer1.Size = new System.Drawing.Size(784, 100);
+            this.splitContainer1.Size = new System.Drawing.Size(1184, 100);
             this.splitContainer1.SplitterDistance = 56;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -138,7 +138,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label1.Location = new System.Drawing.Point(387, 22);
+            this.label1.Location = new System.Drawing.Point(318, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(11, 16);
             this.label1.TabIndex = 8;
@@ -147,7 +147,7 @@
             // dtpDenNgay
             // 
             this.dtpDenNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDenNgay.Location = new System.Drawing.Point(504, 17);
+            this.dtpDenNgay.Location = new System.Drawing.Point(435, 15);
             this.dtpDenNgay.Name = "dtpDenNgay";
             this.dtpDenNgay.Size = new System.Drawing.Size(200, 22);
             this.dtpDenNgay.TabIndex = 7;
@@ -155,7 +155,7 @@
             // dtpTuNgay
             // 
             this.dtpTuNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpTuNgay.Location = new System.Drawing.Point(143, 17);
+            this.dtpTuNgay.Location = new System.Drawing.Point(74, 15);
             this.dtpTuNgay.Name = "dtpTuNgay";
             this.dtpTuNgay.Size = new System.Drawing.Size(200, 22);
             this.dtpTuNgay.TabIndex = 6;
@@ -163,7 +163,7 @@
             // lblDenNgay
             // 
             this.lblDenNgay.AutoSize = true;
-            this.lblDenNgay.Location = new System.Drawing.Point(434, 22);
+            this.lblDenNgay.Location = new System.Drawing.Point(365, 20);
             this.lblDenNgay.Name = "lblDenNgay";
             this.lblDenNgay.Size = new System.Drawing.Size(64, 16);
             this.lblDenNgay.TabIndex = 5;
@@ -172,7 +172,7 @@
             // lblTuNgay
             // 
             this.lblTuNgay.AutoSize = true;
-            this.lblTuNgay.Location = new System.Drawing.Point(81, 22);
+            this.lblTuNgay.Location = new System.Drawing.Point(12, 20);
             this.lblTuNgay.Name = "lblTuNgay";
             this.lblTuNgay.Size = new System.Drawing.Size(56, 16);
             this.lblTuNgay.TabIndex = 4;
@@ -194,7 +194,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 180);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(784, 321);
+            this.panel4.Size = new System.Drawing.Size(1184, 521);
             this.panel4.TabIndex = 6;
             // 
             // splitContainer2
@@ -214,8 +214,8 @@
             this.splitContainer2.Panel2.Controls.Add(this.txtTDT);
             this.splitContainer2.Panel2.Controls.Add(this.lblTongDoanhThu);
             this.splitContainer2.Panel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.splitContainer2.Size = new System.Drawing.Size(784, 321);
-            this.splitContainer2.SplitterDistance = 283;
+            this.splitContainer2.Size = new System.Drawing.Size(1184, 521);
+            this.splitContainer2.SplitterDistance = 459;
             this.splitContainer2.TabIndex = 0;
             // 
             // dgvDoanhThu
@@ -227,13 +227,13 @@
             this.dgvDoanhThu.Location = new System.Drawing.Point(0, 0);
             this.dgvDoanhThu.Name = "dgvDoanhThu";
             this.dgvDoanhThu.ReadOnly = true;
-            this.dgvDoanhThu.Size = new System.Drawing.Size(784, 283);
+            this.dgvDoanhThu.Size = new System.Drawing.Size(1184, 459);
             this.dgvDoanhThu.TabIndex = 0;
             // 
             // txtTDT
             // 
             this.txtTDT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.txtTDT.Location = new System.Drawing.Point(554, 6);
+            this.txtTDT.Location = new System.Drawing.Point(945, 17);
             this.txtTDT.Name = "txtTDT";
             this.txtTDT.Size = new System.Drawing.Size(227, 22);
             this.txtTDT.TabIndex = 61;
@@ -242,7 +242,7 @@
             // 
             this.lblTongDoanhThu.AutoSize = true;
             this.lblTongDoanhThu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblTongDoanhThu.Location = new System.Drawing.Point(448, 9);
+            this.lblTongDoanhThu.Location = new System.Drawing.Point(839, 20);
             this.lblTongDoanhThu.Name = "lblTongDoanhThu";
             this.lblTongDoanhThu.Size = new System.Drawing.Size(100, 16);
             this.lblTongDoanhThu.TabIndex = 60;
@@ -253,13 +253,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.MaximumSize = new System.Drawing.Size(800, 600);
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmBaoCaoDoanhThu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Báo cáo doanh thu";

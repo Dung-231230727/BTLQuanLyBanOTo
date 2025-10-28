@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmThongTin));
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.picAnh = new System.Windows.Forms.PictureBox();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnDong = new System.Windows.Forms.Button();
@@ -44,12 +43,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.grbTTPM = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.picAnh = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -57,6 +56,7 @@
             this.splitContainer2.SuspendLayout();
             this.grbTTNL.SuspendLayout();
             this.grbTTPM.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -65,7 +65,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(584, 100);
+            this.panel1.Size = new System.Drawing.Size(1184, 100);
             this.panel1.TabIndex = 0;
             // 
             // splitContainer1
@@ -81,18 +81,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lblTieuDe);
-            this.splitContainer1.Size = new System.Drawing.Size(584, 100);
-            this.splitContainer1.SplitterDistance = 106;
+            this.splitContainer1.Size = new System.Drawing.Size(1184, 100);
+            this.splitContainer1.SplitterDistance = 156;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // picAnh
-            // 
-            this.picAnh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picAnh.Location = new System.Drawing.Point(0, 0);
-            this.picAnh.Name = "picAnh";
-            this.picAnh.Size = new System.Drawing.Size(106, 100);
-            this.picAnh.TabIndex = 0;
-            this.picAnh.TabStop = false;
             // 
             // lblTieuDe
             // 
@@ -101,7 +92,7 @@
             this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
             this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
             this.lblTieuDe.Name = "lblTieuDe";
-            this.lblTieuDe.Size = new System.Drawing.Size(474, 100);
+            this.lblTieuDe.Size = new System.Drawing.Size(1024, 100);
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "PHẦN MỀM QUẢN LÝ CỬA HÀNG BÁN Ô TÔ";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -110,15 +101,16 @@
             // 
             this.panel2.Controls.Add(this.btnDong);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 301);
+            this.panel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.panel2.Location = new System.Drawing.Point(0, 701);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(584, 60);
+            this.panel2.Size = new System.Drawing.Size(1184, 60);
             this.panel2.TabIndex = 1;
             // 
             // btnDong
             // 
             this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(460, 11);
+            this.btnDong.Location = new System.Drawing.Point(1060, 10);
             this.btnDong.Name = "btnDong";
             this.btnDong.Size = new System.Drawing.Size(112, 38);
             this.btnDong.TabIndex = 14;
@@ -129,7 +121,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.splitContainer2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.splitContainer2.Location = new System.Drawing.Point(0, 100);
             this.splitContainer2.Name = "splitContainer2";
             // 
@@ -140,8 +132,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.grbTTPM);
-            this.splitContainer2.Size = new System.Drawing.Size(584, 201);
-            this.splitContainer2.SplitterDistance = 292;
+            this.splitContainer2.Size = new System.Drawing.Size(1184, 601);
+            this.splitContainer2.SplitterDistance = 592;
             this.splitContainer2.TabIndex = 2;
             // 
             // grbTTNL
@@ -155,7 +147,7 @@
             this.grbTTNL.ForeColor = System.Drawing.Color.Blue;
             this.grbTTNL.Location = new System.Drawing.Point(0, 0);
             this.grbTTNL.Name = "grbTTNL";
-            this.grbTTNL.Size = new System.Drawing.Size(292, 201);
+            this.grbTTNL.Size = new System.Drawing.Size(592, 601);
             this.grbTTNL.TabIndex = 0;
             this.grbTTNL.TabStop = false;
             this.grbTTNL.Text = "Thông tin người làm";
@@ -166,7 +158,7 @@
             this.label6.ForeColor = System.Drawing.Color.Blue;
             this.label6.Location = new System.Drawing.Point(25, 172);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(242, 16);
+            this.label6.Size = new System.Drawing.Size(287, 20);
             this.label6.TabIndex = 4;
             this.label6.Text = "Liên hệ: vandunglc2005pro@gmail.com";
             // 
@@ -176,7 +168,7 @@
             this.label4.ForeColor = System.Drawing.Color.Blue;
             this.label4.Location = new System.Drawing.Point(25, 136);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(163, 16);
+            this.label4.Size = new System.Drawing.Size(201, 20);
             this.label4.TabIndex = 3;
             this.label4.Text = "Lớp: Công nghệ thông tin 2";
             // 
@@ -186,7 +178,7 @@
             this.label3.ForeColor = System.Drawing.Color.Blue;
             this.label3.Location = new System.Drawing.Point(25, 100);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(150, 16);
+            this.label3.Size = new System.Drawing.Size(185, 20);
             this.label3.TabIndex = 2;
             this.label3.Text = "Mã sinh viên: 231230727";
             // 
@@ -196,7 +188,7 @@
             this.label2.ForeColor = System.Drawing.Color.Blue;
             this.label2.Location = new System.Drawing.Point(25, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(159, 16);
+            this.label2.Size = new System.Drawing.Size(191, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Thực hiện: Ngô Văn Dũng";
             // 
@@ -206,7 +198,7 @@
             this.label1.ForeColor = System.Drawing.Color.Blue;
             this.label1.Location = new System.Drawing.Point(25, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(238, 16);
+            this.label1.Size = new System.Drawing.Size(291, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Bài tập lớn học phần Lập trình trực quan";
             // 
@@ -217,7 +209,7 @@
             this.grbTTPM.ForeColor = System.Drawing.Color.Blue;
             this.grbTTPM.Location = new System.Drawing.Point(0, 0);
             this.grbTTPM.Name = "grbTTPM";
-            this.grbTTPM.Size = new System.Drawing.Size(288, 201);
+            this.grbTTPM.Size = new System.Drawing.Size(588, 601);
             this.grbTTPM.TabIndex = 0;
             this.grbTTPM.TabStop = false;
             this.grbTTPM.Text = "Thông tin phần mềm";
@@ -228,16 +220,27 @@
             this.label5.ForeColor = System.Drawing.Color.Blue;
             this.label5.Location = new System.Drawing.Point(29, 28);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(90, 16);
+            this.label5.Size = new System.Drawing.Size(110, 20);
             this.label5.TabIndex = 4;
             this.label5.Text = "Phiên bản: 1.0";
+            // 
+            // picAnh
+            // 
+            this.picAnh.BackgroundImage = global::BTLQuanLyBanOTo.Properties.Resources.hinhnen3;
+            this.picAnh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picAnh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picAnh.Location = new System.Drawing.Point(0, 0);
+            this.picAnh.Name = "picAnh";
+            this.picAnh.Size = new System.Drawing.Size(156, 100);
+            this.picAnh.TabIndex = 0;
+            this.picAnh.TabStop = false;
             // 
             // frmThongTin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -251,7 +254,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).EndInit();
             this.panel2.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -261,6 +263,7 @@
             this.grbTTNL.PerformLayout();
             this.grbTTPM.ResumeLayout(false);
             this.grbTTPM.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).EndInit();
             this.ResumeLayout(false);
 
         }
