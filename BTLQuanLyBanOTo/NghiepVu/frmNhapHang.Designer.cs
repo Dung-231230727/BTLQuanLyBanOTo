@@ -67,10 +67,12 @@
             this.txtTenSP = new System.Windows.Forms.TextBox();
             this.lblTenSP = new System.Windows.Forms.Label();
             this.lblMaSP = new System.Windows.Forms.Label();
-            this.btnThemSP = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.txtTT = new System.Windows.Forms.TextBox();
             this.lblThanhTien = new System.Windows.Forms.Label();
+            this.btnThemSP = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.btnDong = new System.Windows.Forms.Button();
             this.btnIn = new System.Windows.Forms.Button();
             this.btnLuu = new System.Windows.Forms.Button();
@@ -78,6 +80,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvGioHang = new System.Windows.Forms.DataGridView();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.txtTongTien = new System.Windows.Forms.TextBox();
             this.lblTongTien = new System.Windows.Forms.Label();
             this.btnXoaSP = new System.Windows.Forms.Button();
@@ -93,13 +96,16 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSLN)).BeginInit();
+            this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGioHang)).BeginInit();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -172,6 +178,7 @@
             // 
             // txtTenNCC
             // 
+            this.txtTenNCC.Enabled = false;
             this.txtTenNCC.Location = new System.Drawing.Point(482, 58);
             this.txtTenNCC.Name = "txtTenNCC";
             this.txtTenNCC.Size = new System.Drawing.Size(179, 22);
@@ -179,6 +186,7 @@
             // 
             // txtDienThoai
             // 
+            this.txtDienThoai.Enabled = false;
             this.txtDienThoai.Location = new System.Drawing.Point(802, 99);
             this.txtDienThoai.Name = "txtDienThoai";
             this.txtDienThoai.Size = new System.Drawing.Size(179, 22);
@@ -186,6 +194,7 @@
             // 
             // txtDiaChi
             // 
+            this.txtDiaChi.Enabled = false;
             this.txtDiaChi.Location = new System.Drawing.Point(802, 17);
             this.txtDiaChi.Multiline = true;
             this.txtDiaChi.Name = "txtDiaChi";
@@ -378,9 +387,8 @@
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.panel4);
             this.splitContainer2.Panel2.Controls.Add(this.btnThemSP);
-            this.splitContainer2.Panel2.Controls.Add(this.txtTT);
-            this.splitContainer2.Panel2.Controls.Add(this.lblThanhTien);
             this.splitContainer2.Size = new System.Drawing.Size(1178, 137);
             this.splitContainer2.SplitterDistance = 94;
             this.splitContainer2.TabIndex = 1;
@@ -435,6 +443,7 @@
             // 
             // txtDGN
             // 
+            this.txtDGN.Enabled = false;
             this.txtDGN.Location = new System.Drawing.Point(519, 12);
             this.txtDGN.Name = "txtDGN";
             this.txtDGN.Size = new System.Drawing.Size(227, 22);
@@ -452,6 +461,7 @@
             // 
             // txtSLT
             // 
+            this.txtSLT.Enabled = false;
             this.txtSLT.Location = new System.Drawing.Point(519, 61);
             this.txtSLT.Name = "txtSLT";
             this.txtSLT.Size = new System.Drawing.Size(227, 22);
@@ -468,6 +478,7 @@
             // 
             // txtTenSP
             // 
+            this.txtTenSP.Enabled = false;
             this.txtTenSP.Location = new System.Drawing.Point(137, 58);
             this.txtTenSP.Name = "txtTenSP";
             this.txtTenSP.Size = new System.Drawing.Size(227, 22);
@@ -491,6 +502,33 @@
             this.lblMaSP.TabIndex = 42;
             this.lblMaSP.Text = "Mã sản phẩm";
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.txtTT);
+            this.panel4.Controls.Add(this.lblThanhTien);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(850, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(328, 39);
+            this.panel4.TabIndex = 6;
+            // 
+            // txtTT
+            // 
+            this.txtTT.Enabled = false;
+            this.txtTT.Location = new System.Drawing.Point(92, 8);
+            this.txtTT.Name = "txtTT";
+            this.txtTT.Size = new System.Drawing.Size(227, 22);
+            this.txtTT.TabIndex = 61;
+            // 
+            // lblThanhTien
+            // 
+            this.lblThanhTien.AutoSize = true;
+            this.lblThanhTien.Location = new System.Drawing.Point(11, 11);
+            this.lblThanhTien.Name = "lblThanhTien";
+            this.lblThanhTien.Size = new System.Drawing.Size(69, 16);
+            this.lblThanhTien.TabIndex = 60;
+            this.lblThanhTien.Text = "Thành tiền";
+            // 
             // btnThemSP
             // 
             this.btnThemSP.Location = new System.Drawing.Point(3, 3);
@@ -501,38 +539,31 @@
             this.btnThemSP.UseVisualStyleBackColor = true;
             this.btnThemSP.Click += new System.EventHandler(this.btnThemSP_Click);
             // 
-            // txtTT
-            // 
-            this.txtTT.Location = new System.Drawing.Point(942, 8);
-            this.txtTT.Name = "txtTT";
-            this.txtTT.Size = new System.Drawing.Size(227, 22);
-            this.txtTT.TabIndex = 59;
-            // 
-            // lblThanhTien
-            // 
-            this.lblThanhTien.AutoSize = true;
-            this.lblThanhTien.Location = new System.Drawing.Point(861, 11);
-            this.lblThanhTien.Name = "lblThanhTien";
-            this.lblThanhTien.Size = new System.Drawing.Size(69, 16);
-            this.lblThanhTien.TabIndex = 58;
-            this.lblThanhTien.Text = "Thành tiền";
-            // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnDong);
-            this.panel2.Controls.Add(this.btnIn);
-            this.panel2.Controls.Add(this.btnLuu);
-            this.panel2.Controls.Add(this.btnThem);
+            this.panel2.Controls.Add(this.panel6);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 699);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1184, 62);
             this.panel2.TabIndex = 3;
             // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.btnDong);
+            this.panel6.Controls.Add(this.btnIn);
+            this.panel6.Controls.Add(this.btnLuu);
+            this.panel6.Controls.Add(this.btnThem);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel6.Location = new System.Drawing.Point(666, 0);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(518, 62);
+            this.panel6.TabIndex = 1;
+            // 
             // btnDong
             // 
             this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(1060, 12);
+            this.btnDong.Location = new System.Drawing.Point(390, 12);
             this.btnDong.Name = "btnDong";
             this.btnDong.Size = new System.Drawing.Size(112, 38);
             this.btnDong.TabIndex = 21;
@@ -543,7 +574,7 @@
             // btnIn
             // 
             this.btnIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnIn.Location = new System.Drawing.Point(931, 12);
+            this.btnIn.Location = new System.Drawing.Point(261, 12);
             this.btnIn.Name = "btnIn";
             this.btnIn.Size = new System.Drawing.Size(112, 38);
             this.btnIn.TabIndex = 20;
@@ -554,7 +585,7 @@
             // btnLuu
             // 
             this.btnLuu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnLuu.Location = new System.Drawing.Point(802, 12);
+            this.btnLuu.Location = new System.Drawing.Point(132, 12);
             this.btnLuu.Name = "btnLuu";
             this.btnLuu.Size = new System.Drawing.Size(112, 38);
             this.btnLuu.TabIndex = 19;
@@ -565,7 +596,7 @@
             // btnThem
             // 
             this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnThem.Location = new System.Drawing.Point(673, 12);
+            this.btnThem.Location = new System.Drawing.Point(3, 12);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(112, 38);
             this.btnThem.TabIndex = 18;
@@ -596,8 +627,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.txtTongTien);
-            this.splitContainer1.Panel2.Controls.Add(this.lblTongTien);
+            this.splitContainer1.Panel2.Controls.Add(this.panel5);
             this.splitContainer1.Panel2.Controls.Add(this.btnXoaSP);
             this.splitContainer1.Size = new System.Drawing.Size(1184, 261);
             this.splitContainer1.SplitterDistance = 218;
@@ -614,20 +644,31 @@
             this.dgvGioHang.TabIndex = 0;
             this.dgvGioHang.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGioHang_CellClick);
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.txtTongTien);
+            this.panel5.Controls.Add(this.lblTongTien);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel5.Location = new System.Drawing.Point(856, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(328, 39);
+            this.panel5.TabIndex = 65;
+            // 
             // txtTongTien
             // 
-            this.txtTongTien.Location = new System.Drawing.Point(945, 8);
+            this.txtTongTien.Enabled = false;
+            this.txtTongTien.Location = new System.Drawing.Point(89, 8);
             this.txtTongTien.Name = "txtTongTien";
             this.txtTongTien.Size = new System.Drawing.Size(227, 22);
-            this.txtTongTien.TabIndex = 61;
+            this.txtTongTien.TabIndex = 65;
             // 
             // lblTongTien
             // 
             this.lblTongTien.AutoSize = true;
-            this.lblTongTien.Location = new System.Drawing.Point(864, 11);
+            this.lblTongTien.Location = new System.Drawing.Point(8, 11);
             this.lblTongTien.Name = "lblTongTien";
             this.lblTongTien.Size = new System.Drawing.Size(63, 16);
-            this.lblTongTien.TabIndex = 60;
+            this.lblTongTien.TabIndex = 64;
             this.lblTongTien.Text = "Tổng tiền";
             // 
             // btnXoaSP
@@ -668,18 +709,21 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numSLN)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvGioHang)).EndInit();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -723,20 +767,23 @@
         private System.Windows.Forms.Label lblTenSP;
         private System.Windows.Forms.Label lblMaSP;
         private System.Windows.Forms.Button btnThemSP;
-        private System.Windows.Forms.TextBox txtTT;
-        private System.Windows.Forms.Label lblThanhTien;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dgvGioHang;
-        private System.Windows.Forms.TextBox txtTongTien;
-        private System.Windows.Forms.Label lblTongTien;
         private System.Windows.Forms.Button btnXoaSP;
-        private System.Windows.Forms.Button btnDong;
-        private System.Windows.Forms.Button btnIn;
-        private System.Windows.Forms.Button btnLuu;
-        private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.Button btnTimKiem;
         private System.Windows.Forms.Button btnHuy;
         private System.Windows.Forms.ComboBox cboTimKiem;
         private System.Windows.Forms.Label lblTimKiem;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TextBox txtTT;
+        private System.Windows.Forms.Label lblThanhTien;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.TextBox txtTongTien;
+        private System.Windows.Forms.Label lblTongTien;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Button btnDong;
+        private System.Windows.Forms.Button btnIn;
+        private System.Windows.Forms.Button btnLuu;
+        private System.Windows.Forms.Button btnThem;
     }
 }

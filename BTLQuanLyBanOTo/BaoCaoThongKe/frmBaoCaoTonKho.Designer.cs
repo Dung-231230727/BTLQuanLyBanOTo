@@ -31,14 +31,16 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnDong = new System.Windows.Forms.Button();
-            this.btnLamMoi = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvTonKho = new System.Windows.Forms.DataGridView();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btnDong = new System.Windows.Forms.Button();
+            this.btnLamMoi = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTonKho)).BeginInit();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -64,33 +66,12 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnDong);
-            this.panel2.Controls.Add(this.btnLamMoi);
+            this.panel2.Controls.Add(this.panel4);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 701);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1184, 60);
             this.panel2.TabIndex = 1;
-            // 
-            // btnDong
-            // 
-            this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(1060, 10);
-            this.btnDong.Name = "btnDong";
-            this.btnDong.Size = new System.Drawing.Size(112, 38);
-            this.btnDong.TabIndex = 13;
-            this.btnDong.Text = "Đóng";
-            this.btnDong.UseVisualStyleBackColor = true;
-            // 
-            // btnLamMoi
-            // 
-            this.btnLamMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnLamMoi.Location = new System.Drawing.Point(934, 10);
-            this.btnLamMoi.Name = "btnLamMoi";
-            this.btnLamMoi.Size = new System.Drawing.Size(112, 38);
-            this.btnLamMoi.TabIndex = 12;
-            this.btnLamMoi.Text = "Làm mới";
-            this.btnLamMoi.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -113,6 +94,38 @@
             this.dgvTonKho.Size = new System.Drawing.Size(1184, 621);
             this.dgvTonKho.TabIndex = 0;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.btnDong);
+            this.panel4.Controls.Add(this.btnLamMoi);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(926, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(258, 60);
+            this.panel4.TabIndex = 0;
+            // 
+            // btnDong
+            // 
+            this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnDong.Location = new System.Drawing.Point(129, 11);
+            this.btnDong.Name = "btnDong";
+            this.btnDong.Size = new System.Drawing.Size(112, 38);
+            this.btnDong.TabIndex = 15;
+            this.btnDong.Text = "Đóng";
+            this.btnDong.UseVisualStyleBackColor = true;
+            this.btnDong.Click += new System.EventHandler(this.btnDong_Click);
+            // 
+            // btnLamMoi
+            // 
+            this.btnLamMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnLamMoi.Location = new System.Drawing.Point(3, 11);
+            this.btnLamMoi.Name = "btnLamMoi";
+            this.btnLamMoi.Size = new System.Drawing.Size(112, 38);
+            this.btnLamMoi.TabIndex = 14;
+            this.btnLamMoi.Text = "Làm mới";
+            this.btnLamMoi.UseVisualStyleBackColor = true;
+            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
+            // 
             // frmBaoCaoTonKho
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,6 +144,7 @@
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTonKho)).EndInit();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -142,6 +156,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dgvTonKho;
         private System.Windows.Forms.Label lblTieuDe;
+        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btnDong;
         private System.Windows.Forms.Button btnLamMoi;
     }

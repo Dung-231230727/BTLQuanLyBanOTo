@@ -182,9 +182,9 @@ namespace BTLQuanLyBanOTo.DanhMuc
             //kiểm tra rỗng
             if (string.IsNullOrEmpty(txtMa.Text) ||
                 string.IsNullOrEmpty(txtTen.Text) ||
-                string.IsNullOrEmpty(txtDGN.Text) || // Phải kiểm tra cả giá
+                string.IsNullOrEmpty(txtDGN.Text) ||
                 string.IsNullOrEmpty(txtDGB.Text) ||
-                cboHangSX.SelectedIndex == -1 || // Kiểm tra các ComboBox
+                cboHangSX.SelectedIndex == -1 ||
                 cboLoaiXe.SelectedIndex == -1 ||
                 cboMauSac.SelectedIndex == -1 ||
                 cboDoiXe.SelectedIndex == -1 ||
@@ -222,18 +222,18 @@ namespace BTLQuanLyBanOTo.DanhMuc
                 new SqlParameter("@ma", txtMa.Text),
                 new SqlParameter("@ten", txtTen.Text),
                 new SqlParameter("@sl", numSoLuong.Value),
-                new SqlParameter("@dgn", dgn), // Dùng biến 'dgn' đã TryParse
-                new SqlParameter("@dgb", dgb), // Dùng biến 'dgb' đã TryParse
+                new SqlParameter("@dgn", dgn),
+                new SqlParameter("@dgb", dgb),
                 new SqlParameter("@tgbh", txtTGBH.Text),
-                new SqlParameter("@anh", tenFileAnh), // Dùng biến 'tenFileAnh' an toàn
+                new SqlParameter("@anh", tenFileAnh), 
         
                 // Lấy SelectedValue một cách AN TOÀN
                 new SqlParameter("@ml", cboLoaiXe.SelectedValue ?? DBNull.Value),
                 new SqlParameter("@mhsx", cboHangSX.SelectedValue ?? DBNull.Value),
                 new SqlParameter("@mm", cboMauSac.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@md", cboDoiXe.SelectedValue ?? DBNull.Value),   // SỬA LỖI: Thêm @
+                new SqlParameter("@md", cboDoiXe.SelectedValue ?? DBNull.Value),
                 new SqlParameter("@msc", cboSoCho.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@mnsx", cboNuocSX.SelectedValue ?? DBNull.Value), // SỬA LỖI: Thêm @
+                new SqlParameter("@mnsx", cboNuocSX.SelectedValue ?? DBNull.Value),
                 new SqlParameter("@mtt", cboTinhTrang.SelectedValue ?? DBNull.Value)
             };
 

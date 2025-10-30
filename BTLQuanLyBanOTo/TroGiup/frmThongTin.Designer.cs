@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmThongTin));
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.picAnh = new System.Windows.Forms.PictureBox();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnDong = new System.Windows.Forms.Button();
@@ -43,12 +44,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.grbTTPM = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.picAnh = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -56,7 +57,6 @@
             this.splitContainer2.SuspendLayout();
             this.grbTTNL.SuspendLayout();
             this.grbTTPM.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -84,6 +84,17 @@
             this.splitContainer1.Size = new System.Drawing.Size(1184, 100);
             this.splitContainer1.SplitterDistance = 156;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // picAnh
+            // 
+            this.picAnh.BackgroundImage = global::BTLQuanLyBanOTo.Properties.Resources.hinhnen1;
+            this.picAnh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picAnh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picAnh.Location = new System.Drawing.Point(0, 0);
+            this.picAnh.Name = "picAnh";
+            this.picAnh.Size = new System.Drawing.Size(156, 100);
+            this.picAnh.TabIndex = 0;
+            this.picAnh.TabStop = false;
             // 
             // lblTieuDe
             // 
@@ -224,17 +235,6 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "Phiên bản: 1.0";
             // 
-            // picAnh
-            // 
-            this.picAnh.BackgroundImage = global::BTLQuanLyBanOTo.Properties.Resources.hinhnen3;
-            this.picAnh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picAnh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picAnh.Location = new System.Drawing.Point(0, 0);
-            this.picAnh.Name = "picAnh";
-            this.picAnh.Size = new System.Drawing.Size(156, 100);
-            this.picAnh.TabIndex = 0;
-            this.picAnh.TabStop = false;
-            // 
             // frmThongTin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,6 +254,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).EndInit();
             this.panel2.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -263,7 +264,6 @@
             this.grbTTNL.PerformLayout();
             this.grbTTPM.ResumeLayout(false);
             this.grbTTPM.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picAnh)).EndInit();
             this.ResumeLayout(false);
 
         }

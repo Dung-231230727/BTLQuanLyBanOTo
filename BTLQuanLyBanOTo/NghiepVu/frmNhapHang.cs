@@ -65,7 +65,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
         public void LoadCBOTimKiem()
         {
             // 4. Nạp ComboBox Tìm kiếm Đơn hàng
-            string sqlTim = "SELECT SoHDN FROM HoaDonNhap";
+            string sqlTim = "SELECT SoHDN FROM HoaDonNhap order by SoHDN desc";
             DataTable tblTim = dt.ExecuteQuery(sqlTim);
             cboTimKiem.DataSource = tblTim;
             cboTimKiem.DisplayMember = "SoHDN";
@@ -152,6 +152,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             resetGrbCTMH();
             resetBtn();
             resetDGV();
+            action = "";
         }
 
         /// <summary>
@@ -236,7 +237,12 @@ namespace BTLQuanLyBanOTo.NghiepVu
             if (tblSP.Rows.Count > 0)
             {
                 txtTenSP.Text = tblSP.Rows[0]["TenHang"].ToString();
-                txtDGN.Text = tblSP.Rows[0]["DonGiaNhap"].ToString();
+                object donGiaNhapValue = tblSP.Rows[0]["DonGiaNhap"];
+                if (donGiaNhapValue != DBNull.Value)
+                {
+                    decimal donGiaNhap = Convert.ToDecimal(donGiaNhapValue);
+                    txtDGN.Text = donGiaNhap.ToString("N2");
+                }
                 txtSLT.Text = tblSP.Rows[0]["SoLuong"].ToString();
             }
         }
@@ -251,7 +257,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             decimal.TryParse(txtGG.Text, out giamGia);
 
             decimal thanhTien = (soLuongNhap * donGia) - giamGia;
-            txtTT.Text = thanhTien.ToString("N0");
+            txtTT.Text = thanhTien.ToString("N2");
         }
 
         public void TinhTongTien()
@@ -266,7 +272,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             // 3. Tính toán tổng cuối cùng
             decimal tongCong = tongTienHang;
 
-            txtTongTien.Text = tongCong.ToString("N0");
+            txtTongTien.Text = tongCong.ToString("N2");
         }
 
         private void txtDGN_TextChanged(object sender, EventArgs e)
@@ -331,11 +337,6 @@ namespace BTLQuanLyBanOTo.NghiepVu
             if (e.RowIndex >= 0)
             {
                 btnXoaSP.Enabled = true;
-
-                var rows = dgvGioHang.Rows[e.RowIndex];
-                cboMaSP.Text = rows.Cells["MaHang"].Value.ToString();
-                numSLN.Value = (int)rows.Cells["SoLuong"].Value;
-                txtGG.Text = rows.Cells["GiamGia"].Value.ToString();
             }
         }
 
@@ -587,6 +588,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
         }
 
+
+        private string action = "";
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
             //nếu có So HDN thì fill lên form
@@ -669,6 +672,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 // Khóa các control nhập liệu chính
                 cboMaNV.Enabled = false;
                 cboMaNCC.Enabled = false;
+
+                action = "search";
             }
             catch (Exception ex)
             {

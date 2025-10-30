@@ -78,7 +78,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
         public void LoadCBOTimKiem()
         {
             // 4. Nạp ComboBox Tìm kiếm Đơn hàng
-            string sqlTim = "SELECT SoDDH FROM DonDatHang";
+            string sqlTim = "SELECT SoDDH FROM DonDatHang order by SoDDH desc";
             DataTable tblTim = dt.ExecuteQuery(sqlTim);
             cboTimKiem.DataSource = tblTim;
             cboTimKiem.DisplayMember = "SoDDH";
@@ -88,9 +88,13 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         public void resetGrbTTC()
         {
+            txtMa.Enabled = true;
             txtMa.Text = "";
+            dtpNgayDat.Enabled = true;
             dtpNgayDat.Value = DateTime.Now;
+            dtpNgayGiao.Enabled = true;
             dtpNgayGiao.Value = DateTime.Now;
+            txtThue.Enabled = true;
             txtThue.Text = "0";
 
             // Lấy thông tin từ frmMain và gán thẳng
@@ -103,11 +107,13 @@ namespace BTLQuanLyBanOTo.NghiepVu
             txtTenNV.Text = frmMain.TenNV_DangNhap;
             txtTenNV.Enabled = false;
 
+            cboMaKH.Enabled = true;
             cboMaKH.Text = "";
             cboMaKH.SelectedIndex = -1;
             txtTenKH.Text = "";
             txtDiaChi.Text = "";
             txtDienThoai.Text = "";
+            txtDatCoc.Enabled = true;
             txtDatCoc.Text = "0";
 
             cboTimKiem.Text = "";
@@ -153,6 +159,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             resetGrbCTMH();
             resetBtn();
             resetDGV();
+            action = "";
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -240,7 +247,12 @@ namespace BTLQuanLyBanOTo.NghiepVu
             if (tblSP.Rows.Count > 0)
             {
                 txtTenSP.Text = tblSP.Rows[0]["TenHang"].ToString();
-                txtDG.Text = tblSP.Rows[0]["DonGiaBan"].ToString();
+                object donGiaBanValue = tblSP.Rows[0]["DonGiaBan"];
+                if (donGiaBanValue != DBNull.Value)
+                {
+                    decimal donGiaBan = Convert.ToDecimal(donGiaBanValue);
+                    txtDG.Text = donGiaBan.ToString("N2");
+                }
                 txtSLT.Text = tblSP.Rows[0]["SoLuong"].ToString();
             }
         }
@@ -255,7 +267,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             decimal.TryParse(txtGG.Text, out giamGia);
 
             decimal thanhTien = (soLuongBan * donGia) - giamGia;
-            txtTT.Text = thanhTien.ToString("N0");
+            txtTT.Text = thanhTien.ToString("N2");
         }
 
         public void TinhTongTien()
@@ -277,7 +289,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             decimal tongThue = (tongTienHang * thue) / 100;
             decimal tongCong = (tongTienHang + tongThue) - datCoc;
 
-            txtTongTien.Text = tongCong.ToString("N0");
+            txtTongTien.Text = tongCong.ToString("N2");
         }
 
         private void txtDG_TextChanged(object sender, EventArgs e)
@@ -350,14 +362,9 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         private void dgvGioHang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && action != "search")
             {
                 btnXoaSP.Enabled = true;
-
-                var rows = dgvGioHang.Rows[e.RowIndex];
-                cboMaSP.Text = rows.Cells["MaHang"].Value.ToString();
-                numSLB.Value = (int)rows.Cells["SoLuong"].Value;
-                txtGG.Text = rows.Cells["GiamGia"].Value.ToString();
             }
         }
 
@@ -618,6 +625,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
         }
 
+        private string action = "";
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
             //nếu có So DDH thì fill lên form
@@ -701,10 +709,14 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 btnHuy.Enabled = true;      // Cho phép Hủy (Reset form)
 
                 // Khóa các control nhập liệu chính
-                cboMaNV.Enabled = false;
+                txtMa.Enabled = false;
+                dtpNgayDat.Enabled = false;
+                dtpNgayGiao.Enabled = false;
                 cboMaKH.Enabled = false;
                 txtDatCoc.Enabled = false;
                 txtThue.Enabled = false;
+
+                action = "search";
             }
             catch (Exception ex)
             {

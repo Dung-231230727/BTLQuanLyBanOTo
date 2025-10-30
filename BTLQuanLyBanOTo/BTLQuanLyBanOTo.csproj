@@ -248,7 +248,8 @@
   <ItemGroup>
     <Content Include="bin\Debug\BTLQuanLyBanOTo.exe" />
     <Content Include="bin\Debug\BTLQuanLyBanOTo.pdb" />
-    <None Include="Resources\avt.jpg" />
+    <Content Include="bin\Debug\Images\Oto\porsche.jpg" />
+    <Content Include="Resources\avt.jpg" />
     <None Include="bin\Debug\Images\HinhNen\hinhnen1.jpg" />
     <None Include="bin\Debug\Images\HinhNen\hinhnen2.png" />
     <None Include="bin\Debug\Images\HinhNen\hinhnen.jpg" />
@@ -256,7 +257,6 @@
   <ItemGroup>
     <Folder Include="bin\Debug\Images\Icons\" />
     <Folder Include="bin\Debug\Images\NhanVien\" />
-    <Folder Include="bin\Debug\Images\Oto\" />
     <Folder Include="bin\Release\" />
   </ItemGroup>
   <ItemGroup>

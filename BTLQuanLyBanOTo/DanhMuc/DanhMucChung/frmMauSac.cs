@@ -24,6 +24,7 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
         public void reset()
         {
+            txtMa.Enabled = true;
             txtMa.Text = "";
             txtTen.Text = "";
             txtMa.Focus();
@@ -202,6 +203,7 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
         {
             if (e.RowIndex >= 0)
             {
+                txtMa.Enabled = false;
                 btnSua.Enabled = true;
                 btnXoa.Enabled = true;
                 btnBoQua.Enabled = true;
