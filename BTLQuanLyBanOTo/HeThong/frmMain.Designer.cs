@@ -59,10 +59,13 @@ namespace BTLQuanLyBanOTo
             this.mnuQlyTroGiup = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTGTT = new System.Windows.Forms.ToolStripMenuItem();
             this.hướngDẫnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.mnutxtTB = new System.Windows.Forms.ToolStripTextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.lvChucNang = new System.Windows.Forms.ListView();
+            this.mnuHTDangNhap = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuQLy.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -78,7 +81,7 @@ namespace BTLQuanLyBanOTo
             this.mnuQlyNghiepVu,
             this.mnuQlyBCTK,
             this.mnuQlyTroGiup,
-            this.toolStripTextBox1});
+            this.mnutxtTB});
             this.mnuQLy.Location = new System.Drawing.Point(0, 0);
             this.mnuQLy.Name = "mnuQLy";
             this.mnuQLy.Size = new System.Drawing.Size(1184, 30);
@@ -88,6 +91,8 @@ namespace BTLQuanLyBanOTo
             // mnuQlyHeThong
             // 
             this.mnuQlyHeThong.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuHTDangNhap,
+            this.toolStripSeparator1,
             this.mnuHTDangXuat,
             this.mnuHTThoat});
             this.mnuQlyHeThong.Name = "mnuQlyHeThong";
@@ -97,14 +102,14 @@ namespace BTLQuanLyBanOTo
             // mnuHTDangXuat
             // 
             this.mnuHTDangXuat.Name = "mnuHTDangXuat";
-            this.mnuHTDangXuat.Size = new System.Drawing.Size(135, 22);
+            this.mnuHTDangXuat.Size = new System.Drawing.Size(180, 22);
             this.mnuHTDangXuat.Text = "Đăng xuất";
             this.mnuHTDangXuat.Click += new System.EventHandler(this.mnuHTDangXuat_Click);
             // 
             // mnuHTThoat
             // 
             this.mnuHTThoat.Name = "mnuHTThoat";
-            this.mnuHTThoat.Size = new System.Drawing.Size(135, 22);
+            this.mnuHTThoat.Size = new System.Drawing.Size(180, 22);
             this.mnuHTThoat.Text = "Thoát";
             this.mnuHTThoat.Click += new System.EventHandler(this.mnuHTThoat_Click);
             // 
@@ -115,6 +120,7 @@ namespace BTLQuanLyBanOTo
             this.mnuDMNV,
             this.mnuDMKH,
             this.mnuDMNCC,
+            this.toolStripSeparator2,
             this.mnuDMDMC});
             this.mnuQLyDanhMuc.Name = "mnuQLyDanhMuc";
             this.mnuQLyDanhMuc.Size = new System.Drawing.Size(78, 26);
@@ -231,14 +237,14 @@ namespace BTLQuanLyBanOTo
             // mnuNVBH
             // 
             this.mnuNVBH.Name = "mnuNVBH";
-            this.mnuNVBH.Size = new System.Drawing.Size(141, 22);
+            this.mnuNVBH.Size = new System.Drawing.Size(180, 22);
             this.mnuNVBH.Text = "Bán hàng";
             this.mnuNVBH.Click += new System.EventHandler(this.mnuNVBH_Click);
             // 
             // mnuNVNH
             // 
             this.mnuNVNH.Name = "mnuNVNH";
-            this.mnuNVNH.Size = new System.Drawing.Size(141, 22);
+            this.mnuNVNH.Size = new System.Drawing.Size(180, 22);
             this.mnuNVNH.Text = "Nhập hàng";
             this.mnuNVNH.Click += new System.EventHandler(this.mnuNVNH_Click);
             // 
@@ -277,31 +283,31 @@ namespace BTLQuanLyBanOTo
             // mnuTGTT
             // 
             this.mnuTGTT.Name = "mnuTGTT";
-            this.mnuTGTT.Size = new System.Drawing.Size(142, 22);
+            this.mnuTGTT.Size = new System.Drawing.Size(180, 22);
             this.mnuTGTT.Text = "Thông tin";
             this.mnuTGTT.Click += new System.EventHandler(this.mnuTGTT_Click);
             // 
             // hướngDẫnToolStripMenuItem
             // 
             this.hướngDẫnToolStripMenuItem.Name = "hướngDẫnToolStripMenuItem";
-            this.hướngDẫnToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.hướngDẫnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.hướngDẫnToolStripMenuItem.Text = "Hướng dẫn";
             // 
-            // toolStripTextBox1
+            // mnutxtTB
             // 
-            this.toolStripTextBox1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripTextBox1.AutoSize = false;
-            this.toolStripTextBox1.BackColor = System.Drawing.Color.White;
-            this.toolStripTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.toolStripTextBox1.Enabled = false;
-            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.toolStripTextBox1.ForeColor = System.Drawing.Color.Black;
-            this.toolStripTextBox1.HideSelection = false;
-            this.toolStripTextBox1.Margin = new System.Windows.Forms.Padding(1, 0, 18, 0);
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.ReadOnly = true;
-            this.toolStripTextBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripTextBox1.Size = new System.Drawing.Size(400, 28);
+            this.mnutxtTB.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.mnutxtTB.AutoSize = false;
+            this.mnutxtTB.BackColor = System.Drawing.Color.White;
+            this.mnutxtTB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.mnutxtTB.Enabled = false;
+            this.mnutxtTB.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.mnutxtTB.ForeColor = System.Drawing.Color.Black;
+            this.mnutxtTB.HideSelection = false;
+            this.mnutxtTB.Margin = new System.Windows.Forms.Padding(1, 0, 18, 0);
+            this.mnutxtTB.Name = "mnutxtTB";
+            this.mnutxtTB.ReadOnly = true;
+            this.mnutxtTB.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.mnutxtTB.Size = new System.Drawing.Size(400, 28);
             // 
             // imageList1
             // 
@@ -338,6 +344,23 @@ namespace BTLQuanLyBanOTo
             this.lvChucNang.TabIndex = 1;
             this.lvChucNang.UseCompatibleStateImageBehavior = false;
             this.lvChucNang.DoubleClick += new System.EventHandler(this.lvChucNang_DoubleClick);
+            // 
+            // mnuHTDangNhap
+            // 
+            this.mnuHTDangNhap.Name = "mnuHTDangNhap";
+            this.mnuHTDangNhap.Size = new System.Drawing.Size(196, 22);
+            this.mnuHTDangNhap.Text = "Đăng nhập/ Đăng ký";
+            this.mnuHTDangNhap.Click += new System.EventHandler(this.mnuHTDangNhap_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
             // 
             // frmMain
             // 
@@ -396,7 +419,10 @@ namespace BTLQuanLyBanOTo
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListView lvChucNang;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripTextBox mnutxtTB;
+        private System.Windows.Forms.ToolStripMenuItem mnuHTDangNhap;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

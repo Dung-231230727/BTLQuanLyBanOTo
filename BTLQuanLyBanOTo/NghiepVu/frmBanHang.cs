@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -134,13 +135,18 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         public void resetBtn()
         {
+            //ẩn
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = false;
+            btnBoQua.Enabled = false;
+            btnIn.Enabled = false;
             btnTimKiem.Enabled = false;
             btnHuy.Enabled = false;
             btnThemSP.Enabled = false;
             btnXoaSP.Enabled = false;
-            btnLuu.Enabled = false;
-            btnIn.Enabled = false;
 
+            //hiện
             btnThem.Enabled = true;
         }
 
@@ -162,13 +168,47 @@ namespace BTLQuanLyBanOTo.NghiepVu
             action = "";
         }
 
+        private string action = "";
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
             txtMa.Text = TaoMaDonHang();
+
+            //ẩn
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            //hiện
             btnThemSP.Enabled = true;
             btnLuu.Enabled = true;
-            btnIn.Enabled = true;
+            btnBoQua.Enabled = true;
+            action = "add";
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            action = "edit";
+            //ẩn
+            txtMa.Enabled = false;
+            btnXoa.Enabled = false;
+            btnThem.Enabled = false;
+            btnIn.Enabled = false;
+            //hiện
+            btnThemSP.Enabled = true;
+            btnLuu.Enabled = true;
+            btnBoQua.Enabled = true;
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            action = "delete";
+            //ẩn
+            txtMa.Enabled = false;
+            btnSua.Enabled = false;
+            btnThem.Enabled = false;
+            btnIn.Enabled = false;
+            //hiện
+            btnLuu.Enabled = true;
+            btnBoQua.Enabled = true;
         }
 
         /// <summary>
@@ -362,7 +402,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         private void dgvGioHang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && action != "search")
+            if (e.RowIndex >= 0 && (action != "search" && action != "delete"))
             {
                 btnXoaSP.Enabled = true;
             }
@@ -404,94 +444,169 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            //ktra trống
-            if (cboMaKH.SelectedIndex == -1 || cboMaNV.SelectedIndex == -1)
+            // Lấy chuỗi kết nối từ App.config (Cách an toàn)
+            string connStr = "Server=Dung;Database=QuanLyCuaHangOto;Integrated Security=True";
+
+            // Khai báo và TryParse các biến tiền tệ/số (ĐÃ SỬA LỖI PARSING)
+            decimal tongTien = 0, datCoc = 0;
+            float thue = 0;
+
+            // 1. Lấy giá trị an toàn từ các control
+            string tongTienStr = txtTongTien.Text.Trim();
+            decimal.TryParse(tongTienStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out tongTien);
+            decimal.TryParse(txtDatCoc.Text, out datCoc);
+            float.TryParse(txtThue.Text, out thue);
+
+            // === 2. KIỂM TRA ĐIỀU KIỆN ===
+            if (cboMaKH.SelectedIndex == -1)
             {
-                MessageBox.Show("Vui lòng chọn khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn Khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            //ktra du lieu trong dgv
-            if (tblChiTietDonHang.Rows.Count == 0)
+            // Chỉ kiểm tra giỏ hàng khi KHÔNG phải là xóa
+            if (tblChiTietDonHang.Rows.Count == 0 && action != "delete")
             {
                 MessageBox.Show("Hóa đơn phải có ít nhất một sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            //lưu vào db (dùng transaction)
-            using (SqlConnection conn = new SqlConnection("Data Source=DUNG;Initial Catalog=QuanLyCuaHangOto;Integrated Security=True"))
+            // === 3. BẮT ĐẦU TRANSACTION ===
+            using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                // Bắt đầu giao dịch
                 SqlTransaction transaction = conn.BeginTransaction();
 
                 try
                 {
-                    // --- BƯỚC 3A: LƯU VÀO BẢNG `DonDatHang` (Hóa đơn chính) ---
+                    // --- CỘT TRẠNG THÁI (TrangThai) ĐƯỢC THÊM VÀO CÂU SQL ---
 
-                    // Tính toán tổng tiền cuối cùng (từ Label)
-                    decimal tongTien = 0;
-                    decimal.TryParse(txtTongTien.Text.Replace(",", ""), out tongTien);
-
-                    string sqlDonHang = @"INSERT INTO DonDatHang(SoDDH, MaNV, MaKhach, NgayDat, NgayGiao, DatCoc, Thue, TongTien)
-                                          VALUES(@soDDH, @maNV, @maKhach, @ngayDat, @ngayGiao, @datCoc, @thue, @tongTien)";
-
-                    SqlCommand cmdDonHang = new SqlCommand(sqlDonHang, conn, transaction);
-                    cmdDonHang.Parameters.AddWithValue("@soDDH", txtMa.Text);
-                    cmdDonHang.Parameters.AddWithValue("@maNV", frmMain.MaNV_DangNhap);
-                    cmdDonHang.Parameters.AddWithValue("@maKhach", cboMaKH.SelectedValue);
-                    cmdDonHang.Parameters.AddWithValue("@ngayDat", dtpNgayDat.Value);
-                    cmdDonHang.Parameters.AddWithValue("@ngayGiao", dtpNgayGiao.Value);
-                    cmdDonHang.Parameters.AddWithValue("@datCoc", decimal.Parse(txtDatCoc.Text));
-                    cmdDonHang.Parameters.AddWithValue("@thue", float.Parse(txtThue.Text));
-                    cmdDonHang.Parameters.AddWithValue("@tongTien", tongTien);
-
-                    cmdDonHang.ExecuteNonQuery();
-
-                    // --- BƯỚC 3B & 3C: LẶP QUA GIỎ HÀNG (DataGridView) ---
-                    foreach (DataRow row in tblChiTietDonHang.Rows)
+                    if (action == "add" || action == "edit")
                     {
-                        // --- 3B: LƯU VÀO BẢNG `ChiTietDonDatHang` ---
-                        string sqlChiTiet = @"INSERT INTO ChiTietDonDatHang(SoDDH, MaHang, SoLuong, GiamGia, ThanhTien)
-                                              VALUES(@soDDH, @maHang, @soLuong, @giamGia, @thanhTien)";
+                        // B1: Nếu là EDIT, PHẢI HOÀN TRẢ KHO CŨ và XÓA CHI TIẾT CŨ
+                        if (action == "edit")
+                        {
+                            HoanTraKhoVaXoaChiTietCu(conn, transaction);
+                        }
 
-                        SqlCommand cmdChiTiet = new SqlCommand(sqlChiTiet, conn, transaction);
-                        cmdChiTiet.Parameters.AddWithValue("@soDDH", txtMa.Text);
-                        cmdChiTiet.Parameters.AddWithValue("@maHang", row["MaHang"]);
-                        cmdChiTiet.Parameters.AddWithValue("@soLuong", row["SoLuong"]);
-                        cmdChiTiet.Parameters.AddWithValue("@giamGia", row["GiamGia"]);
-                        cmdChiTiet.Parameters.AddWithValue("@thanhTien", row["ThanhTien"]);
+                        // B2: INSERT/UPDATE BẢNG DonDatHang (CÓ CỘT TRANGTHAI)
+                        string sqlDonHang = (action == "add") ?
+                            @"INSERT INTO DonDatHang(SoDDH, MaNV, MaKhach, NgayDat, NgayGiao, DatCoc, Thue, TongTien, TrangThai)
+                            VALUES(@soDDH, @maNV, @maKhach, @ngayDat, @ngayGiao, @datCoc, @thue, @tongTien, @trangThai)"
+                            :
+                            @"UPDATE DonDatHang SET MaKhach = @maKhach, NgayDat = @ngayDat, NgayGiao = @ngayGiao, DatCoc = @datCoc, 
+                            Thue = @thue, TongTien = @tongTien, TrangThai = @trangThai WHERE SoDDH = @soDDH";
 
-                        cmdChiTiet.ExecuteNonQuery();
+                        SqlCommand cmdDonHang = new SqlCommand(sqlDonHang, conn, transaction);
+                        cmdDonHang.Parameters.AddWithValue("@soDDH", txtMa.Text);
+                        cmdDonHang.Parameters.AddWithValue("@maNV", frmMain.MaNV_DangNhap);
+                        cmdDonHang.Parameters.AddWithValue("@maKhach", cboMaKH.SelectedValue);
+                        cmdDonHang.Parameters.AddWithValue("@ngayDat", dtpNgayDat.Value);
+                        cmdDonHang.Parameters.AddWithValue("@ngayGiao", dtpNgayGiao.Value);
+                        cmdDonHang.Parameters.AddWithValue("@datCoc", datCoc);
+                        cmdDonHang.Parameters.AddWithValue("@thue", thue);
+                        cmdDonHang.Parameters.AddWithValue("@tongTien", tongTien);
+                        cmdDonHang.Parameters.AddWithValue("@trangThai", 0);
+                        cmdDonHang.ExecuteNonQuery();
 
-                        // --- 3C: CẬP NHẬT TỒN KHO (Bảng `DanhMucHang`) ---
-                        string sqlCapNhatKho = @"UPDATE DanhMucHang 
-                                                SET SoLuong = SoLuong - @soLuongBan 
-                                                WHERE MaHang = @maHang";
+                        // B3: LƯU CHI TIẾT MỚI VÀ CẬP NHẬT KHO MỚI (TRỪ ĐI)
+                        LuuChiTietVaCapNhatKho(conn, transaction);
 
-                        SqlCommand cmdCapNhatKho = new SqlCommand(sqlCapNhatKho, conn, transaction);
-                        cmdCapNhatKho.Parameters.AddWithValue("@soLuongBan", row["SoLuong"]);
-                        cmdCapNhatKho.Parameters.AddWithValue("@maHang", row["MaHang"]);
-
-                        cmdCapNhatKho.ExecuteNonQuery();
+                        MessageBox.Show((action == "add" ? "Thêm" : "Sửa") + " hóa đơn thành công!", "Thông báo");
                     }
 
-                    // --- 4. KẾT THÚC GIAO DỊCH (THÀNH CÔNG) ---
+                    else if (action == "delete")
+                    {
+                        // B1: XÓA CHI TIẾT VÀ HOÀN TRẢ KHO CŨ
+                        HoanTraKhoVaXoaChiTietCu(conn, transaction);
+
+                        // B2: DELETE BẢNG DonDatHang
+                        string sqlDeleteDonHang = "DELETE FROM DonDatHang WHERE SoDDH = @soDDH";
+                        SqlCommand cmdDeleteDonHang = new SqlCommand(sqlDeleteDonHang, conn, transaction);
+                        cmdDeleteDonHang.Parameters.AddWithValue("@soDDH", txtMa.Text);
+                        cmdDeleteDonHang.ExecuteNonQuery();
+
+                        MessageBox.Show("Xóa hóa đơn thành công!", "Thông báo");
+                    }
+
+                    // KẾT THÚC GIAO DỊCH (THÀNH CÔNG)
                     transaction.Commit();
-                    MessageBox.Show("Lưu hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Tải lại CBO Sản phẩm và tìm kiếm
+                    LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0", "TenHang", "MaHang");
+                    LoadCBOTimKiem();
+
+                    // Khởi động lại form hoặc reset
+                    reset();
+
+                    // Nút In chỉ bật sau khi Lưu (Add/Edit)
+                    if (action == "add" || action == "edit")
+                    {
+                        btnIn.Enabled = true;
+                        btnLuu.Enabled = false; // Tắt nút Lưu
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // --- 5. HỦY GIAO DỊCH (THẤT BẠI) ---
+                    // HỦY GIAO DỊCH (THẤT BẠI)
                     transaction.Rollback();
                     MessageBox.Show("Lưu hóa đơn thất bại! Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-            // Tải lại CBO Sản phẩm và tìm kiếm
-            LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0", "TenHang", "MaHang");
-            LoadCBOTimKiem();
             resetGrbCTMH();
+        }
+
+        // === HÀM HELPER 1: LƯU CHI TIẾT VÀ CẬP NHẬT KHO (ADD/EDIT) ===
+        private void LuuChiTietVaCapNhatKho(SqlConnection conn, SqlTransaction transaction)
+        {
+            foreach (DataRow row in tblChiTietDonHang.Rows)
+            {
+                // INSERT VÀO BẢNG ChiTietDonDatHang
+                string sqlChiTiet = @"INSERT INTO ChiTietDonDatHang(SoDDH, MaHang, SoLuong, GiamGia, ThanhTien)
+                             VALUES(@soDDH, @maHang, @soLuong, @giamGia, @thanhTien)";
+
+                SqlCommand cmdChiTiet = new SqlCommand(sqlChiTiet, conn, transaction);
+                cmdChiTiet.Parameters.AddWithValue("@soDDH", txtMa.Text);
+                cmdChiTiet.Parameters.AddWithValue("@maHang", row["MaHang"]);
+                cmdChiTiet.Parameters.AddWithValue("@soLuong", row["SoLuong"]);
+                cmdChiTiet.Parameters.AddWithValue("@giamGia", row["GiamGia"]);
+                cmdChiTiet.Parameters.AddWithValue("@thanhTien", row["ThanhTien"]);
+                cmdChiTiet.ExecuteNonQuery();
+
+                // CẬP NHẬT TỒN KHO (TRỪ ĐI)
+                string sqlCapNhatKho = @"UPDATE DanhMucHang SET SoLuong = SoLuong - @soLuongBan WHERE MaHang = @maHang";
+
+                SqlCommand cmdCapNhatKho = new SqlCommand(sqlCapNhatKho, conn, transaction);
+                cmdCapNhatKho.Parameters.AddWithValue("@soLuongBan", row["SoLuong"]);
+                cmdCapNhatKho.Parameters.AddWithValue("@maHang", row["MaHang"]);
+                cmdCapNhatKho.ExecuteNonQuery();
+            }
+        }
+
+        // === HÀM HELPER 2: HOÀN TRẢ KHO VÀ XÓA CHI TIẾT CŨ (EDIT/DELETE) ===
+        private void HoanTraKhoVaXoaChiTietCu(SqlConnection conn, SqlTransaction transaction)
+        {
+            // B1: Lấy Chi tiết Đơn hàng CŨ từ DB
+            string sqlGetChiTiet = "SELECT MaHang, SoLuong FROM ChiTietDonDatHang WHERE SoDDH = @soDDH";
+            DataTable tblChiTietCu = dt.ExecuteQuery(sqlGetChiTiet, new SqlParameter[] { new SqlParameter("@soDDH", txtMa.Text) });
+
+            // Hoàn trả tồn kho cũ
+            foreach (DataRow row in tblChiTietCu.Rows)
+            {
+                string sqlHoanTra = @"UPDATE DanhMucHang 
+                             SET SoLuong = SoLuong + @soLuongHoanTra 
+                             WHERE MaHang = @maHang";
+                SqlCommand cmdHoanTra = new SqlCommand(sqlHoanTra, conn, transaction);
+                cmdHoanTra.Parameters.AddWithValue("@soLuongHoanTra", row["SoLuong"]);
+                cmdHoanTra.Parameters.AddWithValue("@maHang", row["MaHang"]);
+                cmdHoanTra.ExecuteNonQuery();
+            }
+
+            // Xóa chi tiết cũ khỏi bảng
+            string sqlDeleteChiTiet = "DELETE FROM ChiTietDonDatHang WHERE SoDDH = @soDDH";
+            SqlCommand cmdDeleteChiTiet = new SqlCommand(sqlDeleteChiTiet, conn, transaction);
+            cmdDeleteChiTiet.Parameters.AddWithValue("@soDDH", txtMa.Text);
+            cmdDeleteChiTiet.ExecuteNonQuery();
         }
 
         private void btnIn_Click(object sender, EventArgs e)
@@ -594,6 +709,9 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 exApp.Visible = true; // Mở file Excel lên cho người dùng xem
                                       // (Hoặc bạn có thể lưu file tự động: exBook.SaveAs("D:\\HoaDon_" + txtMa.Text + ".xlsx");)
 
+                string sqlUpdateStatus = "UPDATE DonDatHang SET TrangThai = 1 WHERE SoDDH = @ma";
+                dt.ExecuteNonQuery(sqlUpdateStatus, new SqlParameter[] { new SqlParameter("@ma", txtMa.Text) });
+
                 MessageBox.Show("Đã xuất hóa đơn ra Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Reset form sau khi in
@@ -625,7 +743,6 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
         }
 
-        private string action = "";
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
             //nếu có So DDH thì fill lên form
@@ -649,6 +766,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
                 DataTable tblDonHang = dt.ExecuteQuery(sqlDonHang, new SqlParameter[] { new SqlParameter("@ma", soDDHCanTim) });
 
+                int trangThai = 0;
+
                 if (tblDonHang.Rows.Count > 0)
                 {
                     DataRow rowDH = tblDonHang.Rows[0];
@@ -667,6 +786,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
                     // Hiển thị tổng tiền từ CSDL
                     txtTongTien.Text = string.Format("{0:N0}", (decimal)rowDH["TongTien"]);
+                    trangThai = (int)rowDH["TrangThai"];
                 }
                 else
                 {
@@ -697,24 +817,33 @@ namespace BTLQuanLyBanOTo.NghiepVu
                     );
                 }
 
-                // === 5. Cập nhật trạng thái nút bấm ===
-                btnThem.Enabled = true;     // Cho phép tạo hóa đơn mới
-                btnTimKiem.Enabled = true;  // Vẫn cho tìm hóa đơn khác
-                cboTimKiem.Enabled = true;
+                //kiemtra trang thai
+                if (trangThai == 0)
+                {
+                    btnSua.Enabled = true;
+                    btnXoa.Enabled = true;
+                    btnBoQua.Enabled = true;
+                    btnIn.Enabled = true;
+                    btnTimKiem.Enabled = true;
+                    btnHuy.Enabled = true;
+                    cboTimKiem.Enabled = true;
+                }
+                else if (trangThai == 1)
+                {
+                    btnSua.Enabled = false;
+                    btnXoa.Enabled = false;
+                    btnBoQua.Enabled = true;
+                    btnIn.Enabled = true;
+                    btnTimKiem.Enabled = true;
+                    btnHuy.Enabled = true;
+                    cboTimKiem.Enabled = true;
+                }
 
-                btnLuu.Enabled = false;     // Không cho Lưu lại hóa đơn cũ
-                btnThemSP.Enabled = false;  // Không cho Thêm SP vào HĐ cũ
-                btnXoaSP.Enabled = false;   // Không cho Xóa SP khỏi HĐ cũ
-                btnIn.Enabled = true;       // Cho phép In hóa đơn cũ
-                btnHuy.Enabled = true;      // Cho phép Hủy (Reset form)
-
-                // Khóa các control nhập liệu chính
-                txtMa.Enabled = false;
-                dtpNgayDat.Enabled = false;
-                dtpNgayGiao.Enabled = false;
-                cboMaKH.Enabled = false;
-                txtDatCoc.Enabled = false;
-                txtThue.Enabled = false;
+                //ẩn
+                btnThem.Enabled = false;
+                btnLuu.Enabled = false;
+                btnThemSP.Enabled = false;
+                btnXoaSP.Enabled = false;
 
                 action = "search";
             }
@@ -741,6 +870,32 @@ namespace BTLQuanLyBanOTo.NghiepVu
             if (r == DialogResult.Yes)
             {
                 this.Close();
+            }
+        }
+
+        private void btnBoQua_Click(object sender, EventArgs e)
+        {
+            if (action == "edit" || action == "delete")
+            {
+                //bật
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+                btnBoQua.Enabled = true;
+                btnIn.Enabled = true;
+                btnTimKiem.Enabled = true;
+                btnHuy.Enabled = true;
+                cboTimKiem.Enabled = true;
+
+                //ẩn
+                btnThem.Enabled = false;
+                btnLuu.Enabled = false;
+                btnThemSP.Enabled = false;
+
+                action = "search";
+            }
+            else if (action == "search" || action == "add")
+            {
+                reset();
             }
         }
     }

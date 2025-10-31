@@ -2,6 +2,7 @@
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace BTLQuanLyBanOTo.DanhMuc
 {
@@ -90,6 +91,15 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
             if (action == "add")
             {
+                string sdt = txtDienThoai.Text.Trim();
+                // Kiểm tra sdt chỉ có số và đủ 10 chữ số
+                if (sdt.Length != 10 || !sdt.All(char.IsDigit))
+                {
+                    MessageBox.Show("Số điện thoại phải là 10 chữ số. Vui lòng kiểm tra lại!", "Lỗi Đăng ký", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtDienThoai.Focus();
+                    return;
+                }
+
                 //lọc trùng
                 string sqlKT = "select count(*) from KhachHang where MaKhach = @ma";
                 int rKT = (int)dt.ExecuteScalar(sqlKT, new SqlParameter[]

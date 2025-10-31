@@ -6,14 +6,16 @@ namespace BTLQuanLyBanOTo.HeThong
 {
     public partial class frmDangNhap : Form
     {
-        DataProcesser dt;
-        public bool LoginSuccessful { get; private set; }
-        public string MaNhanVien { get; private set; }
-        public string TenNhanVien { get; private set; }
         public frmDangNhap()
         {
             InitializeComponent();
+            txtTDN.Text = TDN_DKy;
+            txtMK.Text = MK_DKy;
         }
+
+        DataProcesser dt;
+        public static string TDN_DKy = "";
+        public static string MK_DKy = "";
 
         private void frmDangNhap_Load(object sender, System.EventArgs e)
         {
@@ -40,7 +42,7 @@ namespace BTLQuanLyBanOTo.HeThong
                    MessageBoxButtons.OK,
                    MessageBoxIcon.Warning
                 );
-                LoginSuccessful = false;
+                frmMain.LoginSuccessful = false;
                 return;
             }
 
@@ -64,9 +66,18 @@ namespace BTLQuanLyBanOTo.HeThong
                     MessageBoxIcon.Information
                 );
 
-                LoginSuccessful = true;
-                MaNhanVien = txtTDN.Text;
-                TenNhanVien = tenNV_Result.ToString();
+                frmMain.LoginSuccessful = true;
+                frmMain.MaNV_DangNhap = txtTDN.Text;
+                frmMain.TenNV_DangNhap = tenNV_Result.ToString();
+
+                frmMain parentForm = this.MdiParent as frmMain;
+
+                if (parentForm != null)
+                {
+                    parentForm.KiemSoatTrangThai(true);
+                    parentForm.GanTen();
+                }
+
                 this.Close();
             }
             else
@@ -77,22 +88,25 @@ namespace BTLQuanLyBanOTo.HeThong
                    MessageBoxButtons.OK,
                    MessageBoxIcon.Warning
                 );
-                LoginSuccessful = false;
+                frmMain.LoginSuccessful = false;
                 return;
             }
         }
 
-        private void btnThoat_Click(object sender, System.EventArgs e)
+        private void btnHuy_Click(object sender, System.EventArgs e)
         {
-            DialogResult r = MessageBox.Show(
-                "Bạn có chắc muốn thoát không?",
-                "Thông báo",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-                );
-            if (r == DialogResult.Yes)
+            txtTDN.Text = "";
+            txtMK.Text = "";
+            txtTDN.Focus();
+        }
+
+        private void lblDangKy_Click(object sender, System.EventArgs e)
+        {
+            frmMain parentForm = this.MdiParent as frmMain;
+
+            if (parentForm != null)
             {
-                LoginSuccessful = false;
+                parentForm.OpenDKy();
                 this.Close();
             }
         }

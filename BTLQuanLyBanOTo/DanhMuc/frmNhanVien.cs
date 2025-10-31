@@ -1,6 +1,7 @@
 ﻿using BTLQuanLyBanOTo.Classes;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BTLQuanLyBanOTo.DanhMuc
@@ -112,6 +113,25 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
             if (action == "add")
             {
+                //ktra tuổi
+                DateTime ngaySinh = dtpNgaySinh.Value;
+                DateTime tuoiToiThieu = DateTime.Now.Date.AddYears(-18);
+
+                if (ngaySinh.Date > tuoiToiThieu)
+                {
+                    MessageBox.Show("Bạn chưa đủ 18 tuổi!", "Lỗi Đăng ký", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Kiểm tra sdt chỉ có số và đủ 10 chữ số
+                string sdt = txtDienThoai.Text.Trim();
+                if (sdt.Length != 10 || !sdt.All(char.IsDigit))
+                {
+                    MessageBox.Show("Số điện thoại phải là 10 chữ số. Vui lòng kiểm tra lại!", "Lỗi Đăng ký", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtDienThoai.Focus();
+                    return;
+                }
+
                 //lọc trùng
                 string sqlKT = "select count(*) from NhanVien where MaNV = @ma";
                 int count = (int)dt.ExecuteScalar(sqlKT, new SqlParameter[]

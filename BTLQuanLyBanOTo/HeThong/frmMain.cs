@@ -1,6 +1,7 @@
 ﻿using BTLQuanLyBanOTo.BaoCaoThongKe;
 using BTLQuanLyBanOTo.DanhMuc;
 using BTLQuanLyBanOTo.DanhMuc.DanhMucChung;
+using BTLQuanLyBanOTo.HeThong;
 using BTLQuanLyBanOTo.NghiepVu;
 using BTLQuanLyBanOTo.TroGiup;
 using System;
@@ -10,20 +11,18 @@ namespace BTLQuanLyBanOTo
 {
     public partial class frmMain : Form
     {
-        public frmMain(string maNV, string tenNV)
+        public frmMain()
         {
             InitializeComponent();
-
-            MaNV_DangNhap = maNV;
-            TenNV_DangNhap = tenNV;
 
             IsLoggingOut = false;
             this.FormClosing += frmMain_FormClosing;
         }
         //biến
         public bool IsLoggingOut { get; private set; }
-        public static string MaNV_DangNhap;
-        public static string TenNV_DangNhap;
+        public static string MaNV_DangNhap = "";
+        public static string TenNV_DangNhap = "";
+        public static bool LoginSuccessful;
 
         private void mnuHTThoat_Click(object sender, EventArgs e)
         {
@@ -42,7 +41,7 @@ namespace BTLQuanLyBanOTo
             if (r == DialogResult.Yes)
             {
                 IsLoggingOut = true;
-                this.Close();
+                KiemSoatTrangThai(false);
             }
         }
 
@@ -118,14 +117,21 @@ namespace BTLQuanLyBanOTo
 
         private void OpenChildForm(Form childForm)
         {
-            foreach (Form form in this.MdiChildren)
+            Type formType = childForm.GetType();
+
+            foreach (Form openForm in this.MdiChildren)
             {
-                if (form.GetType() == childForm.GetType())
+                if (openForm.GetType() == formType)
                 {
-                    form.Activate();
+                    openForm.Activate();
+                    if (openForm.WindowState == FormWindowState.Minimized)
+                    {
+                        openForm.WindowState = FormWindowState.Normal;
+                    }
                     return;
                 }
             }
+
             childForm.MdiParent = this;
             childForm.Show();
         }
@@ -133,7 +139,27 @@ namespace BTLQuanLyBanOTo
         private void frmMain_Load(object sender, EventArgs e)
         {
             PopulateListView();
-            toolStripTextBox1.Text = "Xin chào: " + TenNV_DangNhap;
+            KiemSoatTrangThai(false);
+
+            frmDangNhap f = new frmDangNhap();
+            OpenChildForm(f);
+        }
+
+        public void KiemSoatTrangThai(bool isEnable)
+        {
+            mnuHTDangNhap.Enabled = !isEnable;
+            mnuHTDangXuat.Enabled = isEnable;
+            mnuQlyNghiepVu.Enabled = isEnable;
+            mnuQLyDanhMuc.Enabled = isEnable;
+            mnuQlyBCTK.Enabled = isEnable;
+            mnuQlyTroGiup.Enabled = isEnable;
+
+            lvChucNang.Enabled = isEnable;
+        }
+
+        public void GanTen()
+        {
+            mnutxtTB.Text = "Xin chào: " + TenNV_DangNhap;
         }
 
         private void mnuDMSP_Click(object sender, EventArgs e)
@@ -235,6 +261,18 @@ namespace BTLQuanLyBanOTo
         private void mnuTGTT_Click(object sender, EventArgs e)
         {
             frmThongTin f = new frmThongTin();
+            OpenChildForm(f);
+        }
+
+        public void mnuHTDangNhap_Click(object sender, EventArgs e)
+        {
+            frmDangNhap f = new frmDangNhap();
+            OpenChildForm(f);
+        }
+
+        public void OpenDKy()
+        {
+            frmDangKy f = new frmDangKy();
             OpenChildForm(f);
         }
     }
