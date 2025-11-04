@@ -341,6 +341,7 @@
             this.cboMaKH.Name = "cboMaKH";
             this.cboMaKH.Size = new System.Drawing.Size(227, 24);
             this.cboMaKH.TabIndex = 57;
+            this.cboMaKH.SelectedIndexChanged += new System.EventHandler(this.cboMaKH_SelectedIndexChanged);
             // 
             // cboMaNV
             // 

@@ -440,11 +440,25 @@ namespace BTLQuanLyBanOTo.NghiepVu
             decimal.TryParse(tongTienStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out tongTien);
             decimal.TryParse(txtDatCoc.Text, out datCoc);
             float.TryParse(txtThue.Text, out thue);
+            DateTime ngayDat = dtpNgayDat.Value;
+            DateTime ngayGiao = dtpNgayGiao.Value;
 
             // ktra
             if (cboMaKH.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn Khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //
+            if (ngayDat > ngayGiao)
+            {
+                MessageBox.Show("Thời gian đặt phải bằng hoặc ở sau thời gian giao!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (ngayDat < DateTime.Now || ngayGiao < DateTime.Now)
+            {
+                MessageBox.Show("Thời gian đặt và thời gian giao phải ở sau thời gian hiện tại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -483,8 +497,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
                         cmdDonHang.Parameters.AddWithValue("@soDDH", txtMa.Text);
                         cmdDonHang.Parameters.AddWithValue("@maNV", frmMain.MaNV_DangNhap);
                         cmdDonHang.Parameters.AddWithValue("@maKhach", cboMaKH.SelectedValue);
-                        cmdDonHang.Parameters.AddWithValue("@ngayDat", dtpNgayDat.Value);
-                        cmdDonHang.Parameters.AddWithValue("@ngayGiao", dtpNgayGiao.Value);
+                        cmdDonHang.Parameters.AddWithValue("@ngayDat", ngayDat);
+                        cmdDonHang.Parameters.AddWithValue("@ngayGiao", ngayGiao);
                         cmdDonHang.Parameters.AddWithValue("@datCoc", datCoc);
                         cmdDonHang.Parameters.AddWithValue("@thue", thue);
                         cmdDonHang.Parameters.AddWithValue("@tongTien", tongTien);

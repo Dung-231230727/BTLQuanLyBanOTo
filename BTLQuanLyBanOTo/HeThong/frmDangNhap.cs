@@ -1,4 +1,5 @@
 ﻿using BTLQuanLyBanOTo.Classes;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -47,37 +48,36 @@ namespace BTLQuanLyBanOTo.HeThong
             }
 
             //loc
-            string sql = "select TenNV from NhanVien where MaNV=@ma and MatKhau=@mk";
+            string sql = @"SELECT nv.MaNV, nv.TenNV, nv.MaCV, cv.TenCV 
+                            FROM NhanVien nv
+                            Join CongViec cv on cv.MaCV = nv.MaCV
+                            WHERE nv.MaNV=@ma AND nv.MatKhau=@mk";
             SqlParameter[] prms = new SqlParameter[]
             {
                 new SqlParameter("@ma", txtTDN.Text),
                 new SqlParameter("@mk", txtMK.Text)
             };
 
-            // Dùng ExecuteScalar để lấy TenNV
-            object tenNV_Result = dt.ExecuteScalar(sql, prms);
+            var tbl = dt.ExecuteQuery(sql, prms);
 
-            if (tenNV_Result != null)
+            if (tbl.Rows.Count > 0)
             {
-                MessageBox.Show(
-                    "Đăng nhập thành công.",
-                    "Thông báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                DataRow row = tbl.Rows[0];
+                frmMain.MaNV_DangNhap = row["MaNV"].ToString();
+                frmMain.TenNV_DangNhap = row["TenNV"].ToString();
+                frmMain.MaCV_DangNhap = row["MaCV"].ToString();
+                frmMain.TenCV_DangNhap = row["TenCV"].ToString();
 
                 frmMain.LoginSuccessful = true;
-                frmMain.MaNV_DangNhap = txtTDN.Text;
-                frmMain.TenNV_DangNhap = tenNV_Result.ToString();
+
+                MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 frmMain parentForm = this.MdiParent as frmMain;
-
                 if (parentForm != null)
                 {
                     parentForm.KiemSoatTrangThai(true);
                     parentForm.GanTen();
                 }
-
                 this.Close();
             }
             else

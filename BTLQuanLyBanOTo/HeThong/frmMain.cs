@@ -5,6 +5,7 @@ using BTLQuanLyBanOTo.HeThong;
 using BTLQuanLyBanOTo.NghiepVu;
 using BTLQuanLyBanOTo.TroGiup;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -23,6 +24,8 @@ namespace BTLQuanLyBanOTo
         public bool IsLoggingOut { get; private set; }
         public static string MaNV_DangNhap = "";
         public static string TenNV_DangNhap = "";
+        public static string MaCV_DangNhap = "";
+        public static string TenCV_DangNhap = "";
         public static bool LoginSuccessful;
 
         private void mnuHTThoat_Click(object sender, EventArgs e)
@@ -111,8 +114,15 @@ namespace BTLQuanLyBanOTo
             if (lvChucNang.SelectedItems.Count > 0)
             {
                 ListViewItem selectedItem = lvChucNang.SelectedItems[0];
-                Type formType = selectedItem.Tag as Type;
 
+                if (selectedItem.ForeColor == Color.Gray)
+                {
+                    MessageBox.Show("Bạn không có quyền sử dụng chức năng này!", "Cảnh báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                Type formType = selectedItem.Tag as Type;
                 if (formType != null)
                 {
                     try
@@ -146,7 +156,65 @@ namespace BTLQuanLyBanOTo
             }
 
             childForm.MdiParent = this;
+
+            foreach (ListViewItem item in lvChucNang.Items)
+            {
+                if (item.Tag as Type == formType)
+                {
+                    childForm.Tag = item;
+                    break;
+                }
+            }
+
+            childForm.Activated += ChildForm_Activated;
+            childForm.FormClosed += ChildForm_Closed;
             childForm.Show();
+
+            HighlightListViewItem(childForm);
+        }
+
+        private void HighlightListViewItem(Form form)
+        {
+            if (form.Tag is ListViewItem item)
+            {
+                foreach (ListViewItem lvItem in lvChucNang.Items)
+                {
+                    if (lvItem.ForeColor == Color.Gray)
+                        continue;
+
+                    lvItem.BackColor = SystemColors.Window;
+                    lvItem.ForeColor = SystemColors.ControlText;
+                    lvItem.Font = new Font(lvChucNang.Font, FontStyle.Regular);
+                }
+
+                if (item.ForeColor != Color.Gray)
+                {
+                    item.BackColor = Color.LightSkyBlue;
+                    item.ForeColor = Color.White;
+                    item.Font = new Font(lvChucNang.Font, FontStyle.Bold);
+                    item.Selected = true;
+                    item.EnsureVisible();
+                }
+            }
+        }
+
+        private void ChildForm_Activated(object sender, EventArgs e)
+        {
+            HighlightListViewItem(sender as Form);
+        }
+
+        private void ChildForm_Closed(object sender, FormClosedEventArgs e)
+        {
+            foreach (ListViewItem lvItem in lvChucNang.Items)
+            {
+                // Giữ nguyên màu xám cho item bị khóa
+                if (lvItem.ForeColor == Color.Gray)
+                    continue;
+
+                lvItem.BackColor = SystemColors.Window;
+                lvItem.ForeColor = SystemColors.ControlText;
+                lvItem.Font = new Font(lvChucNang.Font, FontStyle.Regular);
+            }
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -168,35 +236,122 @@ namespace BTLQuanLyBanOTo
             mnuQlyTroGiup.Enabled = isEnable;
 
             lvChucNang.Enabled = isEnable;
+
+            if (isEnable)
+            {
+                PhanQuyenChucNang();
+            }
         }
 
         public void GanTen()
         {
-            mnutxtTB.Text = "Xin chào: " + TenNV_DangNhap;
+            mnutxtTB.Text = "Xin chào " + TenCV_DangNhap + ": " + TenNV_DangNhap;
         }
+
+        public void PhanQuyenChucNang()
+        {
+            string maCV = frmMain.MaCV_DangNhap ?? "";
+
+            mnuQLyDanhMuc.Enabled = false;
+            mnuQlyNghiepVu.Enabled = false;
+            mnuQlyBCTK.Enabled = false;
+            mnuQlyTroGiup.Enabled = true;
+            mnuHTDangXuat.Enabled = true;
+
+            mnuDMNV.Enabled = false;
+            mnuDMKH.Enabled = false;
+            mnuDMNCC.Enabled = false;
+            mnuDMSP.Enabled = false;
+            mnuNVBH.Enabled = false;
+            mnuNVNH.Enabled = false;
+            mnuBCTKDT.Enabled = false;
+            mnuBCTKTK.Enabled = false;
+
+            foreach (ListViewItem item in lvChucNang.Items)
+                item.ForeColor = Color.Gray;
+            lvChucNang.Enabled = false;
+
+            switch (maCV)
+            {
+                case "CV01": //giám đốc / admin
+                    mnuQLyDanhMuc.Enabled = true;
+                    mnuQlyNghiepVu.Enabled = true;
+                    mnuQlyBCTK.Enabled = true;
+                    lvChucNang.Enabled = true;
+                    foreach (ListViewItem item in lvChucNang.Items)
+                        item.ForeColor = Color.Black;
+                    break;
+
+                case "CV03": //nhân viên bán hàng
+                    mnuQLyDanhMuc.Enabled = true;
+                    mnuQlyNghiepVu.Enabled = true;
+                    mnuDMKH.Enabled = true;
+                    mnuDMSP.Enabled = true;
+                    mnuNVBH.Enabled = true;
+                    mnuBCTKDT.Enabled = true;
+
+                    lvChucNang.Enabled = true;
+                    foreach (ListViewItem item in lvChucNang.Items)
+                    {
+                        if (item.Text == "Khách Hàng" ||
+                            item.Text == "Sản Phẩm" ||
+                            item.Text == "Hóa Đơn Bán")
+                            item.ForeColor = Color.Black;
+                        else
+                            item.ForeColor = Color.Gray;
+                    }
+                    break;
+
+                case "CV04": //thủ kho
+                    mnuQLyDanhMuc.Enabled = true;
+                    mnuQlyNghiepVu.Enabled = true;
+                    mnuQlyBCTK.Enabled = true;
+                    mnuDMNCC.Enabled = true;
+                    mnuDMSP.Enabled = true;
+                    mnuNVNH.Enabled = true;
+                    mnuBCTKTK.Enabled = true;
+
+                    lvChucNang.Enabled = true;
+                    foreach (ListViewItem item in lvChucNang.Items)
+                    {
+                        if (item.Text == "Nhà Cung Cấp" ||
+                            item.Text == "Sản Phẩm" ||
+                            item.Text == "Hóa Đơn Nhập")
+                            item.ForeColor = Color.Black;
+                        else
+                            item.ForeColor = Color.Gray;
+                    }
+                    break;
+            }
+        }
+
 
         private void mnuDMSP_Click(object sender, EventArgs e)
         {
             frmSanPham f = new frmSanPham();
             OpenChildForm(f);
+            HighlightListViewItem(f);
         }
 
         private void mnuDMNV_Click(object sender, EventArgs e)
         {
             frmNhanVien f = new frmNhanVien();
             OpenChildForm(f);
+            HighlightListViewItem(f);
         }
 
         private void mnuDMKH_Click(object sender, EventArgs e)
         {
             frmKhachHang f = new frmKhachHang();
             OpenChildForm(f);
+            HighlightListViewItem(f);
         }
 
         private void mnuDMNCC_Click(object sender, EventArgs e)
         {
             frmNhaCungCap f = new frmNhaCungCap();
             OpenChildForm(f);
+            HighlightListViewItem(f);
         }
 
         private void mnuDMCCV_Click(object sender, EventArgs e)
@@ -251,12 +406,14 @@ namespace BTLQuanLyBanOTo
         {
             frmBanHang f = new frmBanHang();
             OpenChildForm(f);
+            HighlightListViewItem(f);
         }
 
         private void mnuNVNH_Click(object sender, EventArgs e)
         {
             frmNhapHang f = new frmNhapHang();
             OpenChildForm(f);
+            HighlightListViewItem(f);
         }
 
         private void mnuBCTKTK_Click(object sender, EventArgs e)

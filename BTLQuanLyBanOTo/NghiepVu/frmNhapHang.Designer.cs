@@ -184,6 +184,7 @@
             this.cboMaNCC.Name = "cboMaNCC";
             this.cboMaNCC.Size = new System.Drawing.Size(227, 24);
             this.cboMaNCC.TabIndex = 54;
+            this.cboMaNCC.SelectedIndexChanged += new System.EventHandler(this.cboMaNCC_SelectedIndexChanged);
             // 
             // cboMaNV
             // 

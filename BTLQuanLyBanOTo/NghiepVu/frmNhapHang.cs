@@ -411,11 +411,19 @@ namespace BTLQuanLyBanOTo.NghiepVu
             decimal tongTien = 0;
             string tongTienStr = txtTongTien.Text.Trim();
             decimal.TryParse(tongTienStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out tongTien);
+            DateTime ngayNhap = dtpNgayNhap.Value;
 
             //
             if (cboMaNCC.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn Nhà cung cấp!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //
+            if (ngayNhap < DateTime.Now)
+            {
+                MessageBox.Show("Thời gian nhập phải bằng hoặc ở sau thời gian hiện tại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -452,7 +460,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                         cmdDonHang.Parameters.AddWithValue("@soHDN", txtMa.Text);
                         cmdDonHang.Parameters.AddWithValue("@maNV", frmMain.MaNV_DangNhap);
                         cmdDonHang.Parameters.AddWithValue("@maNCC", cboMaNCC.SelectedValue);
-                        cmdDonHang.Parameters.AddWithValue("@ngayNhap", dtpNgayNhap.Value);
+                        cmdDonHang.Parameters.AddWithValue("@ngayNhap", ngayNhap);
                         cmdDonHang.Parameters.AddWithValue("@tongTien", tongTien);
                         cmdDonHang.Parameters.AddWithValue("@trangThai", 0);
                         cmdDonHang.ExecuteNonQuery();
