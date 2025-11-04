@@ -15,6 +15,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         DataProcesser dt;
         private string action = "";
+        public bool IsFromBanHang { get; set; } = false;
+        public string DT_BanHang = "";
 
         private void frmKhachHang_Load(object sender, EventArgs e)
         {
@@ -58,6 +60,10 @@ namespace BTLQuanLyBanOTo.DanhMuc
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
+            if (IsFromBanHang)
+            {
+                txtDienThoai.Text = DT_BanHang;
+            }
             btnLuu.Enabled = true;
             btnBoQua.Enabled = true;
             btnSua.Enabled = false;
@@ -148,6 +154,11 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     MessageBox.Show(r > 0 ? "Thêm khách hàng thành công!"
                                           : "Thêm thất bại!",
                         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (IsFromBanHang)
+                    {
+                        this.Close();
+                    }
                 }
 
                 if (action == "edit")

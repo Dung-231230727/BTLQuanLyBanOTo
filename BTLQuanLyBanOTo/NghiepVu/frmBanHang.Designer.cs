@@ -311,11 +311,11 @@
             // 
             // txtDienThoai
             // 
-            this.txtDienThoai.Enabled = false;
             this.txtDienThoai.Location = new System.Drawing.Point(924, 110);
             this.txtDienThoai.Name = "txtDienThoai";
             this.txtDienThoai.Size = new System.Drawing.Size(227, 22);
             this.txtDienThoai.TabIndex = 60;
+            this.txtDienThoai.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDienThoai_KeyDown);
             // 
             // txtDiaChi
             // 
@@ -361,7 +361,7 @@
             // dtpNgayGiao
             // 
             this.dtpNgayGiao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNgayGiao.Location = new System.Drawing.Point(135, 108);
+            this.dtpNgayGiao.Location = new System.Drawing.Point(135, 110);
             this.dtpNgayGiao.Name = "dtpNgayGiao";
             this.dtpNgayGiao.Size = new System.Drawing.Size(227, 22);
             this.dtpNgayGiao.TabIndex = 54;
@@ -369,7 +369,7 @@
             // dtpNgayDat
             // 
             this.dtpNgayDat.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNgayDat.Location = new System.Drawing.Point(135, 67);
+            this.dtpNgayDat.Location = new System.Drawing.Point(135, 69);
             this.dtpNgayDat.Name = "dtpNgayDat";
             this.dtpNgayDat.Size = new System.Drawing.Size(227, 22);
             this.dtpNgayDat.TabIndex = 53;
@@ -486,6 +486,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(3, 18);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -663,6 +664,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 438);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;

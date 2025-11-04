@@ -1,4 +1,5 @@
 ﻿using BTLQuanLyBanOTo.Classes;
+using BTLQuanLyBanOTo.DanhMuc;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -451,12 +452,12 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
 
             //
-            if (ngayDat > ngayGiao)
+            if (ngayDat.Date > ngayGiao.Date)
             {
-                MessageBox.Show("Thời gian đặt phải bằng hoặc ở sau thời gian giao!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Thời gian giao phải bằng hoặc ở sau thời gian đặt!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (ngayDat < DateTime.Now || ngayGiao < DateTime.Now)
+            if (ngayDat.Date < DateTime.Now.Date || ngayGiao.Date < DateTime.Now.Date)
             {
                 MessageBox.Show("Thời gian đặt và thời gian giao phải ở sau thời gian hiện tại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -880,6 +881,58 @@ namespace BTLQuanLyBanOTo.NghiepVu
             else if (action == "search" || action == "add")
             {
                 reset();
+            }
+        }
+
+        //truy vấn kh bằng sdt
+        private void txtDienThoai_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                KiemTraKhachHangTheoSDT();
+            }
+        }
+
+        private void KiemTraKhachHangTheoSDT()
+        {
+            string sdt = txtDienThoai.Text.Trim();
+            if (string.IsNullOrEmpty(sdt))
+            {
+                MessageBox.Show("Vui lòng nhập số điện thoại khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string sql = "SELECT MaKhach, TenKhach, DiaChi, DienThoai FROM KhachHang WHERE DienThoai = @dt";
+            var tbl = dt.ExecuteQuery(sql, new SqlParameter[]
+            {
+                new SqlParameter("@dt", sdt)
+            });
+            if (tbl.Rows.Count > 0)
+            {
+                DataRow row = tbl.Rows[0];
+                cboMaKH.Text = row["MaKhach"].ToString();
+                txtTenKH.Text = row["TenKhach"].ToString();
+                txtDiaChi.Text = row["DiaChi"].ToString();
+
+                MessageBox.Show("Đã tìm thấy thông tin khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show(
+                    "Số điện thoại này chưa có trong hệ thống. Bạn có muốn thêm khách hàng mới không?",
+                    "Khách hàng mới",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    frmKhachHang f = new frmKhachHang();
+                    f.IsFromBanHang = true;
+                    f.DT_BanHang = sdt;
+                    f.ShowDialog();
+                }
             }
         }
     }

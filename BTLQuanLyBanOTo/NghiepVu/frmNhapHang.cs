@@ -1,4 +1,5 @@
 ﻿using BTLQuanLyBanOTo.Classes;
+using BTLQuanLyBanOTo.DanhMuc;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -421,7 +422,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
 
             //
-            if (ngayNhap < DateTime.Now)
+            if (ngayNhap.Date < DateTime.Now.Date)
             {
                 MessageBox.Show("Thời gian nhập phải bằng hoặc ở sau thời gian hiện tại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -837,6 +838,58 @@ namespace BTLQuanLyBanOTo.NghiepVu
             else if (action == "search" || action == "add")
             {
                 reset();
+            }
+        }
+
+        //truy vấn ncc băng sdt
+        private void txtDienThoai_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                KiemTraNCCTheoSDT();
+            }
+        }
+
+        private void KiemTraNCCTheoSDT()
+        {
+            string sdt = txtDienThoai.Text.Trim();
+            if (string.IsNullOrEmpty(sdt))
+            {
+                MessageBox.Show("Vui lòng nhập số điện thoại nhà cung cấp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string sql = "SELECT MaNCC, TenNCC, DiaChi, DienThoai FROM NhaCungCap WHERE DienThoai = @dt";
+            var tbl = dt.ExecuteQuery(sql, new SqlParameter[]
+            {
+                new SqlParameter("@dt", sdt)
+            });
+            if (tbl.Rows.Count > 0)
+            {
+                DataRow row = tbl.Rows[0];
+                cboMaNCC.Text = row["MaNCC"].ToString();
+                txtTenNCC.Text = row["TenNCC"].ToString();
+                txtDiaChi.Text = row["DiaChi"].ToString();
+
+                MessageBox.Show("Đã tìm thấy thông tin nhà cung cấp!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show(
+                    "Số điện thoại này chưa có trong hệ thống. Bạn có muốn thêm nhà cung cấp mới không?",
+                    "Khách hàng mới",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    frmNhaCungCap f = new frmNhaCungCap();
+                    f.IsFromNCC = true;
+                    f.DT_BanHang = sdt;
+                    f.ShowDialog();
+                }
             }
         }
     }

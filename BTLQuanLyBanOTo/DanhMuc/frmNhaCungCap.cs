@@ -14,7 +14,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         DataProcesser dt;
         private string action = "";
-
+        public bool IsFromNCC { get; set; } = false;
+        public string DT_BanHang = "";
         private void frmNhaCungCap_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
@@ -57,6 +58,10 @@ namespace BTLQuanLyBanOTo.DanhMuc
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
+            if (IsFromNCC)
+            {
+                txtDienThoai.Text = DT_BanHang;
+            }
             btnLuu.Enabled = true;
             btnBoQua.Enabled = true;
             btnSua.Enabled = false;
@@ -147,6 +152,11 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     MessageBox.Show(r > 0 ? "Thêm nhà cung cấp thành công!"
                                           : "Thêm thất bại!",
                         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (IsFromNCC)
+                    {
+                        this.Close();
+                    }
                 }
 
                 if (action == "edit")
