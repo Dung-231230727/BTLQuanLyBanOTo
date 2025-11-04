@@ -28,11 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmKhachHang));
             this.dgvKhachHang = new System.Windows.Forms.DataGridView();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btnDong = new System.Windows.Forms.Button();
+            this.btnBoQua = new System.Windows.Forms.Button();
+            this.btnLuu = new System.Windows.Forms.Button();
+            this.btnXoa = new System.Windows.Forms.Button();
+            this.btnSua = new System.Windows.Forms.Button();
+            this.btnThem = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblMa = new System.Windows.Forms.Label();
             this.lblTen = new System.Windows.Forms.Label();
@@ -43,19 +51,12 @@
             this.txtDiaChi = new System.Windows.Forms.TextBox();
             this.txtDienThoai = new System.Windows.Forms.TextBox();
             this.grbNhapLieu = new System.Windows.Forms.GroupBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.btnDong = new System.Windows.Forms.Button();
-            this.btnBoQua = new System.Windows.Forms.Button();
-            this.btnLuu = new System.Windows.Forms.Button();
-            this.btnXoa = new System.Windows.Forms.Button();
-            this.btnSua = new System.Windows.Forms.Button();
-            this.btnThem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.panel1.SuspendLayout();
             this.grbNhapLieu.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvKhachHang
@@ -64,8 +65,17 @@
             this.dgvKhachHang.BackgroundColor = System.Drawing.Color.White;
             this.dgvKhachHang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvKhachHang.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvKhachHang.GridColor = System.Drawing.Color.Black;
             this.dgvKhachHang.Location = new System.Drawing.Point(0, 0);
             this.dgvKhachHang.Name = "dgvKhachHang";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvKhachHang.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvKhachHang.Size = new System.Drawing.Size(1184, 431);
             this.dgvKhachHang.TabIndex = 0;
             this.dgvKhachHang.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKhachHang_CellClick);
@@ -99,99 +109,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1184, 80);
             this.panel2.TabIndex = 6;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.lblTieuDe);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1184, 80);
-            this.panel1.TabIndex = 4;
-            // 
-            // lblMa
-            // 
-            this.lblMa.AutoSize = true;
-            this.lblMa.Location = new System.Drawing.Point(18, 34);
-            this.lblMa.Name = "lblMa";
-            this.lblMa.Size = new System.Drawing.Size(98, 16);
-            this.lblMa.TabIndex = 0;
-            this.lblMa.Text = "Mã khách hàng";
-            // 
-            // lblTen
-            // 
-            this.lblTen.AutoSize = true;
-            this.lblTen.Location = new System.Drawing.Point(18, 83);
-            this.lblTen.Name = "lblTen";
-            this.lblTen.Size = new System.Drawing.Size(103, 16);
-            this.lblTen.TabIndex = 1;
-            this.lblTen.Text = "Tên khách hàng";
-            // 
-            // lblDienThoai
-            // 
-            this.lblDienThoai.AutoSize = true;
-            this.lblDienThoai.Location = new System.Drawing.Point(418, 34);
-            this.lblDienThoai.Name = "lblDienThoai";
-            this.lblDienThoai.Size = new System.Drawing.Size(66, 16);
-            this.lblDienThoai.TabIndex = 6;
-            this.lblDienThoai.Text = "Điện thoại";
-            // 
-            // lblDiaChi
-            // 
-            this.lblDiaChi.AutoSize = true;
-            this.lblDiaChi.Location = new System.Drawing.Point(419, 83);
-            this.lblDiaChi.Name = "lblDiaChi";
-            this.lblDiaChi.Size = new System.Drawing.Size(47, 16);
-            this.lblDiaChi.TabIndex = 7;
-            this.lblDiaChi.Text = "Địa chỉ";
-            // 
-            // txtMa
-            // 
-            this.txtMa.Location = new System.Drawing.Point(137, 31);
-            this.txtMa.Name = "txtMa";
-            this.txtMa.Size = new System.Drawing.Size(226, 22);
-            this.txtMa.TabIndex = 11;
-            // 
-            // txtTen
-            // 
-            this.txtTen.Location = new System.Drawing.Point(137, 80);
-            this.txtTen.Name = "txtTen";
-            this.txtTen.Size = new System.Drawing.Size(226, 22);
-            this.txtTen.TabIndex = 12;
-            // 
-            // txtDiaChi
-            // 
-            this.txtDiaChi.Location = new System.Drawing.Point(519, 80);
-            this.txtDiaChi.Multiline = true;
-            this.txtDiaChi.Name = "txtDiaChi";
-            this.txtDiaChi.Size = new System.Drawing.Size(226, 60);
-            this.txtDiaChi.TabIndex = 13;
-            // 
-            // txtDienThoai
-            // 
-            this.txtDienThoai.Location = new System.Drawing.Point(519, 31);
-            this.txtDienThoai.Name = "txtDienThoai";
-            this.txtDienThoai.Size = new System.Drawing.Size(226, 22);
-            this.txtDienThoai.TabIndex = 16;
-            // 
-            // grbNhapLieu
-            // 
-            this.grbNhapLieu.Controls.Add(this.txtDienThoai);
-            this.grbNhapLieu.Controls.Add(this.txtDiaChi);
-            this.grbNhapLieu.Controls.Add(this.txtTen);
-            this.grbNhapLieu.Controls.Add(this.txtMa);
-            this.grbNhapLieu.Controls.Add(this.lblDiaChi);
-            this.grbNhapLieu.Controls.Add(this.lblDienThoai);
-            this.grbNhapLieu.Controls.Add(this.lblTen);
-            this.grbNhapLieu.Controls.Add(this.lblMa);
-            this.grbNhapLieu.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grbNhapLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.grbNhapLieu.Location = new System.Drawing.Point(0, 80);
-            this.grbNhapLieu.Name = "grbNhapLieu";
-            this.grbNhapLieu.Size = new System.Drawing.Size(1184, 170);
-            this.grbNhapLieu.TabIndex = 5;
-            this.grbNhapLieu.TabStop = false;
-            this.grbNhapLieu.Text = "Thông tin khách hàng";
             // 
             // panel4
             // 
@@ -273,6 +190,99 @@
             this.btnThem.UseVisualStyleBackColor = true;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblTieuDe);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1184, 80);
+            this.panel1.TabIndex = 4;
+            // 
+            // lblMa
+            // 
+            this.lblMa.AutoSize = true;
+            this.lblMa.Location = new System.Drawing.Point(18, 34);
+            this.lblMa.Name = "lblMa";
+            this.lblMa.Size = new System.Drawing.Size(98, 16);
+            this.lblMa.TabIndex = 0;
+            this.lblMa.Text = "Mã khách hàng";
+            // 
+            // lblTen
+            // 
+            this.lblTen.AutoSize = true;
+            this.lblTen.Location = new System.Drawing.Point(18, 83);
+            this.lblTen.Name = "lblTen";
+            this.lblTen.Size = new System.Drawing.Size(103, 16);
+            this.lblTen.TabIndex = 1;
+            this.lblTen.Text = "Tên khách hàng";
+            // 
+            // lblDienThoai
+            // 
+            this.lblDienThoai.AutoSize = true;
+            this.lblDienThoai.Location = new System.Drawing.Point(424, 34);
+            this.lblDienThoai.Name = "lblDienThoai";
+            this.lblDienThoai.Size = new System.Drawing.Size(66, 16);
+            this.lblDienThoai.TabIndex = 6;
+            this.lblDienThoai.Text = "Điện thoại";
+            // 
+            // lblDiaChi
+            // 
+            this.lblDiaChi.AutoSize = true;
+            this.lblDiaChi.Location = new System.Drawing.Point(425, 83);
+            this.lblDiaChi.Name = "lblDiaChi";
+            this.lblDiaChi.Size = new System.Drawing.Size(47, 16);
+            this.lblDiaChi.TabIndex = 7;
+            this.lblDiaChi.Text = "Địa chỉ";
+            // 
+            // txtMa
+            // 
+            this.txtMa.Location = new System.Drawing.Point(137, 31);
+            this.txtMa.Name = "txtMa";
+            this.txtMa.Size = new System.Drawing.Size(226, 22);
+            this.txtMa.TabIndex = 11;
+            // 
+            // txtTen
+            // 
+            this.txtTen.Location = new System.Drawing.Point(137, 80);
+            this.txtTen.Name = "txtTen";
+            this.txtTen.Size = new System.Drawing.Size(226, 22);
+            this.txtTen.TabIndex = 12;
+            // 
+            // txtDiaChi
+            // 
+            this.txtDiaChi.Location = new System.Drawing.Point(519, 80);
+            this.txtDiaChi.Multiline = true;
+            this.txtDiaChi.Name = "txtDiaChi";
+            this.txtDiaChi.Size = new System.Drawing.Size(226, 60);
+            this.txtDiaChi.TabIndex = 13;
+            // 
+            // txtDienThoai
+            // 
+            this.txtDienThoai.Location = new System.Drawing.Point(519, 31);
+            this.txtDienThoai.Name = "txtDienThoai";
+            this.txtDienThoai.Size = new System.Drawing.Size(226, 22);
+            this.txtDienThoai.TabIndex = 16;
+            // 
+            // grbNhapLieu
+            // 
+            this.grbNhapLieu.Controls.Add(this.txtDienThoai);
+            this.grbNhapLieu.Controls.Add(this.txtDiaChi);
+            this.grbNhapLieu.Controls.Add(this.txtTen);
+            this.grbNhapLieu.Controls.Add(this.txtMa);
+            this.grbNhapLieu.Controls.Add(this.lblDiaChi);
+            this.grbNhapLieu.Controls.Add(this.lblDienThoai);
+            this.grbNhapLieu.Controls.Add(this.lblTen);
+            this.grbNhapLieu.Controls.Add(this.lblMa);
+            this.grbNhapLieu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grbNhapLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.grbNhapLieu.Location = new System.Drawing.Point(0, 80);
+            this.grbNhapLieu.Name = "grbNhapLieu";
+            this.grbNhapLieu.Size = new System.Drawing.Size(1184, 170);
+            this.grbNhapLieu.TabIndex = 5;
+            this.grbNhapLieu.TabStop = false;
+            this.grbNhapLieu.Text = "Thông tin khách hàng";
+            // 
             // frmKhachHang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,10 +302,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.grbNhapLieu.ResumeLayout(false);
             this.grbNhapLieu.PerformLayout();
-            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

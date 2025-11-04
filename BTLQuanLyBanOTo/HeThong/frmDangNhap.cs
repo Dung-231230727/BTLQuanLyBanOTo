@@ -110,5 +110,19 @@ namespace BTLQuanLyBanOTo.HeThong
                 this.Close();
             }
         }
+
+        private void lblTTMK_Click(object sender, System.EventArgs e)
+        {
+            if (txtMK.UseSystemPasswordChar == true)
+            {
+                txtMK.UseSystemPasswordChar = false;
+                lblTTMK.Text = "( Ẩn )";
+            }
+            else
+            {
+                txtMK.UseSystemPasswordChar = true;
+                lblTTMK.Text = "( Hiện )";
+            }
+        }
     }
 }

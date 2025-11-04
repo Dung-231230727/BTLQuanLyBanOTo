@@ -157,5 +157,33 @@ namespace BTLQuanLyBanOTo.NghiepVu
         {
             reset();
         }
+
+        private void lblTTMK_Click(object sender, EventArgs e)
+        {
+            if (txtMK.UseSystemPasswordChar == true)
+            {
+                txtMK.UseSystemPasswordChar = false;
+                lblTTMK.Text = "( Ẩn )";
+            }
+            else
+            {
+                txtMK.UseSystemPasswordChar = true;
+                lblTTMK.Text = "( Hiện )";
+            }
+        }
+
+        private void lblTTXNMK_Click(object sender, EventArgs e)
+        {
+            if (txtXNMK.UseSystemPasswordChar == true)
+            {
+                txtXNMK.UseSystemPasswordChar = false;
+                lblTTXNMK.Text = "( Ẩn )";
+            }
+            else
+            {
+                txtXNMK.UseSystemPasswordChar = true;
+                lblTTXNMK.Text = "( Hiện )";
+            }
+        }
     }
 }

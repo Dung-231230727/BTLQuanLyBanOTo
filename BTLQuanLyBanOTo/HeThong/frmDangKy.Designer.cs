@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDangKy));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.lblTTXNMK = new System.Windows.Forms.Label();
+            this.lblTTMK = new System.Windows.Forms.Label();
             this.cboChucVu = new System.Windows.Forms.ComboBox();
             this.radNu = new System.Windows.Forms.RadioButton();
             this.radNam = new System.Windows.Forms.RadioButton();
@@ -75,6 +78,8 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.lblTTXNMK);
+            this.panel4.Controls.Add(this.lblTTMK);
             this.panel4.Controls.Add(this.cboChucVu);
             this.panel4.Controls.Add(this.radNu);
             this.panel4.Controls.Add(this.radNam);
@@ -99,6 +104,30 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(784, 278);
             this.panel4.TabIndex = 47;
+            // 
+            // lblTTXNMK
+            // 
+            this.lblTTXNMK.AutoSize = true;
+            this.lblTTXNMK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTTXNMK.ForeColor = System.Drawing.Color.Blue;
+            this.lblTTXNMK.Location = new System.Drawing.Point(672, 188);
+            this.lblTTXNMK.Name = "lblTTXNMK";
+            this.lblTTXNMK.Size = new System.Drawing.Size(49, 16);
+            this.lblTTXNMK.TabIndex = 66;
+            this.lblTTXNMK.Text = "( Hiện )";
+            this.lblTTXNMK.Click += new System.EventHandler(this.lblTTXNMK_Click);
+            // 
+            // lblTTMK
+            // 
+            this.lblTTMK.AutoSize = true;
+            this.lblTTMK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTTMK.ForeColor = System.Drawing.Color.Blue;
+            this.lblTTMK.Location = new System.Drawing.Point(614, 112);
+            this.lblTTMK.Name = "lblTTMK";
+            this.lblTTMK.Size = new System.Drawing.Size(49, 16);
+            this.lblTTMK.TabIndex = 65;
+            this.lblTTMK.Text = "( Hiện )";
+            this.lblTTMK.Click += new System.EventHandler(this.lblTTMK_Click);
             // 
             // cboChucVu
             // 
@@ -150,6 +179,7 @@
             this.txtXNMK.Name = "txtXNMK";
             this.txtXNMK.Size = new System.Drawing.Size(184, 22);
             this.txtXNMK.TabIndex = 60;
+            this.txtXNMK.UseSystemPasswordChar = true;
             // 
             // lblXNMK
             // 
@@ -168,6 +198,7 @@
             this.txtMK.Name = "txtMK";
             this.txtMK.Size = new System.Drawing.Size(184, 22);
             this.txtMK.TabIndex = 58;
+            this.txtMK.UseSystemPasswordChar = true;
             // 
             // lblMK
             // 
@@ -353,6 +384,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 443);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(800, 842);
             this.MinimizeBox = false;
@@ -400,5 +433,7 @@
         private System.Windows.Forms.Label lblTen;
         private System.Windows.Forms.TextBox txtMa;
         private System.Windows.Forms.Label lblMa;
+        private System.Windows.Forms.Label lblTTMK;
+        private System.Windows.Forms.Label lblTTXNMK;
     }
 }

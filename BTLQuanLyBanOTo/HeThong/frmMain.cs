@@ -5,6 +5,7 @@ using BTLQuanLyBanOTo.HeThong;
 using BTLQuanLyBanOTo.NghiepVu;
 using BTLQuanLyBanOTo.TroGiup;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BTLQuanLyBanOTo
@@ -30,6 +31,16 @@ namespace BTLQuanLyBanOTo
             this.Close();
         }
 
+        private void CloseAllMdiChildren()
+        {
+            Form[] childForms = this.MdiChildren.ToArray();
+
+            foreach (Form childForm in childForms)
+            {
+                childForm.Close();
+            }
+        }
+
         private void mnuHTDangXuat_Click(object sender, EventArgs e)
         {
             DialogResult r = MessageBox.Show(
@@ -40,8 +51,10 @@ namespace BTLQuanLyBanOTo
                 );
             if (r == DialogResult.Yes)
             {
+                CloseAllMdiChildren();
                 IsLoggingOut = true;
                 KiemSoatTrangThai(false);
+                mnuHTDangNhap_Click(sender, e);
             }
         }
 

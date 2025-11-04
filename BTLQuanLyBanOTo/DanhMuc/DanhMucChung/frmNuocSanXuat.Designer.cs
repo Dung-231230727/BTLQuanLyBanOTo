@@ -28,16 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvNuocSX = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.grbNhapLieu = new System.Windows.Forms.GroupBox();
-            this.txtTen = new System.Windows.Forms.TextBox();
-            this.txtMa = new System.Windows.Forms.TextBox();
-            this.lblTen = new System.Windows.Forms.Label();
-            this.lblMa = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnDong = new System.Windows.Forms.Button();
             this.btnBoQua = new System.Windows.Forms.Button();
@@ -45,12 +39,19 @@
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
+            this.grbNhapLieu = new System.Windows.Forms.GroupBox();
+            this.txtTen = new System.Windows.Forms.TextBox();
+            this.txtMa = new System.Windows.Forms.TextBox();
+            this.lblTen = new System.Windows.Forms.Label();
+            this.lblMa = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNuocSX)).BeginInit();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.grbNhapLieu.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel3
@@ -67,7 +68,16 @@
             this.dgvNuocSX.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNuocSX.BackgroundColor = System.Drawing.Color.White;
             this.dgvNuocSX.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvNuocSX.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvNuocSX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvNuocSX.GridColor = System.Drawing.Color.Black;
             this.dgvNuocSX.Location = new System.Drawing.Point(0, 0);
             this.dgvNuocSX.Name = "dgvNuocSX";
             this.dgvNuocSX.Size = new System.Drawing.Size(1184, 484);
@@ -83,74 +93,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1184, 80);
             this.panel2.TabIndex = 6;
-            // 
-            // grbNhapLieu
-            // 
-            this.grbNhapLieu.Controls.Add(this.txtTen);
-            this.grbNhapLieu.Controls.Add(this.txtMa);
-            this.grbNhapLieu.Controls.Add(this.lblTen);
-            this.grbNhapLieu.Controls.Add(this.lblMa);
-            this.grbNhapLieu.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grbNhapLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.grbNhapLieu.Location = new System.Drawing.Point(0, 80);
-            this.grbNhapLieu.Name = "grbNhapLieu";
-            this.grbNhapLieu.Size = new System.Drawing.Size(1184, 117);
-            this.grbNhapLieu.TabIndex = 5;
-            this.grbNhapLieu.TabStop = false;
-            this.grbNhapLieu.Text = "Thông tin nước sản xuất";
-            // 
-            // txtTen
-            // 
-            this.txtTen.Location = new System.Drawing.Point(115, 71);
-            this.txtTen.Name = "txtTen";
-            this.txtTen.Size = new System.Drawing.Size(292, 22);
-            this.txtTen.TabIndex = 3;
-            // 
-            // txtMa
-            // 
-            this.txtMa.Location = new System.Drawing.Point(115, 32);
-            this.txtMa.Name = "txtMa";
-            this.txtMa.Size = new System.Drawing.Size(292, 22);
-            this.txtMa.TabIndex = 2;
-            // 
-            // lblTen
-            // 
-            this.lblTen.AutoSize = true;
-            this.lblTen.Location = new System.Drawing.Point(20, 74);
-            this.lblTen.Name = "lblTen";
-            this.lblTen.Size = new System.Drawing.Size(63, 16);
-            this.lblTen.TabIndex = 1;
-            this.lblTen.Text = "Tên nước";
-            // 
-            // lblMa
-            // 
-            this.lblMa.AutoSize = true;
-            this.lblMa.Location = new System.Drawing.Point(20, 35);
-            this.lblMa.Name = "lblMa";
-            this.lblMa.Size = new System.Drawing.Size(61, 16);
-            this.lblMa.TabIndex = 0;
-            this.lblMa.Text = "Mã nước ";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.lblTieuDe);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1184, 80);
-            this.panel1.TabIndex = 4;
-            // 
-            // lblTieuDe
-            // 
-            this.lblTieuDe.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTieuDe.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
-            this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
-            this.lblTieuDe.Name = "lblTieuDe";
-            this.lblTieuDe.Size = new System.Drawing.Size(1184, 80);
-            this.lblTieuDe.TabIndex = 0;
-            this.lblTieuDe.Text = "DANH MỤC NƯỚC SẢN XUẤT";
-            this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4
             // 
@@ -232,6 +174,74 @@
             this.btnThem.UseVisualStyleBackColor = true;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
+            // grbNhapLieu
+            // 
+            this.grbNhapLieu.Controls.Add(this.txtTen);
+            this.grbNhapLieu.Controls.Add(this.txtMa);
+            this.grbNhapLieu.Controls.Add(this.lblTen);
+            this.grbNhapLieu.Controls.Add(this.lblMa);
+            this.grbNhapLieu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grbNhapLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.grbNhapLieu.Location = new System.Drawing.Point(0, 80);
+            this.grbNhapLieu.Name = "grbNhapLieu";
+            this.grbNhapLieu.Size = new System.Drawing.Size(1184, 117);
+            this.grbNhapLieu.TabIndex = 5;
+            this.grbNhapLieu.TabStop = false;
+            this.grbNhapLieu.Text = "Thông tin nước sản xuất";
+            // 
+            // txtTen
+            // 
+            this.txtTen.Location = new System.Drawing.Point(115, 71);
+            this.txtTen.Name = "txtTen";
+            this.txtTen.Size = new System.Drawing.Size(292, 22);
+            this.txtTen.TabIndex = 3;
+            // 
+            // txtMa
+            // 
+            this.txtMa.Location = new System.Drawing.Point(115, 32);
+            this.txtMa.Name = "txtMa";
+            this.txtMa.Size = new System.Drawing.Size(292, 22);
+            this.txtMa.TabIndex = 2;
+            // 
+            // lblTen
+            // 
+            this.lblTen.AutoSize = true;
+            this.lblTen.Location = new System.Drawing.Point(20, 74);
+            this.lblTen.Name = "lblTen";
+            this.lblTen.Size = new System.Drawing.Size(63, 16);
+            this.lblTen.TabIndex = 1;
+            this.lblTen.Text = "Tên nước";
+            // 
+            // lblMa
+            // 
+            this.lblMa.AutoSize = true;
+            this.lblMa.Location = new System.Drawing.Point(20, 35);
+            this.lblMa.Name = "lblMa";
+            this.lblMa.Size = new System.Drawing.Size(61, 16);
+            this.lblMa.TabIndex = 0;
+            this.lblMa.Text = "Mã nước ";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblTieuDe);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1184, 80);
+            this.panel1.TabIndex = 4;
+            // 
+            // lblTieuDe
+            // 
+            this.lblTieuDe.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTieuDe.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTieuDe.ForeColor = System.Drawing.Color.Blue;
+            this.lblTieuDe.Location = new System.Drawing.Point(0, 0);
+            this.lblTieuDe.Name = "lblTieuDe";
+            this.lblTieuDe.Size = new System.Drawing.Size(1184, 80);
+            this.lblTieuDe.TabIndex = 0;
+            this.lblTieuDe.Text = "DANH MỤC NƯỚC SẢN XUẤT";
+            this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // frmNuocSanXuat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,10 +260,10 @@
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvNuocSX)).EndInit();
             this.panel2.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.grbNhapLieu.ResumeLayout(false);
             this.grbNhapLieu.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

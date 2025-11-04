@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnDong = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -42,12 +44,11 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dgvDoanhThu = new System.Windows.Forms.DataGridView();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.btnDong = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txtTDT = new System.Windows.Forms.TextBox();
             this.lblTongDoanhThu = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -60,7 +61,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDoanhThu)).BeginInit();
-            this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,6 +73,26 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1184, 60);
             this.panel2.TabIndex = 4;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btnDong);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel5.Location = new System.Drawing.Point(1054, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(130, 60);
+            this.panel5.TabIndex = 0;
+            // 
+            // btnDong
+            // 
+            this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnDong.Location = new System.Drawing.Point(3, 11);
+            this.btnDong.Name = "btnDong";
+            this.btnDong.Size = new System.Drawing.Size(112, 38);
+            this.btnDong.TabIndex = 14;
+            this.btnDong.Text = "Đóng";
+            this.btnDong.UseVisualStyleBackColor = true;
+            this.btnDong.Click += new System.EventHandler(this.btnDong_Click);
             // 
             // panel1
             // 
@@ -216,31 +236,12 @@
             this.dgvDoanhThu.BackgroundColor = System.Drawing.Color.White;
             this.dgvDoanhThu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDoanhThu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvDoanhThu.GridColor = System.Drawing.Color.Black;
             this.dgvDoanhThu.Location = new System.Drawing.Point(0, 0);
             this.dgvDoanhThu.Name = "dgvDoanhThu";
             this.dgvDoanhThu.ReadOnly = true;
             this.dgvDoanhThu.Size = new System.Drawing.Size(1184, 459);
             this.dgvDoanhThu.TabIndex = 0;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.btnDong);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(1054, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(130, 60);
-            this.panel5.TabIndex = 0;
-            // 
-            // btnDong
-            // 
-            this.btnDong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDong.Location = new System.Drawing.Point(3, 11);
-            this.btnDong.Name = "btnDong";
-            this.btnDong.Size = new System.Drawing.Size(112, 38);
-            this.btnDong.TabIndex = 14;
-            this.btnDong.Text = "Đóng";
-            this.btnDong.UseVisualStyleBackColor = true;
-            this.btnDong.Click += new System.EventHandler(this.btnDong_Click);
             // 
             // panel6
             // 
@@ -287,6 +288,7 @@
             this.Text = "Báo cáo doanh thu";
             this.Load += new System.EventHandler(this.frmBaoCaoDoanhThu_Load);
             this.panel2.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -300,7 +302,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDoanhThu)).EndInit();
-            this.panel5.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.ResumeLayout(false);

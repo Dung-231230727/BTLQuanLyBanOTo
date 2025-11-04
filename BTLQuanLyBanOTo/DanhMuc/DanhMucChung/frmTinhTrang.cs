@@ -11,12 +11,13 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
         {
             InitializeComponent();
         }
+
         DataProcesser dt;
+        private string action = "";
 
         private void frmTinhTrang_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
-
             reset();
             LoadDGV();
         }
@@ -24,9 +25,9 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
         public void reset()
         {
             txtMa.Enabled = true;
+            txtMa.Focus();
             txtMa.Text = "";
             txtTen.Text = "";
-            txtMa.Focus();
 
             btnThem.Enabled = true;
             btnSua.Enabled = false;
@@ -39,11 +40,17 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
         public void LoadDGV()
         {
-            string sql = "select * from TinhTrang";
-            dgvTinhTrang.DataSource = dt.ExecuteQuery(sql);
+            try
+            {
+                string sql = "select * from TinhTrang";
+                dgvTinhTrang.DataSource = dt.ExecuteQuery(sql);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dữ liệu:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private string action = "";
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
@@ -56,6 +63,12 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtMa.Text))
+            {
+                MessageBox.Show("Vui lòng chọn bản ghi cần sửa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnThem.Enabled = false;
             btnXoa.Enabled = false;
             btnLuu.Enabled = true;
@@ -65,6 +78,12 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtMa.Text))
+            {
+                MessageBox.Show("Vui lòng chọn bản ghi cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
@@ -74,144 +93,122 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            //kiem tra trong
-            if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text))
+            try
             {
-                MessageBox.Show(
-                    "Vui lòng nhập đầy đủ thông tin!",
-                    "Cảnh báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                    );
-                return;
-            }
-
-            if (action == "add")
-            {
-                //lọc trùng
-                string sqlKT = "select count(*) from TinhTrang where MaTinhTrang = @ma";
-                int rKT = (int)dt.ExecuteScalar(sqlKT, new SqlParameter[]
+                // Kiểm tra dữ liệu trống
+                if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text))
                 {
-                    new SqlParameter("@ma", txtMa.Text.ToString())
-                });
-                if (rKT > 0)
-                {
-                    MessageBox.Show(
-                        "Đã có mã tình trạng này. Vui lòng tạo mã khác!",
-                        "Cảnh báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                        );
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                string sql = "insert into TinhTrang(MaTinhTrang,TenTinhTrang) values(@ma,@ten)";
-                int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                if (action == "add")
                 {
-                    new SqlParameter("@ma", txtMa.Text.ToString()),
-                    new SqlParameter("@ten",txtTen.Text.ToString())
-                });
-                if (r > 0)
-                {
-                    MessageBox.Show(
-                        "Thêm thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
+                    string sqlKT = "select count(*) from TinhTrang where MaTT = @ma";
+                    int rKT = Convert.ToInt32(dt.ExecuteScalar(sqlKT, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim())
+                    }));
+
+                    if (rKT > 0)
+                    {
+                        MessageBox.Show("Đã có mã tình trạng này. Vui lòng tạo mã khác!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    string sql = "insert into TinhTrang(MaTT,TenTT) values(@ma,@ten)";
+                    int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim()),
+                        new SqlParameter("@ten", txtTen.Text.Trim())
+                    });
+
+                    MessageBox.Show(r > 0 ? "Thêm thành công!" : "Thêm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
+                if (action == "edit")
+                {
+                    string sql = "update TinhTrang set TenTT = @ten where MaTT = @ma";
+                    int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim()),
+                        new SqlParameter("@ten", txtTen.Text.Trim())
+                    });
+
+                    MessageBox.Show(r > 0 ? "Sửa thành công!" : "Sửa thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (action == "delete")
+                {
+                    DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa bản ghi này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dr == DialogResult.No) return;
+
+                    string sql = "delete from TinhTrang where MaTT = @ma";
+                    int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim())
+                    });
+
+                    MessageBox.Show(r > 0 ? "Xóa thành công!" : "Xóa thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                LoadDGV();
+                reset();
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 547)
+                    MessageBox.Show("Không thể xóa vì tình trạng này đang được sử dụng ở bảng khác!", "Lỗi ràng buộc", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
-                {
-                    MessageBox.Show(
-                        "Thêm thất bại!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                    return;
-                }
+                    MessageBox.Show("Lỗi SQL:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            if (action == "edit")
+            catch (Exception ex)
             {
-                string sql = "update TinhTrang set TenTinhTrang = @ten where MaTinhTrang = @ma";
-                int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
-                {
-                    new SqlParameter("@ma", txtMa.Text.ToString()),
-                    new SqlParameter("@ten",txtTen.Text.ToString())
-                });
-                if (r > 0)
-                {
-                    MessageBox.Show(
-                        "Sửa thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Sửa thất bại!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                    return;
-                }
+                MessageBox.Show("Đã xảy ra lỗi:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            if (action == "delete")
-            {
-                string sql = "delete from TinhTrang where MaTinhTrang = @ma";
-                int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
-                {
-                    new SqlParameter("@ma", txtMa.Text.ToString())
-                });
-                if (r > 0)
-                {
-                    MessageBox.Show(
-                        "Xóa thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Xóa thất bại!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                    return;
-                }
-            }
-
-            LoadDGV();
-            reset();
         }
 
         private void btnBoQua_Click(object sender, EventArgs e)
         {
-            reset();
+            if (action == "edit" || action == "delete")
+            {
+                //ẩn
+                btnThem.Enabled = false;
+                btnLuu.Enabled = false;
+                //hiện
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+                btnBoQua.Enabled = true;
+                action = "cell_click";
+            }
+            else if (action == "cell_click" || action == "add")
+            {
+                reset();
+            }
         }
 
         private void dgvTinhTrang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            try
             {
                 txtMa.Enabled = false;
+
                 btnSua.Enabled = true;
                 btnXoa.Enabled = true;
                 btnBoQua.Enabled = true;
                 btnThem.Enabled = false;
                 btnLuu.Enabled = false;
+                action = "cell_click";
 
                 var row = dgvTinhTrang.Rows[e.RowIndex];
-                txtMa.Text = row.Cells["MaTinhTrang"].Value.ToString();
-                txtTen.Text = row.Cells["TenTinhTrang"].Value.ToString();
+                txtMa.Text = row.Cells["MaTT"].Value?.ToString();
+                txtTen.Text = row.Cells["TenTT"].Value?.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi hiển thị dữ liệu:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

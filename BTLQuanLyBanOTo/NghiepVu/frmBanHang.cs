@@ -64,21 +64,18 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         public void LoadAllCBO()
         {
-            // 1. Nạp ComboBox Nhân viên
+            //nv
             //LoadCBO(cboMaNV, "SELECT MaNV, TenNV FROM NhanVien", "MaNV", "MaNV");
-
-            // 2. Nạp ComboBox Khách hàng
+            //kh
             LoadCBO(cboMaKH, "SELECT MaKhach, TenKhach FROM KhachHang", "MaKhach", "MaKhach");
-
-            // 3. Nạp ComboBox Sản phẩm (Xe)
+            //sp
             LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0", "MaHang", "MaHang");
-
+            //tk
             LoadCBOTimKiem();
         }
 
         public void LoadCBOTimKiem()
         {
-            // 4. Nạp ComboBox Tìm kiếm Đơn hàng
             string sqlTim = "SELECT SoDDH FROM DonDatHang order by SoDDH desc";
             DataTable tblTim = dt.ExecuteQuery(sqlTim);
             cboTimKiem.DataSource = tblTim;
@@ -98,10 +95,9 @@ namespace BTLQuanLyBanOTo.NghiepVu
             txtThue.Enabled = true;
             txtThue.Text = "0";
 
-            // Lấy thông tin từ frmMain và gán thẳng
             cboMaNV.DataSource = null;
             cboMaNV.Items.Clear();
-            cboMaNV.Items.Add(frmMain.TenNV_DangNhap);
+            cboMaNV.Items.Add(frmMain.MaNV_DangNhap);
             cboMaNV.SelectedIndex = 0;
             cboMaNV.Enabled = false;
 
@@ -142,7 +138,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             btnBoQua.Enabled = false;
             btnIn.Enabled = false;
             btnTimKiem.Enabled = false;
-            btnHuy.Enabled = false;
+            //btnHuy.Enabled = false;
             btnThemSP.Enabled = false;
             btnXoaSP.Enabled = false;
 
@@ -211,40 +207,29 @@ namespace BTLQuanLyBanOTo.NghiepVu
             btnBoQua.Enabled = true;
         }
 
-        /// <summary>
-        /// Sinh mã Đơn đặt hàng tự động theo quy tắc HĐB_ddMMyyyyXXXX
-        /// Ví dụ: HĐB_261020250001
-        /// </summary>
-        /// <returns>Mã đơn hàng mới</returns>
         private string TaoMaDonHang()
         {
-            // 1. Lấy ngày hiện tại và tạo prefix
+            // lấy ngày hiện tại
             string ngayHienTai = DateTime.Now.ToString("ddMMyyyy");
             string prefix = "HĐB_" + ngayHienTai; // Ví dụ: HĐB_26102025
 
-            // 2. Tìm mã lớn nhất TRONG NGÀY HÔM NAY
-            // Câu lệnh này tìm tất cả các mã bắt đầu bằng "HĐB_26102025" và lấy cái lớn nhất
+            // lấy mã lớn nhất
             string sql = "SELECT MAX(SoDDH) FROM DonDatHang WHERE SoDDH LIKE @prefix";
             SqlParameter[] prms = new SqlParameter[] {
                 new SqlParameter("@prefix", prefix + "%")
             };
 
             object result = dt.ExecuteScalar(sql, prms);
-
-            int soThuTuMoi = 1; // Mặc định là hóa đơn đầu tiên trong ngày (0001)
-
+            int soThuTuMoi = 1;
             if (result != null && result != DBNull.Value)
             {
-                // Nếu đã có hóa đơn, lấy 4 số cuối (ví dụ: "0001")
                 string maLonNhat = result.ToString();
-                string soCuoi = maLonNhat.Substring(prefix.Length); // Lấy phần "0001"
+                string soCuoi = maLonNhat.Substring(prefix.Length);
 
-                // Chuyển "0001" thành số (1), rồi cộng 1
-                soThuTuMoi = int.Parse(soCuoi) + 1;
+                soThuTuMoi = int.Parse(soCuoi) + 1; //cộng 1 vào số cũ
             }
 
-            // 3. Định dạng mã mới
-            // Nối "HĐB_26102025" với "0002" (định dạng 4 chữ số "D4")
+            // nối lại mã
             string maMoi = prefix + soThuTuMoi.ToString("D4");
 
             return maMoi;
@@ -307,7 +292,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             decimal.TryParse(txtGG.Text, out giamGia);
 
             decimal thanhTien = (soLuongBan * donGia) - giamGia;
-            txtTT.Text = thanhTien.ToString("N2");
+            txtTT.Text = string.Format("{0:N2} VNĐ", thanhTien);
         }
 
         public void TinhTongTien()
@@ -319,17 +304,15 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 tongTienHang += (decimal)row["ThanhTien"];
             }
 
-            // 2. Lấy Thuế và Đặt cọc
             decimal thue = 0;
             decimal datCoc = 0;
             decimal.TryParse(txtThue.Text, out thue);
             decimal.TryParse(txtDatCoc.Text, out datCoc);
 
-            // 3. Tính toán tổng cuối cùng
             decimal tongThue = (tongTienHang * thue) / 100;
             decimal tongCong = (tongTienHang + tongThue) - datCoc;
 
-            txtTongTien.Text = tongCong.ToString("N2");
+            txtTongTien.Text = string.Format("{0:N2} VNĐ", tongCong);
         }
 
         private void txtDG_TextChanged(object sender, EventArgs e)
@@ -349,14 +332,14 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         private void btnThemSP_Click(object sender, EventArgs e)
         {
-            // Kiểm tra xem đã chọn sản phẩm chưa
+            // ktra chọn
             if (cboMaSP.SelectedIndex == -1)
             {
                 MessageBox.Show("Bạn chưa chọn sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Kiểm tra số lượng bán phải lớn hơn 0
+            // ktra slb
             if (numSLB.Value <= 0)
             {
                 MessageBox.Show("Số lượng bán phải lớn hơn 0!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -364,7 +347,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 return;
             }
 
-            // === 2. Yêu cầu: Kiểm tra tồn kho ===
+            // ktra tồn
             int soLuongTon = 0;
             int.TryParse(txtSLT.Text, out soLuongTon);
 
@@ -375,7 +358,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 return;
             }
 
-            // === 3. Kiểm tra xem sản phẩm đã có trong giỏ chưa ===
+            // ktra giỏ
             string maHang = cboMaSP.SelectedValue.ToString();
             foreach (DataRow row in tblChiTietDonHang.Rows)
             {
@@ -402,6 +385,14 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         private void dgvGioHang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return;
+
+            var row = dgvGioHang.Rows[e.RowIndex];
+            if (row.Cells["MaHang"].Value == null || string.IsNullOrWhiteSpace(row.Cells["MaHang"].Value.ToString()))
+            {
+                return;
+            }
+
             if (e.RowIndex >= 0 && (action != "search" && action != "delete"))
             {
                 btnXoaSP.Enabled = true;
@@ -412,7 +403,6 @@ namespace BTLQuanLyBanOTo.NghiepVu
         {
             string tenSP_dangChon = dgvGioHang.CurrentRow.Cells["TenHang"].Value.ToString();
 
-            // 3. Hiển thị thông báo xác nhận
             DialogResult r = MessageBox.Show(
                 "Bạn có chắc muốn xóa sản phẩm '" + tenSP_dangChon + "' khỏi giỏ hàng không?",
                 "Xác nhận",
@@ -424,10 +414,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             {
                 try
                 {
-                    // Lấy index của dòng đang chọn
                     int rowIndex = dgvGioHang.CurrentRow.Index;
-
-                    // Xóa dòng đó khỏi DataTable tạm (giỏ hàng)
                     tblChiTietDonHang.Rows.RemoveAt(rowIndex);
 
                     MessageBox.Show("Đã xóa sản phẩm khỏi giỏ hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -444,34 +431,31 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            // Lấy chuỗi kết nối từ App.config (Cách an toàn)
             string connStr = "Server=Dung;Database=QuanLyCuaHangOto;Integrated Security=True";
 
-            // Khai báo và TryParse các biến tiền tệ/số (ĐÃ SỬA LỖI PARSING)
             decimal tongTien = 0, datCoc = 0;
             float thue = 0;
 
-            // 1. Lấy giá trị an toàn từ các control
             string tongTienStr = txtTongTien.Text.Trim();
             decimal.TryParse(tongTienStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out tongTien);
             decimal.TryParse(txtDatCoc.Text, out datCoc);
             float.TryParse(txtThue.Text, out thue);
 
-            // === 2. KIỂM TRA ĐIỀU KIỆN ===
+            // ktra
             if (cboMaKH.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn Khách hàng!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Chỉ kiểm tra giỏ hàng khi KHÔNG phải là xóa
+            // chỉ ktra khi kp là xóa
             if (tblChiTietDonHang.Rows.Count == 0 && action != "delete")
             {
                 MessageBox.Show("Hóa đơn phải có ít nhất một sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // === 3. BẮT ĐẦU TRANSACTION ===
+            // transaction
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
@@ -479,17 +463,15 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
                 try
                 {
-                    // --- CỘT TRẠNG THÁI (TrangThai) ĐƯỢC THÊM VÀO CÂU SQL ---
-
                     if (action == "add" || action == "edit")
                     {
-                        // B1: Nếu là EDIT, PHẢI HOÀN TRẢ KHO CŨ và XÓA CHI TIẾT CŨ
+                        // edit
                         if (action == "edit")
                         {
                             HoanTraKhoVaXoaChiTietCu(conn, transaction);
                         }
 
-                        // B2: INSERT/UPDATE BẢNG DonDatHang (CÓ CỘT TRANGTHAI)
+                        // toán tử 3 ngôi thêm nếu action == add và sửa nếu ko phải
                         string sqlDonHang = (action == "add") ?
                             @"INSERT INTO DonDatHang(SoDDH, MaNV, MaKhach, NgayDat, NgayGiao, DatCoc, Thue, TongTien, TrangThai)
                             VALUES(@soDDH, @maNV, @maKhach, @ngayDat, @ngayGiao, @datCoc, @thue, @tongTien, @trangThai)"
@@ -509,46 +491,40 @@ namespace BTLQuanLyBanOTo.NghiepVu
                         cmdDonHang.Parameters.AddWithValue("@trangThai", 0);
                         cmdDonHang.ExecuteNonQuery();
 
-                        // B3: LƯU CHI TIẾT MỚI VÀ CẬP NHẬT KHO MỚI (TRỪ ĐI)
+                        //lưu chi tiết
                         LuuChiTietVaCapNhatKho(conn, transaction);
 
-                        MessageBox.Show((action == "add" ? "Thêm" : "Sửa") + " hóa đơn thành công!", "Thông báo");
+                        MessageBox.Show((action == "add" ? "Thêm" : "Sửa") + " hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-
                     else if (action == "delete")
                     {
-                        // B1: XÓA CHI TIẾT VÀ HOÀN TRẢ KHO CŨ
+                        // delete
                         HoanTraKhoVaXoaChiTietCu(conn, transaction);
 
-                        // B2: DELETE BẢNG DonDatHang
+                        // xóa bảng ĐonatHang
                         string sqlDeleteDonHang = "DELETE FROM DonDatHang WHERE SoDDH = @soDDH";
                         SqlCommand cmdDeleteDonHang = new SqlCommand(sqlDeleteDonHang, conn, transaction);
                         cmdDeleteDonHang.Parameters.AddWithValue("@soDDH", txtMa.Text);
                         cmdDeleteDonHang.ExecuteNonQuery();
 
-                        MessageBox.Show("Xóa hóa đơn thành công!", "Thông báo");
+                        MessageBox.Show("Xóa hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        reset();
                     }
-
-                    // KẾT THÚC GIAO DỊCH (THÀNH CÔNG)
                     transaction.Commit();
 
-                    // Tải lại CBO Sản phẩm và tìm kiếm
                     LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0", "TenHang", "MaHang");
                     LoadCBOTimKiem();
 
-                    // Khởi động lại form hoặc reset
-                    reset();
+                    //reset();
 
-                    // Nút In chỉ bật sau khi Lưu (Add/Edit)
                     if (action == "add" || action == "edit")
                     {
                         btnIn.Enabled = true;
-                        btnLuu.Enabled = false; // Tắt nút Lưu
+                        btnLuu.Enabled = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    // HỦY GIAO DỊCH (THẤT BẠI)
                     transaction.Rollback();
                     MessageBox.Show("Lưu hóa đơn thất bại! Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -556,12 +532,11 @@ namespace BTLQuanLyBanOTo.NghiepVu
             resetGrbCTMH();
         }
 
-        // === HÀM HELPER 1: LƯU CHI TIẾT VÀ CẬP NHẬT KHO (ADD/EDIT) ===
+        // lưu chi tiết và cập nhật kho
         private void LuuChiTietVaCapNhatKho(SqlConnection conn, SqlTransaction transaction)
         {
             foreach (DataRow row in tblChiTietDonHang.Rows)
             {
-                // INSERT VÀO BẢNG ChiTietDonDatHang
                 string sqlChiTiet = @"INSERT INTO ChiTietDonDatHang(SoDDH, MaHang, SoLuong, GiamGia, ThanhTien)
                              VALUES(@soDDH, @maHang, @soLuong, @giamGia, @thanhTien)";
 
@@ -573,7 +548,6 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 cmdChiTiet.Parameters.AddWithValue("@thanhTien", row["ThanhTien"]);
                 cmdChiTiet.ExecuteNonQuery();
 
-                // CẬP NHẬT TỒN KHO (TRỪ ĐI)
                 string sqlCapNhatKho = @"UPDATE DanhMucHang SET SoLuong = SoLuong - @soLuongBan WHERE MaHang = @maHang";
 
                 SqlCommand cmdCapNhatKho = new SqlCommand(sqlCapNhatKho, conn, transaction);
@@ -583,14 +557,13 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
         }
 
-        // === HÀM HELPER 2: HOÀN TRẢ KHO VÀ XÓA CHI TIẾT CŨ (EDIT/DELETE) ===
+        // hoàn trả và xóa chi tiết cũ
         private void HoanTraKhoVaXoaChiTietCu(SqlConnection conn, SqlTransaction transaction)
         {
-            // B1: Lấy Chi tiết Đơn hàng CŨ từ DB
             string sqlGetChiTiet = "SELECT MaHang, SoLuong FROM ChiTietDonDatHang WHERE SoDDH = @soDDH";
             DataTable tblChiTietCu = dt.ExecuteQuery(sqlGetChiTiet, new SqlParameter[] { new SqlParameter("@soDDH", txtMa.Text) });
 
-            // Hoàn trả tồn kho cũ
+            // Hoàn trả 
             foreach (DataRow row in tblChiTietCu.Rows)
             {
                 string sqlHoanTra = @"UPDATE DanhMucHang 
@@ -602,7 +575,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 cmdHoanTra.ExecuteNonQuery();
             }
 
-            // Xóa chi tiết cũ khỏi bảng
+            // Xóa 
             string sqlDeleteChiTiet = "DELETE FROM ChiTietDonDatHang WHERE SoDDH = @soDDH";
             SqlCommand cmdDeleteChiTiet = new SqlCommand(sqlDeleteChiTiet, conn, transaction);
             cmdDeleteChiTiet.Parameters.AddWithValue("@soDDH", txtMa.Text);
@@ -611,14 +584,14 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         private void btnIn_Click(object sender, EventArgs e)
         {
-            // === 1. Yêu cầu: Kiểm tra dữ liệu trong DGV ===
+            // ktra dgv
             if (tblChiTietDonHang.Rows.Count == 0)
             {
                 MessageBox.Show("Không có dữ liệu để xuất hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // === 2. Khởi tạo Excel ===
+            // khởi tạo excel
             Excel.Application exApp = new Excel.Application();
             Excel.Workbook exBook = null;
             Excel.Worksheet exSheet = null;
@@ -629,7 +602,6 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 exSheet = (Excel.Worksheet)exBook.Worksheets.get_Item(1);
                 exSheet.Name = "Hóa Đơn Bán Hàng";
 
-                // === 3. Thêm Tiêu đề và Thông tin chung ===
                 // Định dạng tiêu đề
                 exSheet.Range["A1:F1"].Merge(true); // Gộp ô
                 exSheet.Range["A1"].Value = "HÓA ĐƠN BÁN Ô TÔ";
@@ -657,7 +629,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 exSheet.Range["D6"].Value = "Nhân viên:";
                 exSheet.Range["E6"].Value = txtTenNV.Text;
 
-                // === 4. Thêm Tiêu đề cột cho Chi tiết sản phẩm ===
+                // Phần chi tiết
                 exSheet.Range["A10"].Value = "STT";
                 exSheet.Range["B10"].Value = "Tên hàng";
                 exSheet.Range["C10"].Value = "Số lượng";
@@ -669,7 +641,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 exSheet.Range["A10:F10"].Font.Bold = true;
                 exSheet.Range["A10:F10"].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
 
-                // === 5. Thêm Dữ liệu chi tiết từ Giỏ hàng (tblChiTietDonHang) ===
+                // Ghi dữ liệu
                 int startRow = 11;
                 for (int i = 0; i < tblChiTietDonHang.Rows.Count; i++)
                 {
@@ -682,9 +654,9 @@ namespace BTLQuanLyBanOTo.NghiepVu
                     exSheet.Range["F" + (startRow + i)].Value = row["ThanhTien"];
                 }
 
-                // === 6. Thêm Tổng tiền ===
+                //
                 int lastDataRow = startRow + tblChiTietDonHang.Rows.Count - 1;
-                int totalRow = lastDataRow + 2; // Cách ra 1 dòng
+                int totalRow = lastDataRow + 2;
 
                 exSheet.Range["E" + totalRow].Value = "Tổng tiền hàng:";
                 exSheet.Range["F" + totalRow].Formula = "=SUM(F" + startRow + ":F" + lastDataRow + ")";
@@ -723,7 +695,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
             finally
             {
-                // Giải phóng tài nguyên COM (rất quan trọng)
+                //
                 if (exSheet != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(exSheet);
                 if (exBook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(exBook);
                 if (exApp != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(exApp);
@@ -739,7 +711,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
             if (cboTimKiem.SelectedIndex != -1)
             {
                 btnTimKiem.Enabled = true;
-                btnHuy.Enabled = true;
+                // btnHuy.Enabled = true;
             }
         }
 
@@ -748,15 +720,13 @@ namespace BTLQuanLyBanOTo.NghiepVu
             //nếu có So DDH thì fill lên form
             string soDDHCanTim = cboTimKiem.SelectedValue.ToString();
 
-            // === 2. Xóa thông tin cũ trên form ===
-            // Reset các khu vực nhập liệu và giỏ hàng
             resetGrbTTC();
             resetGrbCTMH();
             resetDGV();
 
             try
             {
-                // === 3. Nạp thông tin chung (DonDatHang) ===
+                // nạp tt lên grb
                 string sqlDonHang = @"
                                     SELECT dh.*, nv.TenNV, kh.TenKhach, kh.DiaChi, kh.DienThoai
                                     FROM DonDatHang dh
@@ -785,7 +755,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                     txtDienThoai.Text = rowDH["DienThoai"].ToString();
 
                     // Hiển thị tổng tiền từ CSDL
-                    txtTongTien.Text = string.Format("{0:N0}", (decimal)rowDH["TongTien"]);
+                    txtTongTien.Text = string.Format("{0:N2} VNĐ", (decimal)rowDH["TongTien"]);
                     trangThai = (int)rowDH["TrangThai"];
                 }
                 else
@@ -795,7 +765,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                     return;
                 }
 
-                // === 4. Nạp chi tiết đơn hàng (ChiTietDonDatHang) vào giỏ hàng ===
+                // ghi chi tiết lên giỏ hàng
                 string sqlChiTiet = @"
                                     SELECT ct.MaHang, dm.TenHang, ct.SoLuong, dm.DonGiaBan AS DonGia, ct.GiamGia, ct.ThanhTien
                                     FROM ChiTietDonDatHang AS ct
@@ -824,8 +794,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
                     btnXoa.Enabled = true;
                     btnBoQua.Enabled = true;
                     btnIn.Enabled = true;
-                    btnTimKiem.Enabled = true;
-                    btnHuy.Enabled = true;
+                    cboTimKiem.Enabled = true;
+                    //btnHuy.Enabled = true;
                     cboTimKiem.Enabled = true;
                 }
                 else if (trangThai == 1)
@@ -834,8 +804,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
                     btnXoa.Enabled = false;
                     btnBoQua.Enabled = true;
                     btnIn.Enabled = true;
-                    btnTimKiem.Enabled = true;
-                    btnHuy.Enabled = true;
+                    cboTimKiem.Enabled = true;
+                    //btnHuy.Enabled = true;
                     cboTimKiem.Enabled = true;
                 }
 
@@ -850,14 +820,14 @@ namespace BTLQuanLyBanOTo.NghiepVu
             catch (Exception ex)
             {
                 MessageBox.Show("Đã xảy ra lỗi khi tải đơn hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                reset(); // Reset về trạng thái ban đầu nếu có lỗi
+                reset();
             }
         }
 
-        private void btnHuy_Click(object sender, EventArgs e)
-        {
-            reset();
-        }
+        //private void btnHuy_Click(object sender, EventArgs e)
+        //{
+        //    reset();
+        //}
 
         private void btnDong_Click(object sender, EventArgs e)
         {
@@ -882,14 +852,14 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 btnXoa.Enabled = true;
                 btnBoQua.Enabled = true;
                 btnIn.Enabled = true;
-                btnTimKiem.Enabled = true;
-                btnHuy.Enabled = true;
                 cboTimKiem.Enabled = true;
+                //btnHuy.Enabled = true;
 
                 //ẩn
                 btnThem.Enabled = false;
                 btnLuu.Enabled = false;
                 btnThemSP.Enabled = false;
+                btnXoaSP.Enabled = false;
 
                 action = "search";
             }

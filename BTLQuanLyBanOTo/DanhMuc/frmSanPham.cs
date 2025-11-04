@@ -1,6 +1,5 @@
 ﻿using BTLQuanLyBanOTo.Classes;
 using System;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
@@ -14,50 +13,99 @@ namespace BTLQuanLyBanOTo.DanhMuc
         {
             InitializeComponent();
         }
-        DataProcesser dt;
+
+        private DataProcesser dt;
+        private string action = "";
+
         private void frmSanPham_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
-
+            reset();
             LoadDGV();
             LoadAllCBO();
-            reset();
         }
 
-        public void LoadDGV()
+        private void reset()
         {
-            string sql = @"
-                            SELECT MaHang, TenHang, SoLuong, DonGiaNhap, DonGiaBan, ThoiGianBaoHanh, Anh,
-                                   h.TenHangSX, tl.TenLoai, ms.TenMau, dx.TenDoi, 
-                                   scn.TenSoCho, ns.TenNuocSX, tt.TenTinhTrang,       
-                                   sp.MaHangSX, sp.MaLoai, sp.MaMau, sp.MaDoi, 
-                                   sp.MaSoCho, sp.MaNuocSX, sp.MaTinhTrang
-                            FROM DanhMucHang AS sp
-                            LEFT JOIN HangSX AS h ON sp.MaHangSX = h.MaHangSX
-                            LEFT JOIN TheLoai AS tl ON sp.MaLoai = tl.MaLoai
-                            LEFT JOIN MauSac AS ms ON sp.MaMau = ms.MaMau
-                            LEFT JOIN DoiXe AS dx ON sp.MaDoi = dx.MaDoi
-                            LEFT JOIN SoChoNgoi AS scn ON sp.MaSoCho = scn.MaSoCho
-                            LEFT JOIN NuocSX AS ns ON sp.MaNuocSX = ns.MaNuocSX
-                            LEFT JOIN TinhTrang AS tt ON sp.MaTinhTrang = tt.MaTinhTrang";
-            dgvSanPham.DataSource = dt.ExecuteQuery(sql);
-            // Ẩn các cột Mã không cần thiết
-            dgvSanPham.Columns["MaHangSX"].Visible = false;
-            dgvSanPham.Columns["MaLoai"].Visible = false;
-            dgvSanPham.Columns["MaMau"].Visible = false;
-            dgvSanPham.Columns["MaDoi"].Visible = false;
-            dgvSanPham.Columns["MaSoCho"].Visible = false;
-            dgvSanPham.Columns["MaNuocSX"].Visible = false;
-            dgvSanPham.Columns["MaTinhTrang"].Visible = false;
+            txtMa.Enabled = true;
+            txtMa.Text = "";
+            txtTen.Text = "";
+            numSoLuong.ReadOnly = false;
+            numSoLuong.Value = 0;
+            txtDGN.Text = "0";
+            txtDGB.Text = "0";
+            txtTGBH.Text = "";
+
+            cboHangSX.SelectedIndex = -1;
+            cboLoaiXe.SelectedIndex = -1;
+            cboMauSac.SelectedIndex = -1;
+            cboDoiXe.SelectedIndex = -1;
+            cboSoCho.SelectedIndex = -1;
+            cboNuocSX.SelectedIndex = -1;
+            cboTinhTrang.SelectedIndex = -1;
+
+            picAnh.Image = null;
+            picAnh.Tag = null;
+
+            btnThem.Enabled = true;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+            btnLuu.Enabled = false;
+            btnBoQua.Enabled = false;
+
+            action = "";
+            txtMa.Focus();
         }
 
-        public void LoadCBO(ComboBox cbo, string sql, string displayMember, string valueMember)
+        private void LoadDGV()
         {
-            DataTable tbl = dt.ExecuteQuery(sql);
-            cbo.DataSource = tbl;
-            cbo.DisplayMember = displayMember;
-            cbo.ValueMember = valueMember;
-            cbo.SelectedIndex = -1;
+            try
+            {
+                string sql = @"
+                    SELECT MaHang, TenHang, SoLuong, DonGiaNhap, DonGiaBan, ThoiGianBaoHanh, Anh,
+                           h.TenHangSX, tl.TenLoai, ms.TenMau, dx.TenDoi,
+                           scn.TenSoCho, ns.TenNuocSX, tt.TenTinhTrang,
+                           sp.MaHangSX, sp.MaLoai, sp.MaMau, sp.MaDoi,
+                           sp.MaSoCho, sp.MaNuocSX, sp.MaTinhTrang
+                    FROM DanhMucHang AS sp
+                    LEFT JOIN HangSX AS h ON sp.MaHangSX = h.MaHangSX
+                    LEFT JOIN TheLoai AS tl ON sp.MaLoai = tl.MaLoai
+                    LEFT JOIN MauSac AS ms ON sp.MaMau = ms.MaMau
+                    LEFT JOIN DoiXe AS dx ON sp.MaDoi = dx.MaDoi
+                    LEFT JOIN SoChoNgoi AS scn ON sp.MaSoCho = scn.MaSoCho
+                    LEFT JOIN NuocSX AS ns ON sp.MaNuocSX = ns.MaNuocSX
+                    LEFT JOIN TinhTrang AS tt ON sp.MaTinhTrang = tt.MaTinhTrang";
+
+                dgvSanPham.DataSource = dt.ExecuteQuery(sql);
+
+                // Ẩn các mã liên kết
+                dgvSanPham.Columns["MaHangSX"].Visible = false;
+                dgvSanPham.Columns["MaLoai"].Visible = false;
+                dgvSanPham.Columns["MaMau"].Visible = false;
+                dgvSanPham.Columns["MaDoi"].Visible = false;
+                dgvSanPham.Columns["MaSoCho"].Visible = false;
+                dgvSanPham.Columns["MaNuocSX"].Visible = false;
+                dgvSanPham.Columns["MaTinhTrang"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dữ liệu:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadCBO(ComboBox cbo, string sql, string display, string value)
+        {
+            try
+            {
+                cbo.DataSource = dt.ExecuteQuery(sql);
+                cbo.DisplayMember = display;
+                cbo.ValueMember = value;
+                cbo.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải danh sách:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadAllCBO()
@@ -71,325 +119,258 @@ namespace BTLQuanLyBanOTo.DanhMuc
             LoadCBO(cboTinhTrang, "SELECT MaTinhTrang, TenTinhTrang FROM TinhTrang", "TenTinhTrang", "MaTinhTrang");
         }
 
-        public void reset()
-        {
-            txtMa.Text = "";
-            txtTen.Text = "";
-            numSoLuong.Value = 0;
-            txtDGN.Text = "0";
-            txtDGB.Text = "0";
-            txtTGBH.Text = "";
-
-            // Reset tất cả ComboBox
-            cboHangSX.SelectedIndex = -1;
-            cboLoaiXe.SelectedIndex = -1;
-            cboMauSac.SelectedIndex = -1;
-            cboDoiXe.SelectedIndex = -1;
-            cboSoCho.SelectedIndex = -1;
-            cboNuocSX.SelectedIndex = -1;
-            cboTinhTrang.SelectedIndex = -1;
-
-            picAnh.Image = null;
-            picAnh.Tag = null;
-
-            txtMa.Enabled = true;
-            btnThem.Enabled = true;
-            btnSua.Enabled = false;
-            btnXoa.Enabled = false;
-            btnLuu.Enabled = false;
-            btnBoQua.Enabled = false;
-
-            action = "";
-            txtMa.Focus();
-        }
-
         private void btnAnh_Click(object sender, EventArgs e)
         {
-            // 1. Mở cửa sổ chọn file
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Image Files (*.jpg;*.jpeg;*.png;*.gif;*.bmp)|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
-            ofd.Title = "Chọn ảnh sản phẩm";
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                Filter = "Ảnh (*.jpg;*.jpeg;*.png;*.gif;*.bmp)|*.jpg;*.jpeg;*.png;*.gif;*.bmp",
+                Title = "Chọn ảnh sản phẩm"
+            };
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    // 2. Lấy đường dẫn file nguồn
-                    string sourceFilePath = ofd.FileName;
+                    string src = ofd.FileName;
+                    string fileName = Path.GetFileName(src);
+                    string folder = Path.Combine(Application.StartupPath, "Images", "Oto");
 
-                    // 3. Lấy tên file
-                    string fileName = Path.GetFileName(sourceFilePath);
+                    if (!Directory.Exists(folder))
+                        Directory.CreateDirectory(folder);
 
-                    // 4. Tạo đường dẫn thư mục đích (trong thư mục chạy .exe)
-                    // Application.StartupPath là thư mục .../bin/Debug
-                    string destFolder = Path.Combine(Application.StartupPath, "Images", "Oto");
+                    string dest = Path.Combine(folder, fileName);
+                    if (src != dest) File.Copy(src, dest, true);
 
-                    // 5. Tạo đường dẫn file đích
-                    string destFilePath = Path.Combine(destFolder, fileName);
-
-                    // 6. Sao chép file (với 'true' để ghi đè nếu file đã tồn tại)
-                    // Kiểm tra để tránh lỗi tự copy chính nó
-                    if (sourceFilePath != destFilePath)
+                    using (var temp = Image.FromFile(dest))
                     {
-                        File.Copy(sourceFilePath, destFilePath, true);
+                        picAnh.Image = new Bitmap(temp);
                     }
 
-                    // 7. Hiển thị ảnh lên PictureBox
-                    // Phải tải từ file đích để đảm bảo file đã được copy thành công
-                    picAnh.Image = Image.FromFile(destFilePath);
-
-                    // 8. Lưu TÊN FILE vào Tag để sau này dùng cho nút Lưu
                     picAnh.Tag = fileName;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi sao chép hoặc tải ảnh: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi xử lý ảnh:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private string action = "";
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
-            btnSua.Enabled = false;
-            btnXoa.Enabled = false;
             btnLuu.Enabled = true;
             btnBoQua.Enabled = true;
+            numSoLuong.ReadOnly = true;
             action = "add";
         }
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtMa.Text))
+            {
+                MessageBox.Show("Vui lòng chọn bản ghi cần sửa!",
+                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnThem.Enabled = false;
             btnXoa.Enabled = false;
             btnLuu.Enabled = true;
-            btnDong.Enabled = true;
+            btnBoQua.Enabled = true;
             action = "edit";
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtMa.Text))
+            {
+                MessageBox.Show("Vui lòng chọn bản ghi cần xóa!",
+                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
-            btnDong.Enabled = true;
+            btnBoQua.Enabled = true;
             action = "delete";
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            //kiểm tra rỗng
-            if (string.IsNullOrEmpty(txtMa.Text) ||
-                string.IsNullOrEmpty(txtTen.Text) ||
-                string.IsNullOrEmpty(txtDGN.Text) ||
-                string.IsNullOrEmpty(txtDGB.Text) ||
-                cboHangSX.SelectedIndex == -1 ||
-                cboLoaiXe.SelectedIndex == -1 ||
-                cboMauSac.SelectedIndex == -1 ||
-                cboDoiXe.SelectedIndex == -1 ||
-                cboSoCho.SelectedIndex == -1 ||
-                cboNuocSX.SelectedIndex == -1 ||
-                cboTinhTrang.SelectedIndex == -1)
+            try
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            //kiểm tra giá
-            decimal dgn, dgb;
-            if (!decimal.TryParse(txtDGN.Text, out dgn) || !decimal.TryParse(txtDGB.Text, out dgb))
-            {
-                MessageBox.Show("Đơn giá nhập và đơn giá bán phải là số!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (dgb < dgn)
-            {
-                MessageBox.Show("Đơn giá bán phải lớn hơn hoặc bằng đơn giá nhập!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Lấy tên ảnh một cách AN TOÀN
-            string tenFileAnh = "";
-            if (picAnh.Tag != null)
-            {
-                tenFileAnh = picAnh.Tag.ToString();
-            }
-
-            SqlParameter[] prms = new SqlParameter[]
-            {
-                new SqlParameter("@ma", txtMa.Text),
-                new SqlParameter("@ten", txtTen.Text),
-                new SqlParameter("@sl", numSoLuong.Value),
-                new SqlParameter("@dgn", dgn),
-                new SqlParameter("@dgb", dgb),
-                new SqlParameter("@tgbh", txtTGBH.Text),
-                new SqlParameter("@anh", tenFileAnh), 
-        
-                // Lấy SelectedValue một cách AN TOÀN
-                new SqlParameter("@ml", cboLoaiXe.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@mhsx", cboHangSX.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@mm", cboMauSac.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@md", cboDoiXe.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@msc", cboSoCho.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@mnsx", cboNuocSX.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@mtt", cboTinhTrang.SelectedValue ?? DBNull.Value)
-            };
-
-
-            if (action == "add")
-            {
-                //lọc trùng
-                string sqlKT = "select count(*) from DanhMucHang where MaHang = @ma";
-                int count = (int)dt.ExecuteScalar(sqlKT, new SqlParameter[] { new SqlParameter("@ma", txtMa.Text) });
-                if (count > 0)
+                // Kiểm tra dữ liệu
+                if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text) ||
+                    cboHangSX.SelectedIndex == -1 || cboLoaiXe.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Đã có mã sản phẩm này. Vui lòng nhập mã khác!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                string sql = "insert into DanhMucHang(MaHang,TenHang,SoLuong,DonGiaNhap,DonGiaBan,ThoiGianBaoHanh,Anh,MaLoai,MaHangSX,MaMau,MaDoi,MaSoCho,MaNuocSX,MaTinhTrang) " +
-                             "values(@ma,@ten,@sl,@dgn,@dgb,@tgbh,@anh,@ml,@mhsx,@mm,@md,@msc,@mnsx,@mtt)";
+                if (!decimal.TryParse(txtDGN.Text, out decimal dgn) || !decimal.TryParse(txtDGB.Text, out decimal dgb))
+                {
+                    MessageBox.Show("Đơn giá nhập và bán phải là số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (dgb < dgn)
+                {
+                    MessageBox.Show("Đơn giá bán phải lớn hơn hoặc bằng giá nhập!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                int r = dt.ExecuteNonQuery(sql, prms); // Truyền mảng tham số đã tạo
-                if (r > 0)
+                string anh = picAnh.Tag?.ToString() ?? "";
+
+                SqlParameter[] prms =
                 {
-                    MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
+                    new SqlParameter("@ma", txtMa.Text.Trim()),
+                    new SqlParameter("@ten", txtTen.Text.Trim()),
+                    new SqlParameter("@sl", numSoLuong.Value),
+                    new SqlParameter("@dgn", dgn),
+                    new SqlParameter("@dgb", dgb),
+                    new SqlParameter("@tgbh", txtTGBH.Text.Trim()),
+                    new SqlParameter("@anh", anh),
+                    new SqlParameter("@ml", cboLoaiXe.SelectedValue),
+                    new SqlParameter("@mhsx", cboHangSX.SelectedValue),
+                    new SqlParameter("@mm", cboMauSac.SelectedValue),
+                    new SqlParameter("@md", cboDoiXe.SelectedValue),
+                    new SqlParameter("@msc", cboSoCho.SelectedValue),
+                    new SqlParameter("@mnsx", cboNuocSX.SelectedValue),
+                    new SqlParameter("@mtt", cboTinhTrang.SelectedValue)
+                };
+
+                if (action == "add")
                 {
-                    MessageBox.Show("Thêm sản phẩm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int kt = Convert.ToInt32(dt.ExecuteScalar("SELECT COUNT(*) FROM DanhMucHang WHERE MaHang=@ma", new SqlParameter[] {
+                        new SqlParameter("@ma", txtMa.Text.Trim())
+                    }));
+                    if (kt > 0)
+                    {
+                        MessageBox.Show("Đã tồn tại mã này!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    string sql = "INSERT INTO DanhMucHang(MaHang,TenHang,SoLuong,DonGiaNhap,DonGiaBan,ThoiGianBaoHanh,Anh,MaLoai,MaHangSX,MaMau,MaDoi,MaSoCho,MaNuocSX,MaTinhTrang) VALUES(@ma,@ten,@sl,@dgn,@dgb,@tgbh,@anh,@ml,@mhsx,@mm,@md,@msc,@mnsx,@mtt)";
+                    int r = dt.ExecuteNonQuery(sql, prms);
+                    MessageBox.Show(r > 0 ? "Thêm thành công!" : "Thêm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
+                if (action == "edit")
+                {
+                    string sql = "UPDATE DanhMucHang SET TenHang=@ten,SoLuong=@sl,DonGiaNhap=@dgn,DonGiaBan=@dgb,ThoiGianBaoHanh=@tgbh,Anh=@anh,MaLoai=@ml,MaHangSX=@mhsx,MaMau=@mm,MaDoi=@md,MaSoCho=@msc,MaNuocSX=@mnsx,MaTinhTrang=@mtt WHERE MaHang=@ma";
+                    int r = dt.ExecuteNonQuery(sql, prms);
+                    MessageBox.Show(r > 0 ? "Sửa thành công!" : "Sửa thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                if (action == "delete")
+                {
+                    DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dr == DialogResult.No) return;
+
+                    string sql = "DELETE FROM DanhMucHang WHERE MaHang=@ma";
+                    int r = dt.ExecuteNonQuery(sql, new SqlParameter[]{
+                        new SqlParameter("@ma", txtMa.Text)
+                    });
+                    MessageBox.Show(r > 0 ? "Xóa thành công!" : "Xóa thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                LoadDGV();
+                reset();
             }
-
-            if (action == "edit")
+            catch (SqlException ex)
             {
-                string sql = "update DanhMucHang set TenHang=@ten,SoLuong=@sl,DonGiaNhap=@dgn,DonGiaBan=@dgb,ThoiGianBaoHanh=@tgbh,Anh=@anh,MaLoai=@ml,MaHangSX=@mhsx,MaMau=@mm,MaDoi=@md,MaSoCho=@msc,MaNuocSX=@mnsx,MaTinhTrang=@mtt where MaHang=@ma";
-
-                int r = dt.ExecuteNonQuery(sql, prms);
-                if (r > 0)
-                {
-                    MessageBox.Show("Sửa sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                if (ex.Number == 547)
+                    MessageBox.Show("Không thể xóa vì dữ liệu đang được sử dụng!", "Lỗi ràng buộc", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
-                {
-                    MessageBox.Show("Sửa sản phẩm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    MessageBox.Show("Lỗi SQL:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            if (action == "delete")
+            catch (Exception ex)
             {
-                string sql = "delete from DanhMucHang where MaHang=@ma";
-                int r = dt.ExecuteNonQuery(sql, new SqlParameter[] { new SqlParameter("@ma", txtMa.Text) });
-                if (r > 0)
-                {
-                    MessageBox.Show("Xóa sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Xóa sản phẩm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                MessageBox.Show("Lỗi:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            LoadDGV();
-            reset();
         }
 
         private void dgvSanPham_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            // 2. Thiết lập trạng thái các nút
-            btnThem.Enabled = false;
-            btnSua.Enabled = true;
-            btnXoa.Enabled = true;
-            btnLuu.Enabled = false;
-            btnBoQua.Enabled = true;
-
-            // Khóa TextBox Mã
-            txtMa.Enabled = false;
-
-            // 3. Lấy dòng được chọn
-            var row = dgvSanPham.Rows[e.RowIndex];
-
-            // 4. Hàm helper để gán giá trị an toàn (tránh lỗi DBNull)
-            // Bạn có thể đặt hàm này bên trong hàm CellClick, hoặc bên ngoài
-            Action<Control, object> safeSetValue = (ctrl, value) =>
+            try
             {
-                if (value == null || value == DBNull.Value)
-                {
-                    if (ctrl is TextBox) ((TextBox)ctrl).Text = "";
-                    if (ctrl is NumericUpDown) ((NumericUpDown)ctrl).Value = 0;
-                    if (ctrl is ComboBox) ((ComboBox)ctrl).SelectedValue = -1;
-                    // (Thêm cho DateTimePicker nếu cần)
-                }
-                else
-                {
-                    if (ctrl is TextBox) ((TextBox)ctrl).Text = value.ToString();
-                    if (ctrl is NumericUpDown) ((NumericUpDown)ctrl).Value = Convert.ToDecimal(value);
-                    if (ctrl is ComboBox) ((ComboBox)ctrl).SelectedValue = value;
-                }
-            };
+                txtMa.Enabled = false;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+                btnBoQua.Enabled = true;
+                btnThem.Enabled = false;
+                btnLuu.Enabled = false;
+                action = "cell_click";
 
-            // 5. Gán giá trị cho các control
-            safeSetValue(txtMa, row.Cells["MaHang"].Value);
-            safeSetValue(txtTen, row.Cells["TenHang"].Value);
-            safeSetValue(numSoLuong, row.Cells["SoLuong"].Value);
-            safeSetValue(txtDGN, row.Cells["DonGiaNhap"].Value);
-            safeSetValue(txtDGB, row.Cells["DonGiaBan"].Value);
-            safeSetValue(txtTGBH, row.Cells["ThoiGianBaoHanh"].Value);
+                var row = dgvSanPham.Rows[e.RowIndex];
+                txtMa.Text = row.Cells["MaHang"].Value?.ToString();
+                txtTen.Text = row.Cells["TenHang"].Value?.ToString();
+                numSoLuong.Value = Convert.ToDecimal(row.Cells["SoLuong"].Value ?? 0);
+                txtDGN.Text = row.Cells["DonGiaNhap"].Value?.ToString();
+                txtDGB.Text = row.Cells["DonGiaBan"].Value?.ToString();
+                txtTGBH.Text = row.Cells["ThoiGianBaoHanh"].Value?.ToString();
 
-            // 6. Gán giá trị cho 7 ComboBox 
-            safeSetValue(cboHangSX, row.Cells["MaHangSX"].Value);
-            safeSetValue(cboLoaiXe, row.Cells["MaLoai"].Value);
-            safeSetValue(cboMauSac, row.Cells["MaMau"].Value);
-            safeSetValue(cboDoiXe, row.Cells["MaDoi"].Value);
-            safeSetValue(cboSoCho, row.Cells["MaSoCho"].Value);
-            safeSetValue(cboNuocSX, row.Cells["MaNuocSX"].Value);
-            safeSetValue(cboTinhTrang, row.Cells["MaTinhTrang"].Value);
+                cboHangSX.SelectedValue = row.Cells["MaHangSX"].Value;
+                cboLoaiXe.SelectedValue = row.Cells["MaLoai"].Value;
+                cboMauSac.SelectedValue = row.Cells["MaMau"].Value;
+                cboDoiXe.SelectedValue = row.Cells["MaDoi"].Value;
+                cboSoCho.SelectedValue = row.Cells["MaSoCho"].Value;
+                cboNuocSX.SelectedValue = row.Cells["MaNuocSX"].Value;
+                cboTinhTrang.SelectedValue = row.Cells["MaTinhTrang"].Value;
 
-            // 7. Hiển thị ảnh
-            object anhValue = row.Cells["Anh"].Value;
-            if (anhValue != null && anhValue != DBNull.Value)
-            {
-                string fileName = anhValue.ToString();
-                string fullPath = Path.Combine(Application.StartupPath, "Images", "Oto", fileName);
-
-                if (File.Exists(fullPath))
+                string fileName = row.Cells["Anh"].Value?.ToString();
+                if (!string.IsNullOrEmpty(fileName))
                 {
-                    picAnh.Image = Image.FromFile(fullPath);
-                    picAnh.Tag = fileName; // Lưu tên file vào Tag
-                }
-                else
-                {
-                    picAnh.Image = null; // Hoặc ảnh "Not Found"
-                    picAnh.Tag = null;
+                    string path = Path.Combine(Application.StartupPath, "Images", "Oto", fileName);
+                    if (File.Exists(path))
+                    {
+                        using (var imgTemp = Image.FromFile(path))
+                        {
+                            picAnh.Image = new Bitmap(imgTemp);
+                        }
+                        picAnh.Tag = fileName;
+                    }
+                    else
+                    {
+                        picAnh.Image = null;
+                        picAnh.Tag = null;
+                    }
                 }
             }
-            else
-            {
-                picAnh.Image = null;
-                picAnh.Tag = null;
-            }
+            catch { }
         }
 
         private void btnBoQua_Click(object sender, EventArgs e)
         {
-            reset();
+            if (action == "edit" || action == "delete")
+            {
+                btnThem.Enabled = false;
+                btnLuu.Enabled = false;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+                btnBoQua.Enabled = true;
+                action = "cell_click";
+            }
+            else
+            {
+                reset();
+            }
         }
 
         private void btnDong_Click(object sender, EventArgs e)
         {
-            DialogResult r = MessageBox.Show(
-                "Bạn có chắc muốn thoát không?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-                );
-            if (r == DialogResult.Yes)
-            {
+            if (MessageBox.Show("Bạn có chắc muốn thoát không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 this.Close();
+        }
+
+        private void numSoLuong_Click(object sender, EventArgs e)
+        {
+            if (action == "add")
+            {
+                MessageBox.Show("Không thể thay đổi số lượng khi thêm mới!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numSoLuong.Value = 0;
             }
         }
     }

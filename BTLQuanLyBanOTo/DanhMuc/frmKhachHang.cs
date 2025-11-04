@@ -1,8 +1,8 @@
 ﻿using BTLQuanLyBanOTo.Classes;
 using System;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace BTLQuanLyBanOTo.DanhMuc
 {
@@ -12,12 +12,13 @@ namespace BTLQuanLyBanOTo.DanhMuc
         {
             InitializeComponent();
         }
+
         DataProcesser dt;
+        private string action = "";
 
         private void frmKhachHang_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
-
             reset();
             LoadDGV();
         }
@@ -25,11 +26,11 @@ namespace BTLQuanLyBanOTo.DanhMuc
         public void reset()
         {
             txtMa.Enabled = true;
+            txtMa.Focus();
             txtMa.Text = "";
             txtTen.Text = "";
             txtDienThoai.Text = "";
             txtDiaChi.Text = "";
-            txtMa.Focus();
 
             btnThem.Enabled = true;
             btnSua.Enabled = false;
@@ -42,11 +43,18 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         public void LoadDGV()
         {
-            string sql = "select * from KhachHang";
-            dgvKhachHang.DataSource = dt.ExecuteQuery(sql);
+            try
+            {
+                string sql = "select * from KhachHang";
+                dgvKhachHang.DataSource = dt.ExecuteQuery(sql);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dữ liệu:\n" + ex.Message,
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private string action = "";
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
@@ -59,6 +67,13 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtMa.Text))
+            {
+                MessageBox.Show("Vui lòng chọn bản ghi cần sửa!",
+                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnThem.Enabled = false;
             btnXoa.Enabled = false;
             btnLuu.Enabled = true;
@@ -68,6 +83,13 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtMa.Text))
+            {
+                MessageBox.Show("Vui lòng chọn bản ghi cần xóa!",
+                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
@@ -77,146 +99,131 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            //kiem tra trong
-            if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text) || string.IsNullOrEmpty(txtDienThoai.Text) || string.IsNullOrEmpty(txtDiaChi.Text))
+            try
             {
-                MessageBox.Show(
-                    "Vui lòng nhập đầy đủ thông tin!",
-                    "Cảnh báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                    );
-                return;
-            }
-
-            if (action == "add")
-            {
-                string sdt = txtDienThoai.Text.Trim();
-                // Kiểm tra sdt chỉ có số và đủ 10 chữ số
-                if (sdt.Length != 10 || !sdt.All(char.IsDigit))
+                // Kiểm tra dữ liệu trống
+                if (string.IsNullOrEmpty(txtMa.Text) ||
+                    string.IsNullOrEmpty(txtTen.Text) ||
+                    string.IsNullOrEmpty(txtDienThoai.Text))
                 {
-                    MessageBox.Show("Số điện thoại phải là 10 chữ số. Vui lòng kiểm tra lại!", "Lỗi Đăng ký", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!",
+                        "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Kiểm tra SDT
+                if (!Regex.IsMatch(txtDienThoai.Text.Trim(), @"^[0-9]{9,11}$"))
+                {
+                    MessageBox.Show("Số điện thoại không hợp lệ! (chỉ gồm 9-11 chữ số)",
+                        "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtDienThoai.Focus();
                     return;
                 }
 
-                //lọc trùng
-                string sqlKT = "select count(*) from KhachHang where MaKhach = @ma";
-                int rKT = (int)dt.ExecuteScalar(sqlKT, new SqlParameter[]
+                if (action == "add")
                 {
-                    new SqlParameter("@ma", txtMa.Text.ToString())
-                });
-                if (rKT > 0)
-                {
-                    MessageBox.Show(
-                        "Đã có mã khách hàng này. Vui lòng tạo mã khác!",
-                        "Cảnh báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                        );
-                    return;
+                    string sqlKT = "select count(*) from KhachHang where MaKhach = @ma";
+                    int rKT = Convert.ToInt32(dt.ExecuteScalar(sqlKT, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim())
+                    }));
+
+                    if (rKT > 0)
+                    {
+                        MessageBox.Show("Đã có mã khách hàng này. Vui lòng nhập mã khác!",
+                            "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    string sql = "insert into KhachHang(MaKhach, TenKhach, DienThoai, DiaChi) " +
+                                 "values(@ma, @ten, @dt, @dc)";
+                    int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim()),
+                        new SqlParameter("@ten", txtTen.Text.Trim()),
+                        new SqlParameter("@dt", txtDienThoai.Text.Trim()),
+                        new SqlParameter("@dc", txtDiaChi.Text.Trim())
+                    });
+
+                    MessageBox.Show(r > 0 ? "Thêm khách hàng thành công!"
+                                          : "Thêm thất bại!",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                string sql = "insert into KhachHang(MaKhach,TenKhach,DiaChi,DienThoai) values(@ma,@ten,@dc,@dt)";
-                int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                if (action == "edit")
                 {
-                    new SqlParameter("@ma", txtMa.Text.ToString()),
-                    new SqlParameter("@ten",txtTen.Text.ToString()),
-                    new SqlParameter("@dc",txtDiaChi.Text.ToString()),
-                    new SqlParameter("@dt",txtDienThoai.Text.ToString())
-                });
-                if (r > 0)
-                {
-                    MessageBox.Show(
-                        "Thêm thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
+                    string sql = "update KhachHang set TenKhach = @ten, DienThoai = @dt, DiaChi = @dc where MaKhach = @ma";
+                    int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim()),
+                        new SqlParameter("@ten", txtTen.Text.Trim()),
+                        new SqlParameter("@dt", txtDienThoai.Text.Trim()),
+                        new SqlParameter("@dc", txtDiaChi.Text.Trim())
+                    });
+
+                    MessageBox.Show(r > 0 ? "Sửa thành công!"
+                                          : "Sửa thất bại!",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
+
+                if (action == "delete")
                 {
-                    MessageBox.Show(
-                        "Thêm thất bại!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                    return;
+                    DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa khách hàng này?",
+                        "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dr == DialogResult.No) return;
+
+                    string sql = "delete from KhachHang where MaKhach = @ma";
+                    int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
+                    {
+                        new SqlParameter("@ma", txtMa.Text.Trim())
+                    });
+
+                    MessageBox.Show(r > 0 ? "Xóa thành công!"
+                                          : "Xóa thất bại!",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
+                LoadDGV();
+                reset();
             }
-
-            if (action == "edit")
+            catch (SqlException ex)
             {
-                string sql = "update KhachHang set TenKhach = @ten, DianThoai = @dt, DiaChi = @dc where MaKhach = @ma";
-                int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
-                {
-                    new SqlParameter("@ma", txtMa.Text.ToString()),
-                    new SqlParameter("@ten",txtTen.Text.ToString()),
-                    new SqlParameter("@dc",txtDiaChi.Text.ToString()),
-                    new SqlParameter("@dt",txtDienThoai.Text.ToString())
-                });
-                if (r > 0)
-                {
-                    MessageBox.Show(
-                        "Sửa thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                }
+                if (ex.Number == 547)
+                    MessageBox.Show("Không thể xóa vì khách hàng này đang được sử dụng ở bảng khác!",
+                        "Lỗi ràng buộc", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
-                {
-                    MessageBox.Show(
-                        "Sửa thất bại!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                    return;
-                }
+                    MessageBox.Show("Lỗi SQL:\n" + ex.Message,
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            if (action == "delete")
+            catch (Exception ex)
             {
-                string sql = "delete from KhachHang where MaKhach = @ma";
-                int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
-                {
-                    new SqlParameter("@ma", txtMa.Text.ToString())
-                });
-                if (r > 0)
-                {
-                    MessageBox.Show(
-                        "Xóa thành công!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Xóa thất bại!",
-                        "Thông báo",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                        );
-                    return;
-                }
+                MessageBox.Show("Đã xảy ra lỗi:\n" + ex.Message,
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            LoadDGV();
-            reset();
         }
 
         private void btnBoQua_Click(object sender, EventArgs e)
         {
-            reset();
+            if (action == "edit" || action == "delete")
+            {
+                btnThem.Enabled = false;
+                btnLuu.Enabled = false;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+                btnBoQua.Enabled = true;
+                action = "cell_click";
+            }
+            else if (action == "cell_click" || action == "add")
+            {
+                reset();
+            }
         }
 
         private void dgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            try
             {
                 txtMa.Enabled = false;
 
@@ -225,23 +232,25 @@ namespace BTLQuanLyBanOTo.DanhMuc
                 btnBoQua.Enabled = true;
                 btnThem.Enabled = false;
                 btnLuu.Enabled = false;
+                action = "cell_click";
 
                 var row = dgvKhachHang.Rows[e.RowIndex];
-                txtMa.Text = row.Cells["MaKhach"].Value.ToString();
-                txtTen.Text = row.Cells["TenKhach"].Value.ToString();
-                txtDiaChi.Text = row.Cells["DiaChi"].Value.ToString();
-                txtDienThoai.Text = row.Cells["DienThoai"].Value.ToString();
+                txtMa.Text = row.Cells["MaKhach"].Value?.ToString();
+                txtTen.Text = row.Cells["TenKhach"].Value?.ToString();
+                txtDienThoai.Text = row.Cells["DienThoai"].Value?.ToString();
+                txtDiaChi.Text = row.Cells["DiaChi"].Value?.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi hiển thị dữ liệu:\n" + ex.Message,
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnDong_Click(object sender, EventArgs e)
         {
-            DialogResult r = MessageBox.Show(
-                "Bạn có chắc muốn thoát không?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-                );
+            DialogResult r = MessageBox.Show("Bạn có chắc muốn thoát không?",
+                "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (r == DialogResult.Yes)
             {
                 this.Close();

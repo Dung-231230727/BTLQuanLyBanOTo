@@ -30,7 +30,9 @@ namespace BTLQuanLyBanOTo.HeThong
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDangNhap));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblTTMK = new System.Windows.Forms.Label();
             this.lblDangKy = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
@@ -46,7 +48,8 @@ namespace BTLQuanLyBanOTo.HeThong
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.lblTTMK);
             this.panel1.Controls.Add(this.lblDangKy);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.btnHuy);
@@ -58,15 +61,27 @@ namespace BTLQuanLyBanOTo.HeThong
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(384, 407);
+            this.panel1.Size = new System.Drawing.Size(384, 395);
             this.panel1.TabIndex = 0;
+            // 
+            // lblTTMK
+            // 
+            this.lblTTMK.AutoSize = true;
+            this.lblTTMK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTTMK.ForeColor = System.Drawing.Color.Blue;
+            this.lblTTMK.Location = new System.Drawing.Point(119, 179);
+            this.lblTTMK.Name = "lblTTMK";
+            this.lblTTMK.Size = new System.Drawing.Size(60, 20);
+            this.lblTTMK.TabIndex = 14;
+            this.lblTTMK.Text = "( Hiện )";
+            this.lblTTMK.Click += new System.EventHandler(this.lblTTMK_Click);
             // 
             // lblDangKy
             // 
             this.lblDangKy.AutoSize = true;
             this.lblDangKy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.lblDangKy.ForeColor = System.Drawing.Color.Blue;
-            this.lblDangKy.Location = new System.Drawing.Point(159, 364);
+            this.lblDangKy.Location = new System.Drawing.Point(159, 355);
             this.lblDangKy.Name = "lblDangKy";
             this.lblDangKy.Size = new System.Drawing.Size(67, 20);
             this.lblDangKy.TabIndex = 13;
@@ -97,7 +112,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // btnHuy
             // 
             this.btnHuy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnHuy.Location = new System.Drawing.Point(218, 298);
+            this.btnHuy.Location = new System.Drawing.Point(218, 293);
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Size = new System.Drawing.Size(120, 38);
             this.btnHuy.TabIndex = 11;
@@ -108,7 +123,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // btnDN
             // 
             this.btnDN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnDN.Location = new System.Drawing.Point(47, 298);
+            this.btnDN.Location = new System.Drawing.Point(47, 293);
             this.btnDN.Name = "btnDN";
             this.btnDN.Size = new System.Drawing.Size(120, 38);
             this.btnDN.TabIndex = 10;
@@ -119,15 +134,16 @@ namespace BTLQuanLyBanOTo.HeThong
             // txtMK
             // 
             this.txtMK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.txtMK.Location = new System.Drawing.Point(49, 214);
+            this.txtMK.Location = new System.Drawing.Point(49, 209);
             this.txtMK.Name = "txtMK";
             this.txtMK.Size = new System.Drawing.Size(291, 26);
             this.txtMK.TabIndex = 9;
+            this.txtMK.UseSystemPasswordChar = true;
             // 
             // txtTDN
             // 
             this.txtTDN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.txtTDN.Location = new System.Drawing.Point(49, 128);
+            this.txtTDN.Location = new System.Drawing.Point(49, 123);
             this.txtTDN.Name = "txtTDN";
             this.txtTDN.Size = new System.Drawing.Size(291, 26);
             this.txtTDN.TabIndex = 8;
@@ -136,7 +152,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // 
             this.lblMK.AutoSize = true;
             this.lblMK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblMK.Location = new System.Drawing.Point(45, 176);
+            this.lblMK.Location = new System.Drawing.Point(45, 179);
             this.lblMK.Name = "lblMK";
             this.lblMK.Size = new System.Drawing.Size(75, 20);
             this.lblMK.TabIndex = 7;
@@ -146,7 +162,7 @@ namespace BTLQuanLyBanOTo.HeThong
             // 
             this.lblTDN.AutoSize = true;
             this.lblTDN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblTDN.Location = new System.Drawing.Point(45, 88);
+            this.lblTDN.Location = new System.Drawing.Point(45, 91);
             this.lblTDN.Name = "lblTDN";
             this.lblTDN.Size = new System.Drawing.Size(116, 20);
             this.lblTDN.TabIndex = 6;
@@ -156,13 +172,15 @@ namespace BTLQuanLyBanOTo.HeThong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 407);
+            this.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.ClientSize = new System.Drawing.Size(384, 395);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(400, 446);
+            this.MaximumSize = new System.Drawing.Size(400, 434);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 446);
+            this.MinimumSize = new System.Drawing.Size(400, 434);
             this.Name = "frmDangNhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đăng nhập hệ thống";
@@ -186,5 +204,6 @@ namespace BTLQuanLyBanOTo.HeThong
         private Panel panel2;
         private Label lblTieuDe;
         private Label lblDangKy;
+        private Label lblTTMK;
     }
 }
