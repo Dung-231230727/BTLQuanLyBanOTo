@@ -192,7 +192,10 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
 
         private void btnXuat_Click(object sender, EventArgs e)
         {
-            // xuất excel
+            Excel.Application app = null;
+            Excel.Workbook wb = null;
+            Excel.Worksheet ws = null;
+
             try
             {
                 if (dgvChiTiet.Rows.Count == 0)
@@ -201,6 +204,7 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
                     return;
                 }
 
+                //Khởi tạo SaveFileDialog
                 SaveFileDialog sfd = new SaveFileDialog
                 {
                     Filter = "Excel Workbook|*.xlsx",
@@ -208,49 +212,57 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
                     FileName = "BaoCaoTonKho_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx"
                 };
 
-                if (sfd.ShowDialog() == DialogResult.OK)
+                if (sfd.ShowDialog() != DialogResult.OK) return;
+
+                app = new Excel.Application();
+                app.Visible = false;
+                wb = app.Workbooks.Add(Type.Missing);
+                ws = (Excel.Worksheet)wb.ActiveSheet;
+                ws.Name = "BaoCaoTonKho";
+                //
+                Excel.Range title = ws.Range["A1", "E1"];
+                title.Merge();
+                title.Value = "BÁO CÁO TỒN KHO";
+                title.Font.Size = 18;
+                title.Font.Bold = true;
+                title.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                for (int i = 1; i <= dgvChiTiet.Columns.Count; i++)
                 {
-                    Excel.Application app = new Excel.Application();
-                    Excel.Workbook wb = app.Workbooks.Add(Type.Missing);
-                    Excel.Worksheet ws = (Excel.Worksheet)wb.ActiveSheet;
-                    ws.Name = "BaoCaoTonKho";
-
-                    Excel.Range title = ws.Range["A1", "E1"];
-                    title.Merge();
-                    title.Value = "BÁO CÁO TỒN KHO";
-                    title.Font.Size = 18;
-                    title.Font.Bold = true;
-                    title.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
-
-                    for (int i = 1; i <= dgvChiTiet.Columns.Count; i++)
-                    {
-                        ws.Cells[3, i] = dgvChiTiet.Columns[i - 1].HeaderText;
-                        ((Excel.Range)ws.Cells[3, i]).Font.Bold = true;
-                        ((Excel.Range)ws.Cells[3, i]).Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightSkyBlue);
-                    }
-
-                    for (int i = 0; i < dgvChiTiet.Rows.Count; i++)
-                    {
-                        for (int j = 0; j < dgvChiTiet.Columns.Count; j++)
-                        {
-                            ws.Cells[i + 4, j + 1] = dgvChiTiet.Rows[i].Cells[j].Value?.ToString();
-                        }
-                    }
-
-                    Excel.Range usedRange = ws.UsedRange;
-                    usedRange.Columns.AutoFit();
-                    usedRange.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-
-                    wb.SaveAs(sfd.FileName);
-                    wb.Close();
-                    app.Quit();
-
-                    MessageBox.Show("Xuất báo cáo thành công!\n" + Path.GetFileName(sfd.FileName), "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ws.Cells[3, i] = dgvChiTiet.Columns[i - 1].HeaderText;
+                    ((Excel.Range)ws.Cells[3, i]).Font.Bold = true;
+                    ((Excel.Range)ws.Cells[3, i]).Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightSkyBlue);
                 }
+
+                for (int i = 0; i < dgvChiTiet.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dgvChiTiet.Columns.Count; j++)
+                    {
+                        ws.Cells[i + 4, j + 1] = dgvChiTiet.Rows[i].Cells[j].Value?.ToString();
+                    }
+                }
+
+                Excel.Range usedRange = ws.UsedRange;
+                usedRange.Columns.AutoFit();
+                usedRange.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+                // Lưu và đóng ứng dụng
+                wb.SaveAs(sfd.FileName);
+                wb.Close(false);
+                app.Quit();
+
+                MessageBox.Show("Xuất báo cáo thành công!\n" + Path.GetFileName(sfd.FileName), "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi xuất Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (ws != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(ws);
+                if (wb != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
+                if (app != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                GC.Collect();
             }
         }
     }

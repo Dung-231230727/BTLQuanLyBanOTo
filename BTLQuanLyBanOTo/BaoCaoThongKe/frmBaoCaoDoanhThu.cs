@@ -1,6 +1,7 @@
 ﻿using BTLQuanLyBanOTo.Classes;
 using System;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -165,7 +166,7 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
             chartDoanhThu.ChartAreas[0].AxisX.Title = "Sản phẩm";
             chartDoanhThu.ChartAreas[0].AxisY.Title = "Doanh thu (VNĐ)";
             chartDoanhThu.ChartAreas[0].AxisX.Interval = 1;
-            chartDoanhThu.ChartAreas[0].AxisX.LabelStyle.Angle = -15;
+            //chartDoanhThu.ChartAreas[0].AxisX.LabelStyle.Angle = -15;
 
             if (data == null || data.Rows.Count == 0)
                 return;
@@ -179,12 +180,6 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
             // Xác định tên cột hiển thị
             string nameCol = "Tên hàng";
             string valueCol = "Doanh thu (VNĐ)";
-
-            // Nếu có thêm cột danh mục (ví dụ: “Tình trạng”, “Hãng sản xuất”) thì hiển thị song song
-            if (data.Columns.Contains("Nhóm"))
-                nameCol = "Nhóm";
-            else if (data.Columns.Contains("Tình trạng"))
-                nameCol = "Tình trạng";
 
             // Thêm điểm dữ liệu vào biểu đồ
             foreach (DataRow row in data.Rows)
@@ -231,6 +226,10 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
 
         private void btnXuat_Click(object sender, EventArgs e)
         {
+            Excel.Application app = null;
+            Excel.Workbook wb = null;
+            Excel.Worksheet ws = null;
+
             try
             {
                 if (dgvChiTiet.Rows.Count == 0)
@@ -239,9 +238,21 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
                     return;
                 }
 
-                Excel.Application app = new Excel.Application();
-                Excel.Workbook wb = app.Workbooks.Add(Type.Missing);
-                Excel.Worksheet ws = (Excel.Worksheet)wb.ActiveSheet;
+                //Khởi tạo SaveFileDialog
+                SaveFileDialog sfd = new SaveFileDialog
+                {
+                    Filter = "Excel Workbook|*.xlsx",
+                    Title = "Xuất báo cáo doanh thu ra Excel",
+                    FileName = "BaoCaoDoanhThu_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx"
+                };
+
+                if (sfd.ShowDialog() != DialogResult.OK) return;
+
+                //Khởi tạo Excel ẩn
+                app = new Excel.Application();
+                app.Visible = false;
+                wb = app.Workbooks.Add(Type.Missing);
+                ws = (Excel.Worksheet)wb.ActiveSheet;
                 ws.Name = "BaoCaoDoanhThu";
 
                 // Ghi tiêu đề
@@ -272,17 +283,25 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
                     }
                 }
 
-                // Auto-fit cột
                 ws.Columns.AutoFit();
 
-                // Hiển thị Excel
-                app.Visible = true;
+                //Lưu và đóng ứng dụng
+                wb.SaveAs(sfd.FileName);
+                wb.Close(false);
+                app.Quit();
 
-                MessageBox.Show("Xuất báo cáo thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Xuất báo cáo thành công!\n" + Path.GetFileName(sfd.FileName), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi xuất báo cáo: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (ws != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(ws);
+                if (wb != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
+                if (app != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                GC.Collect();
             }
         }
     }

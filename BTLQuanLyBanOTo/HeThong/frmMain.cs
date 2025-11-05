@@ -250,21 +250,25 @@ namespace BTLQuanLyBanOTo
         public void PhanQuyenChucNang()
         {
             string maCV = MaCV_DangNhap ?? "";
-
-            mnuQLyDanhMuc.Enabled = false;
-            mnuQlyNghiepVu.Enabled = false;
-            mnuQlyBCTK.Enabled = false;
-            mnuQlyTroGiup.Enabled = true;
-            mnuHTDangXuat.Enabled = true;
-
+            //2
             mnuDMNV.Enabled = false;
             mnuDMKH.Enabled = false;
             mnuDMNCC.Enabled = false;
             mnuDMSP.Enabled = false;
+            mnuDMDMC.Enabled = false;
             mnuNVBH.Enabled = false;
             mnuNVNH.Enabled = false;
             mnuBCTKDT.Enabled = false;
             mnuBCTKTK.Enabled = false;
+            //3
+            mnuDMCCV.Enabled = false;
+            mnuDMCDX.Enabled = false;
+            mnuDMCHSX.Enabled = false;
+            mnuDMCLX.Enabled = false;
+            mnuDMCMS.Enabled = false;
+            mnuDMCNSX.Enabled = false;
+            mnuDMCSCN.Enabled = false;
+            mnuDMCTT.Enabled = false;
 
             foreach (ListViewItem item in lvChucNang.Items)
                 item.ForeColor = Color.Gray;
@@ -273,25 +277,38 @@ namespace BTLQuanLyBanOTo
             switch (maCV)
             {
                 case "CV01": //giám đốc / admin
-                    mnuQLyDanhMuc.Enabled = true;
-                    mnuQlyNghiepVu.Enabled = true;
-                    mnuQlyBCTK.Enabled = true;
-                    lvChucNang.Enabled = true;
+                    //2
                     mnuDMNV.Enabled = true;
                     mnuDMKH.Enabled = true;
                     mnuDMNCC.Enabled = true;
                     mnuDMSP.Enabled = true;
+                    mnuDMDMC.Enabled = true;
                     mnuNVBH.Enabled = true;
                     mnuNVNH.Enabled = true;
                     mnuBCTKDT.Enabled = true;
                     mnuBCTKTK.Enabled = true;
+                    //3
+                    mnuDMCCV.Enabled = true;
+                    mnuDMCDX.Enabled = true;
+                    mnuDMCHSX.Enabled = true;
+                    mnuDMCLX.Enabled = true;
+                    mnuDMCMS.Enabled = true;
+                    mnuDMCNSX.Enabled = true;
+                    mnuDMCSCN.Enabled = true;
+                    mnuDMCTT.Enabled = true;
+
+                    lvChucNang.Enabled = true;
                     foreach (ListViewItem item in lvChucNang.Items)
                         item.ForeColor = Color.Black;
                     break;
 
+                case "CV02": //kế toán
+                    mnuBCTKDT.Enabled = true;
+                    mnuBCTKTK.Enabled = true;
+                    break;
+
                 case "CV03": //nhân viên bán hàng
-                    mnuQLyDanhMuc.Enabled = true;
-                    mnuQlyNghiepVu.Enabled = true;
+                    //2
                     mnuDMKH.Enabled = true;
                     mnuDMSP.Enabled = true;
                     mnuNVBH.Enabled = true;
@@ -310,9 +327,7 @@ namespace BTLQuanLyBanOTo
                     break;
 
                 case "CV04": //thủ kho
-                    mnuQLyDanhMuc.Enabled = true;
-                    mnuQlyNghiepVu.Enabled = true;
-                    mnuQlyBCTK.Enabled = true;
+                    //2
                     mnuDMNCC.Enabled = true;
                     mnuDMSP.Enabled = true;
                     mnuNVNH.Enabled = true;
@@ -324,6 +339,29 @@ namespace BTLQuanLyBanOTo
                         if (item.Text == "Nhà Cung Cấp" ||
                             item.Text == "Sản Phẩm" ||
                             item.Text == "Hóa Đơn Nhập")
+                            item.ForeColor = Color.Black;
+                        else
+                            item.ForeColor = Color.Gray;
+                    }
+                    break;
+
+                case "CV05": //nv kỹ thuật
+                    //2
+                    mnuDMSP.Enabled = true;
+                    mnuDMDMC.Enabled = true;
+                    //3
+                    mnuDMCDX.Enabled = true;
+                    mnuDMCHSX.Enabled = true;
+                    mnuDMCLX.Enabled = true;
+                    mnuDMCMS.Enabled = true;
+                    mnuDMCNSX.Enabled = true;
+                    mnuDMCSCN.Enabled = true;
+                    mnuDMCTT.Enabled = true;
+
+                    lvChucNang.Enabled = true;
+                    foreach (ListViewItem item in lvChucNang.Items)
+                    {
+                        if (item.Text == "Sản Phẩm")
                             item.ForeColor = Color.Black;
                         else
                             item.ForeColor = Color.Gray;

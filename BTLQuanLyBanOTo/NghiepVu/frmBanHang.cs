@@ -30,10 +30,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         public void LoadDGV()
         {
-            // 1. Khởi tạo bảng tạm (giỏ hàng)
             tblChiTietDonHang = new DataTable();
 
-            // 2. Định nghĩa các cột cho giỏ hàng
             tblChiTietDonHang.Columns.Add("MaHang", typeof(string));
             tblChiTietDonHang.Columns.Add("TenHang", typeof(string));
             tblChiTietDonHang.Columns.Add("SoLuong", typeof(int));
@@ -41,10 +39,8 @@ namespace BTLQuanLyBanOTo.NghiepVu
             tblChiTietDonHang.Columns.Add("GiamGia", typeof(decimal));
             tblChiTietDonHang.Columns.Add("ThanhTien", typeof(decimal));
 
-            // 3. Gán bảng tạm (đang trống) này làm Nguồn dữ liệu
             dgvGioHang.DataSource = tblChiTietDonHang;
 
-            // 4.Định dạng cột
             dgvGioHang.Columns["MaHang"].HeaderText = "Mã hàng";
             dgvGioHang.Columns["TenHang"].HeaderText = "Tên hàng";
             dgvGioHang.Columns["SoLuong"].HeaderText = "Số lượng";
@@ -212,7 +208,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
         {
             // lấy ngày hiện tại
             string ngayHienTai = DateTime.Now.ToString("ddMMyyyy");
-            string prefix = "HĐB_" + ngayHienTai; // Ví dụ: HĐB_26102025
+            string prefix = "HĐB_" + ngayHienTai;
 
             // lấy mã lớn nhất
             string sql = "SELECT MAX(SoDDH) FROM DonDatHang WHERE SoDDH LIKE @prefix";
@@ -227,7 +223,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 string maLonNhat = result.ToString();
                 string soCuoi = maLonNhat.Substring(prefix.Length);
 
-                soThuTuMoi = int.Parse(soCuoi) + 1; //cộng 1 vào số cũ
+                soThuTuMoi = int.Parse(soCuoi) + 1;
             }
 
             // nối lại mã
@@ -606,19 +602,31 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 return;
             }
 
-            // khởi tạo excel
-            Excel.Application exApp = new Excel.Application();
+            // 1. Khởi tạo SaveFileDialog
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "Excel Workbook|*.xlsx",
+                Title = "Xuất hóa đơn bán hàng ra Excel",
+                FileName = "HoaDonBan_" + txtMa.Text + "_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx"
+            };
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            // 2. Khởi tạo Excel ẩn
+            Excel.Application exApp = null;
             Excel.Workbook exBook = null;
             Excel.Worksheet exSheet = null;
 
             try
             {
+                exApp = new Excel.Application();
+                exApp.Visible = false;
                 exBook = exApp.Workbooks.Add(Missing.Value);
                 exSheet = (Excel.Worksheet)exBook.Worksheets.get_Item(1);
                 exSheet.Name = "Hóa Đơn Bán Hàng";
 
                 // Định dạng tiêu đề
-                exSheet.Range["A1:F1"].Merge(true); // Gộp ô
+                exSheet.Range["A1:F1"].Merge(true);
                 exSheet.Range["A1"].Value = "HÓA ĐƠN BÁN Ô TÔ";
                 exSheet.Range["A1"].Font.Bold = true;
                 exSheet.Range["A1"].Font.Size = 16;
@@ -626,7 +634,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
                 // Thông tin hóa đơn
                 exSheet.Range["A3"].Value = "Mã HĐ:";
-                exSheet.Range["B3"].Value = txtMa.Text; // Mã HĐ
+                exSheet.Range["B3"].Value = txtMa.Text;
                 exSheet.Range["A4"].Value = "Ngày đặt:";
                 exSheet.Range["B4"].Value = dtpNgayDat.Value.ToString("dd/MM/yyyy");
                 exSheet.Range["D4"].Value = "Ngày giao:";
@@ -661,7 +669,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 for (int i = 0; i < tblChiTietDonHang.Rows.Count; i++)
                 {
                     DataRow row = tblChiTietDonHang.Rows[i];
-                    exSheet.Range["A" + (startRow + i)].Value = i + 1; // Số thứ tự
+                    exSheet.Range["A" + (startRow + i)].Value = i + 1;
                     exSheet.Range["B" + (startRow + i)].Value = row["TenHang"];
                     exSheet.Range["C" + (startRow + i)].Value = row["SoLuong"];
                     exSheet.Range["D" + (startRow + i)].Value = row["DonGia"];
@@ -676,7 +684,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 exSheet.Range["E" + totalRow].Value = "Tổng tiền hàng:";
                 exSheet.Range["F" + totalRow].Formula = "=SUM(F" + startRow + ":F" + lastDataRow + ")";
 
-                //thêm Thuế, Đặt cọc 
+                // Thuế, Đặt cọc 
                 exSheet.Range["E" + (totalRow + 1)].Value = "Thuế (%):";
                 exSheet.Range["F" + (totalRow + 1)].Value = txtThue.Text;
                 exSheet.Range["E" + (totalRow + 2)].Value = "Đặt cọc:";
@@ -687,22 +695,20 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 exSheet.Range["E" + (totalRow + 3) + ":F" + (totalRow + 3)].Font.Bold = true;
 
 
-                // === 7. Định dạng chung ===
-                exSheet.Columns["A:F"].AutoFit(); // Tự động căn chỉnh độ rộng cột
-                                                  // Kẻ viền (optional)
+                exSheet.Columns["A:F"].AutoFit();
+
                 exSheet.Range["A10:F" + lastDataRow].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
-                // === 8. Hiển thị Excel ===
-                exApp.Visible = true; // Mở file Excel lên cho người dùng xem
-                                      // (Hoặc bạn có thể lưu file tự động: exBook.SaveAs("D:\\HoaDon_" + txtMa.Text + ".xlsx");)
+                // 3. Lưu và đóng ứng dụng
+                exBook.SaveAs(sfd.FileName);
+                exBook.Close(false);
+                exApp.Quit();
 
                 string sqlUpdateStatus = "UPDATE DonDatHang SET TrangThai = 1 WHERE SoDDH = @ma";
                 dt.ExecuteNonQuery(sqlUpdateStatus, new SqlParameter[] { new SqlParameter("@ma", txtMa.Text) });
 
-                MessageBox.Show("Đã xuất hóa đơn ra Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã xuất hóa đơn ra Excel thành công!\n" + System.IO.Path.GetFileName(sfd.FileName), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Reset form sau khi in
-                //reset();
             }
             catch (Exception ex)
             {
@@ -710,7 +716,6 @@ namespace BTLQuanLyBanOTo.NghiepVu
             }
             finally
             {
-                //
                 if (exSheet != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(exSheet);
                 if (exBook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(exBook);
                 if (exApp != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(exApp);

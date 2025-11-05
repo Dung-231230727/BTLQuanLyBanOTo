@@ -574,13 +574,25 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 return;
             }
 
-            // 
-            Excel.Application exApp = new Excel.Application();
+            // 1. Khởi tạo SaveFileDialog
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "Excel Workbook|*.xlsx",
+                Title = "Xuất hóa đơn nhập hàng ra Excel",
+                FileName = "HoaDonNhap_" + txtMa.Text + "_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx"
+            };
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            // 2. Khởi tạo Excel ẩn
+            Excel.Application exApp = null;
             Excel.Workbook exBook = null;
             Excel.Worksheet exSheet = null;
 
             try
             {
+                exApp = new Excel.Application();
+                exApp.Visible = false;
                 exBook = exApp.Workbooks.Add(Missing.Value);
                 exSheet = (Excel.Worksheet)exBook.Worksheets.get_Item(1);
                 exSheet.Name = "Hóa Đơn Nhập Hàng";
@@ -647,20 +659,19 @@ namespace BTLQuanLyBanOTo.NghiepVu
                 exSheet.Range["F" + (totalRow + 3)].Value = txtTongTien.Text;
                 exSheet.Range["E" + (totalRow + 3) + ":F" + (totalRow + 3)].Font.Bold = true;
 
-
-                // === 7. Định dạng chung ===
-                exSheet.Columns["A:F"].AutoFit(); // Tự động căn chỉnh độ rộng cột
-                                                  // Kẻ viền (optional)
+                exSheet.Columns["A:F"].AutoFit();
                 exSheet.Range["A10:F" + lastDataRow].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
 
-                // === 8. Hiển thị Excel ===
-                exApp.Visible = true; // Mở file Excel lên cho người dùng xem
-                                      // (Hoặc bạn có thể lưu file tự động: exBook.SaveAs("D:\\HoaDon_" + txtMa.Text + ".xlsx");)
+                // Lưu và đóng ứng dụng
+                exBook.SaveAs(sfd.FileName);
+                exBook.Close(false);
+                exApp.Quit();
 
+                //cập nhật trạng thái sau khi xuất thành công
                 string sqlUpdateStatus = "UPDATE HoaDonNhap SET TrangThai = 1 WHERE SoHDN = @ma";
                 dt.ExecuteNonQuery(sqlUpdateStatus, new SqlParameter[] { new SqlParameter("@ma", txtMa.Text) });
 
-                MessageBox.Show("Đã xuất hóa đơn ra Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã xuất hóa đơn ra Excel thành công!\n" + System.IO.Path.GetFileName(sfd.FileName), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Reset form sau khi in
                 //reset();
