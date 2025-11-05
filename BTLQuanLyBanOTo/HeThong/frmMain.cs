@@ -233,7 +233,6 @@ namespace BTLQuanLyBanOTo
             mnuQlyNghiepVu.Enabled = isEnable;
             mnuQLyDanhMuc.Enabled = isEnable;
             mnuQlyBCTK.Enabled = isEnable;
-            mnuQlyTroGiup.Enabled = isEnable;
 
             lvChucNang.Enabled = isEnable;
 
@@ -250,7 +249,7 @@ namespace BTLQuanLyBanOTo
 
         public void PhanQuyenChucNang()
         {
-            string maCV = frmMain.MaCV_DangNhap ?? "";
+            string maCV = MaCV_DangNhap ?? "";
 
             mnuQLyDanhMuc.Enabled = false;
             mnuQlyNghiepVu.Enabled = false;
@@ -278,6 +277,14 @@ namespace BTLQuanLyBanOTo
                     mnuQlyNghiepVu.Enabled = true;
                     mnuQlyBCTK.Enabled = true;
                     lvChucNang.Enabled = true;
+                    mnuDMNV.Enabled = true;
+                    mnuDMKH.Enabled = true;
+                    mnuDMNCC.Enabled = true;
+                    mnuDMSP.Enabled = true;
+                    mnuNVBH.Enabled = true;
+                    mnuNVNH.Enabled = true;
+                    mnuBCTKDT.Enabled = true;
+                    mnuBCTKTK.Enabled = true;
                     foreach (ListViewItem item in lvChucNang.Items)
                         item.ForeColor = Color.Black;
                     break;
@@ -324,7 +331,6 @@ namespace BTLQuanLyBanOTo
                     break;
             }
         }
-
 
         private void mnuDMSP_Click(object sender, EventArgs e)
         {
@@ -443,6 +449,12 @@ namespace BTLQuanLyBanOTo
         public void OpenDKy()
         {
             frmDangKy f = new frmDangKy();
+            OpenChildForm(f);
+        }
+
+        private void hướngDẫnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmHuongDan f = new frmHuongDan();
             OpenChildForm(f);
         }
     }
