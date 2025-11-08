@@ -376,6 +376,7 @@
             // 
             // txtMa
             // 
+            this.txtMa.Enabled = false;
             this.txtMa.Location = new System.Drawing.Point(135, 28);
             this.txtMa.Name = "txtMa";
             this.txtMa.Size = new System.Drawing.Size(227, 22);

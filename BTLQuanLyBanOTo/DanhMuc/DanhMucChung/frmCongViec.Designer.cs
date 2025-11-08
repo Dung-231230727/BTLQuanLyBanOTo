@@ -48,6 +48,9 @@
             this.lblMa = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
+            this.lblTrangThai = new System.Windows.Forms.Label();
+            this.radHD = new System.Windows.Forms.RadioButton();
+            this.radKHD = new System.Windows.Forms.RadioButton();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCongViec)).BeginInit();
             this.panel2.SuspendLayout();
@@ -60,9 +63,9 @@
             // 
             this.panel3.Controls.Add(this.dgvCongViec);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 230);
+            this.panel3.Location = new System.Drawing.Point(0, 200);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1184, 451);
+            this.panel3.Size = new System.Drawing.Size(1184, 481);
             this.panel3.TabIndex = 7;
             // 
             // dgvCongViec
@@ -82,7 +85,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvCongViec.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCongViec.Size = new System.Drawing.Size(1184, 451);
+            this.dgvCongViec.Size = new System.Drawing.Size(1184, 481);
             this.dgvCongViec.TabIndex = 0;
             this.dgvCongViec.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCongViec_CellClick);
             // 
@@ -178,6 +181,9 @@
             // 
             // grbNhapLieu
             // 
+            this.grbNhapLieu.Controls.Add(this.radKHD);
+            this.grbNhapLieu.Controls.Add(this.radHD);
+            this.grbNhapLieu.Controls.Add(this.lblTrangThai);
             this.grbNhapLieu.Controls.Add(this.txtLuong);
             this.grbNhapLieu.Controls.Add(this.lblLuong);
             this.grbNhapLieu.Controls.Add(this.txtTen);
@@ -188,14 +194,14 @@
             this.grbNhapLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.grbNhapLieu.Location = new System.Drawing.Point(0, 80);
             this.grbNhapLieu.Name = "grbNhapLieu";
-            this.grbNhapLieu.Size = new System.Drawing.Size(1184, 150);
+            this.grbNhapLieu.Size = new System.Drawing.Size(1184, 120);
             this.grbNhapLieu.TabIndex = 5;
             this.grbNhapLieu.TabStop = false;
             this.grbNhapLieu.Text = "Thông tin công việc";
             // 
             // txtLuong
             // 
-            this.txtLuong.Location = new System.Drawing.Point(124, 100);
+            this.txtLuong.Location = new System.Drawing.Point(620, 30);
             this.txtLuong.Name = "txtLuong";
             this.txtLuong.Size = new System.Drawing.Size(292, 22);
             this.txtLuong.TabIndex = 5;
@@ -203,7 +209,7 @@
             // lblLuong
             // 
             this.lblLuong.AutoSize = true;
-            this.lblLuong.Location = new System.Drawing.Point(19, 103);
+            this.lblLuong.Location = new System.Drawing.Point(515, 33);
             this.lblLuong.Name = "lblLuong";
             this.lblLuong.Size = new System.Drawing.Size(80, 16);
             this.lblLuong.TabIndex = 4;
@@ -211,13 +217,14 @@
             // 
             // txtTen
             // 
-            this.txtTen.Location = new System.Drawing.Point(124, 65);
+            this.txtTen.Location = new System.Drawing.Point(124, 74);
             this.txtTen.Name = "txtTen";
             this.txtTen.Size = new System.Drawing.Size(292, 22);
             this.txtTen.TabIndex = 3;
             // 
             // txtMa
             // 
+            this.txtMa.Enabled = false;
             this.txtMa.Location = new System.Drawing.Point(124, 30);
             this.txtMa.Name = "txtMa";
             this.txtMa.Size = new System.Drawing.Size(292, 22);
@@ -226,7 +233,7 @@
             // lblTen
             // 
             this.lblTen.AutoSize = true;
-            this.lblTen.Location = new System.Drawing.Point(19, 68);
+            this.lblTen.Location = new System.Drawing.Point(19, 77);
             this.lblTen.Name = "lblTen";
             this.lblTen.Size = new System.Drawing.Size(92, 16);
             this.lblTen.TabIndex = 1;
@@ -261,6 +268,37 @@
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "DANH MỤC CÔNG VIỆC";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblTrangThai
+            // 
+            this.lblTrangThai.AutoSize = true;
+            this.lblTrangThai.Location = new System.Drawing.Point(515, 77);
+            this.lblTrangThai.Name = "lblTrangThai";
+            this.lblTrangThai.Size = new System.Drawing.Size(67, 16);
+            this.lblTrangThai.TabIndex = 6;
+            this.lblTrangThai.Text = "Trạng thái";
+            // 
+            // radHD
+            // 
+            this.radHD.AutoSize = true;
+            this.radHD.Location = new System.Drawing.Point(620, 75);
+            this.radHD.Name = "radHD";
+            this.radHD.Size = new System.Drawing.Size(88, 20);
+            this.radHD.TabIndex = 7;
+            this.radHD.TabStop = true;
+            this.radHD.Text = "Hoạt động";
+            this.radHD.UseVisualStyleBackColor = true;
+            // 
+            // radKHD
+            // 
+            this.radKHD.AutoSize = true;
+            this.radKHD.Location = new System.Drawing.Point(732, 75);
+            this.radKHD.Name = "radKHD";
+            this.radKHD.Size = new System.Drawing.Size(126, 20);
+            this.radKHD.TabIndex = 8;
+            this.radKHD.TabStop = true;
+            this.radKHD.Text = "Không hoạt động";
+            this.radKHD.UseVisualStyleBackColor = true;
             // 
             // frmCongViec
             // 
@@ -309,5 +347,8 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Label lblTrangThai;
+        private System.Windows.Forms.RadioButton radHD;
+        private System.Windows.Forms.RadioButton radKHD;
     }
 }

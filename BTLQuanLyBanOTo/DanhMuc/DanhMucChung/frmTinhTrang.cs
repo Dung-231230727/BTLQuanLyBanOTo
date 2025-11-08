@@ -24,7 +24,6 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
         public void reset()
         {
-            txtMa.Enabled = true;
             txtMa.Focus();
             txtMa.Text = "";
             txtTen.Text = "";
@@ -51,9 +50,43 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             }
         }
 
+        private string TaoMaTuDong()
+        {
+            string prefix = "TT";
+
+            string sql = "SELECT MAX(MaTinhTrang) FROM TinhTrang WHERE MaTinhTrang LIKE @prefix";
+            SqlParameter[] prms = new SqlParameter[] {
+                new SqlParameter("@prefix", prefix + "%")
+            };
+
+            object result = dt.ExecuteScalar(sql, prms);
+            int soThuTuMoi = 1;
+            int soChuSo = 4;
+
+            if (result != null && result != DBNull.Value)
+            {
+                string maLonNhat = result.ToString();
+
+                if (maLonNhat.StartsWith(prefix))
+                {
+                    string soCuoi = maLonNhat.Substring(prefix.Length);
+
+                    if (int.TryParse(soCuoi, out int soHienTai))
+                    {
+                        soThuTuMoi = soHienTai + 1;
+                    }
+                }
+            }
+
+            string maMoi = prefix + soThuTuMoi.ToString("D" + soChuSo);
+
+            return maMoi;
+        }
+
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
+            txtMa.Text = TaoMaTuDong();
             btnLuu.Enabled = true;
             btnBoQua.Enabled = true;
             btnSua.Enabled = false;

@@ -121,6 +121,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Name = "frmHuongDan";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hướng dẫn sử dụng";
             this.Load += new System.EventHandler(this.frmHuongDan_Load);
             this.panel2.ResumeLayout(false);

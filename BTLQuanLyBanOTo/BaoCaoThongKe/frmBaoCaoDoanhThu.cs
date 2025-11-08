@@ -66,25 +66,40 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
 
         public void LoadDGV()
         {
-            // --- Phần SELECT cơ bản ---
-            string select = @"
-                                SELECT 
-                                    h.MaHang AS [Mã hàng],
-                                    h.TenHang AS [Tên hàng],
-                                    SUM(ct.ThanhTien) AS [Doanh thu (VNĐ)]
-                            ";
+            // --- Phần SELECT/GROUP BY cơ bản (linh hoạt) ---
+            System.Text.StringBuilder selectParts = new System.Text.StringBuilder();
+            System.Text.StringBuilder groupParts = new System.Text.StringBuilder();
+            System.Text.StringBuilder fromParts = new System.Text.StringBuilder();
 
-            string from = @"
-                                FROM ChiTietDonDatHang ct
-                                JOIN DonDatHang dh ON ct.SoDDH = dh.SoDDH
-                                JOIN DanhMucHang h ON ct.MaHang = h.MaHang
-                            ";
-
+            // Khởi tạo các thành phần FROM và WHERE cơ bản
+            fromParts.AppendLine("FROM ChiTietDonDatHang ct");
+            fromParts.AppendLine("JOIN DonDatHang dh ON ct.SoDDH = dh.SoDDH");
+            fromParts.AppendLine("JOIN DanhMucHang h ON ct.MaHang = h.MaHang");
             string where = "WHERE 1=1";
-            string group = "GROUP BY h.MaHang, h.TenHang";
-            string order = "ORDER BY [Doanh thu (VNĐ)] DESC";
 
-            // --- Bộ lọc thời gian ---
+            // Luôn bao gồm Mã/Tên hàng vào SELECT và GROUP BY (Báo cáo Sản phẩm)
+            selectParts.Append("h.MaHang AS [Mã hàng], h.TenHang AS [Tên hàng]");
+            groupParts.Append("h.MaHang, h.TenHang");
+
+            // --- Bộ lọc Khách hàng (Thêm cột Khách hàng vào báo cáo nếu có lọc) ---
+            if (cboKH.SelectedIndex != -1 && cboKH.SelectedValue != null)
+            {
+                selectParts.Append(", kh.TenKhach AS [Tên Khách hàng]");
+                groupParts.Append(", kh.TenKhach");
+                fromParts.AppendLine("JOIN KhachHang kh ON dh.MaKhach = kh.MaKhach");
+                where += $" AND dh.MaKhach = '{cboKH.SelectedValue}'"; // Lọc thêm vào WHERE
+            }
+
+            // --- Bộ lọc Nhân viên (Thêm cột Nhân viên vào báo cáo nếu có lọc) ---
+            if (cboNV.SelectedIndex != -1 && cboNV.SelectedValue != null)
+            {
+                selectParts.Append(", nv.TenNV AS [Tên Nhân viên]");
+                groupParts.Append(", nv.TenNV");
+                fromParts.AppendLine("JOIN NhanVien nv ON dh.MaNV = nv.MaNV");
+                where += $" AND dh.MaNV = '{cboNV.SelectedValue}'"; // Lọc thêm vào WHERE
+            }
+
+            // --- Bộ lọc Thời gian ---
             if (cboTG.SelectedItem != null)
             {
                 string loaiTG = cboTG.SelectedItem.ToString();
@@ -102,63 +117,64 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
                 }
             }
 
-            // --- Bộ lọc nhân viên ---
-            if (cboNV.SelectedIndex > 0)
-                where += $" AND dh.MaNV = '{cboNV.SelectedValue}'";
-
-            // --- Bộ lọc khách hàng ---
-            if (cboKH.SelectedIndex > 0)
-                where += $" AND dh.MaKhach = '{cboKH.SelectedValue}'";
-
-            // --- Lọc theo danh mục ---
-            string cboDM = cboDMC.SelectedItem?.ToString() ?? "";
-            switch (cboDM)
+            // --- Bộ lọc Danh mục chung (Thêm cột Danh mục vào báo cáo nếu được chọn) ---
+            string cboDM = cboDMC.SelectedItem?.ToString() ?? "Tất cả";
+            if (cboDM != "Tất cả")
             {
-                case "Hãng sản xuất":
-                    select += ", hsx.TenHangSX AS [Hãng sản xuất]";
-                    from += " JOIN HangSX hsx ON h.MaHangSX = hsx.MaHangSX";
-                    group += ", hsx.TenHangSX";
-                    break;
-                case "Loại xe":
-                    select += ", lx.TenLoai AS [Loại xe]";
-                    from += " JOIN TheLoai lx ON h.MaLoai = lx.MaLoai";
-                    group += ", lx.TenLoai";
-                    break;
-                case "Màu sắc":
-                    select += ", ms.TenMau AS [Màu sắc]";
-                    from += " JOIN MauSac ms ON h.MaMau = ms.MaMau";
-                    group += ", ms.TenMau";
-                    break;
-                case "Đời xe":
-                    select += ", dx.TenDoi AS [Đời xe]";
-                    from += " JOIN DoiXe dx ON h.MaDoi = dx.MaDoi";
-                    group += ", dx.TenDoi";
-                    break;
-                case "Số chỗ ngồi":
-                    select += ", scn.TenSoCho AS [Tên số chỗ]";
-                    from += " JOIN SoChoNgoi scn ON h.MaSoCho = scn.MaSoCho";
-                    group += ", scn.TenSoCho";
-                    break;
-                case "Nước sản xuất":
-                    select += ", nsx.TenNuocSX AS [Nước SX]";
-                    from += " JOIN NuocSX nsx ON h.MaNuocSX = nsx.MaNuocSX";
-                    group += ", nsx.TenNuocSX";
-                    break;
-                case "Tình trạng":
-                    select += ", tt.TenTinhTrang AS [Tình trạng]";
-                    from += " JOIN TinhTrang tt ON h.MaTinhTrang = tt.MaTinhTrang";
-                    group += ", tt.TenTinhTrang";
-                    break;
+                switch (cboDM)
+                {
+                    case "Hãng sản xuất":
+                        selectParts.Append(", hsx.TenHangSX AS [Hãng sản xuất]");
+                        fromParts.AppendLine(" JOIN HangSX hsx ON h.MaHangSX = hsx.MaHangSX");
+                        groupParts.Append(", hsx.TenHangSX");
+                        break;
+                    case "Loại xe":
+                        selectParts.Append(", lx.TenLoai AS [Loại xe]");
+                        fromParts.AppendLine(" JOIN TheLoai lx ON h.MaLoai = lx.MaLoai");
+                        groupParts.Append(", lx.TenLoai");
+                        break;
+                    case "Màu sắc":
+                        selectParts.Append(", ms.TenMau AS [Màu sắc]");
+                        fromParts.AppendLine(" JOIN MauSac ms ON h.MaMau = ms.MaMau");
+                        groupParts.Append(", ms.TenMau");
+                        break;
+                    case "Đời xe":
+                        selectParts.Append(", dx.TenDoi AS [Đời xe]");
+                        fromParts.AppendLine(" JOIN DoiXe dx ON h.MaDoi = dx.MaDoi");
+                        groupParts.Append(", dx.TenDoi");
+                        break;
+                    case "Số chỗ ngồi":
+                        selectParts.Append(", scn.TenSoCho AS [Số chỗ]");
+                        fromParts.AppendLine(" JOIN SoChoNgoi scn ON h.MaSoCho = scn.MaSoCho");
+                        groupParts.Append(", scn.TenSoCho");
+                        break;
+                    case "Nước sản xuất":
+                        selectParts.Append(", nsx.TenNuocSX AS [Nước SX]");
+                        fromParts.AppendLine(" JOIN NuocSX nsx ON h.MaNuocSX = nsx.MaNuocSX");
+                        groupParts.Append(", nsx.TenNuocSX");
+                        break;
+                    case "Tình trạng":
+                        selectParts.Append(", tt.TenTinhTrang AS [Tình trạng]");
+                        fromParts.AppendLine(" JOIN TinhTrang tt ON h.MaTinhTrang = tt.MaTinhTrang");
+                        groupParts.Append(", tt.TenTinhTrang");
+                        break;
+                }
             }
 
+
             // --- Ghép toàn bộ lại ---
-            string sql = $"{select} {from} {where} {group} {order}";
+            // THÊM CỘT [Số lượng bán] vào SELECT
+            string select = $"SELECT {selectParts.ToString()}, SUM(ct.SoLuong) AS [Số lượng bán], SUM(ct.ThanhTien) AS [Doanh thu (VNĐ)]";
+            string group = $"GROUP BY {groupParts.ToString()}";
+            string order = "ORDER BY [Doanh thu (VNĐ)] DESC";
+
+            string sql = $"{select} {fromParts.ToString()} {where} {group} {order}";
 
             DataTable data = dt.ExecuteQuery(sql);
             dgvChiTiet.DataSource = data;
+
             LoadChartDoanhThu(data);
         }
-
 
         public void LoadChartDoanhThu(DataTable data)
         {
@@ -166,7 +182,6 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
             chartDoanhThu.ChartAreas[0].AxisX.Title = "Sản phẩm";
             chartDoanhThu.ChartAreas[0].AxisY.Title = "Doanh thu (VNĐ)";
             chartDoanhThu.ChartAreas[0].AxisX.Interval = 1;
-            //chartDoanhThu.ChartAreas[0].AxisX.LabelStyle.Angle = -15;
 
             if (data == null || data.Rows.Count == 0)
                 return;

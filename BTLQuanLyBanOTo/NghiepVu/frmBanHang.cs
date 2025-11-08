@@ -83,7 +83,6 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         public void resetGrbTTC()
         {
-            txtMa.Enabled = true;
             txtMa.Text = "";
             dtpNgayDat.Enabled = true;
             dtpNgayDat.Value = DateTime.Now;
@@ -378,6 +377,11 @@ namespace BTLQuanLyBanOTo.NghiepVu
             MessageBox.Show("Đã thêm sản phẩm vào giỏ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             TinhTongTien();
             resetGrbCTMH();
+        }
+
+        private void btnSuaSP_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void dgvGioHang_CellClick(object sender, DataGridViewCellEventArgs e)

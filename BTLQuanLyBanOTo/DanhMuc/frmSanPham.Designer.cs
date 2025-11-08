@@ -111,6 +111,7 @@
             // 
             // txtMa
             // 
+            this.txtMa.Enabled = false;
             this.txtMa.Location = new System.Drawing.Point(139, 35);
             this.txtMa.Name = "txtMa";
             this.txtMa.Size = new System.Drawing.Size(226, 22);
@@ -512,7 +513,6 @@
             this.Controls.Add(this.grbNhapLieu);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmSanPham";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

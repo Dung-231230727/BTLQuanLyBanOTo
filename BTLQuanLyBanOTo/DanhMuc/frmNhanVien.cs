@@ -26,7 +26,6 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         public void reset()
         {
-            txtMa.Enabled = true;
             txtMa.Text = "";
             txtMa.Focus();
             txtTen.Text = "";
@@ -88,6 +87,7 @@ namespace BTLQuanLyBanOTo.DanhMuc
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
+            txtMa.Text = TaoMaTuDong();
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
             btnLuu.Enabled = true;
@@ -125,6 +125,39 @@ namespace BTLQuanLyBanOTo.DanhMuc
             btnLuu.Enabled = true;
             btnBoQua.Enabled = true;
             action = "delete";
+        }
+
+        private string TaoMaTuDong()
+        {
+            string prefix = "NV";
+
+            string sql = "SELECT MAX(MaNV) FROM NhanVien WHERE MaNV LIKE @prefix";
+            SqlParameter[] prms = new SqlParameter[] {
+                new SqlParameter("@prefix", prefix + "%")
+            };
+
+            object result = dt.ExecuteScalar(sql, prms);
+            int soThuTuMoi = 1;
+            int soChuSo = 4;
+
+            if (result != null && result != DBNull.Value)
+            {
+                string maLonNhat = result.ToString();
+
+                if (maLonNhat.StartsWith(prefix))
+                {
+                    string soCuoi = maLonNhat.Substring(prefix.Length);
+
+                    if (int.TryParse(soCuoi, out int soHienTai))
+                    {
+                        soThuTuMoi = soHienTai + 1;
+                    }
+                }
+            }
+
+            string maMoi = prefix + soThuTuMoi.ToString("D" + soChuSo);
+
+            return maMoi;
         }
 
         private void btnLuu_Click(object sender, EventArgs e)

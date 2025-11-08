@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -38,13 +38,6 @@
             this.btnDong = new System.Windows.Forms.Button();
             this.btnXuat = new System.Windows.Forms.Button();
             this.grbLoc = new System.Windows.Forms.GroupBox();
-            this.btnBoLoc = new System.Windows.Forms.Button();
-            this.btnLoc = new System.Windows.Forms.Button();
-            this.grbChiTiet = new System.Windows.Forms.GroupBox();
-            this.dgvChiTiet = new System.Windows.Forms.DataGridView();
-            this.grbBieuDo = new System.Windows.Forms.GroupBox();
-            this.chartDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.cboDMC = new System.Windows.Forms.ComboBox();
             this.lblDMC = new System.Windows.Forms.Label();
@@ -59,16 +52,23 @@
             this.lblDenNgay = new System.Windows.Forms.Label();
             this.lblTG = new System.Windows.Forms.Label();
             this.lblTuNgay = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnBoLoc = new System.Windows.Forms.Button();
+            this.btnLoc = new System.Windows.Forms.Button();
+            this.grbChiTiet = new System.Windows.Forms.GroupBox();
+            this.dgvChiTiet = new System.Windows.Forms.DataGridView();
+            this.grbBieuDo = new System.Windows.Forms.GroupBox();
+            this.chartDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.grbLoc.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.grbChiTiet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).BeginInit();
             this.grbBieuDo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).BeginInit();
-            this.panel3.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -145,89 +145,6 @@
             this.grbLoc.TabIndex = 7;
             this.grbLoc.TabStop = false;
             this.grbLoc.Text = "Bộ lọc";
-            // 
-            // btnBoLoc
-            // 
-            this.btnBoLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnBoLoc.Location = new System.Drawing.Point(129, 93);
-            this.btnBoLoc.Name = "btnBoLoc";
-            this.btnBoLoc.Size = new System.Drawing.Size(112, 38);
-            this.btnBoLoc.TabIndex = 16;
-            this.btnBoLoc.Text = "Bỏ lọc";
-            this.btnBoLoc.UseVisualStyleBackColor = true;
-            this.btnBoLoc.Click += new System.EventHandler(this.btnBoLoc_Click);
-            // 
-            // btnLoc
-            // 
-            this.btnLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnLoc.Location = new System.Drawing.Point(3, 93);
-            this.btnLoc.Name = "btnLoc";
-            this.btnLoc.Size = new System.Drawing.Size(112, 38);
-            this.btnLoc.TabIndex = 15;
-            this.btnLoc.Text = "Lọc dữ liệu";
-            this.btnLoc.UseVisualStyleBackColor = true;
-            this.btnLoc.Click += new System.EventHandler(this.btnLoc_Click);
-            // 
-            // grbChiTiet
-            // 
-            this.grbChiTiet.Controls.Add(this.dgvChiTiet);
-            this.grbChiTiet.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grbChiTiet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.grbChiTiet.Location = new System.Drawing.Point(0, 235);
-            this.grbChiTiet.Name = "grbChiTiet";
-            this.grbChiTiet.Size = new System.Drawing.Size(1184, 200);
-            this.grbChiTiet.TabIndex = 8;
-            this.grbChiTiet.TabStop = false;
-            this.grbChiTiet.Text = "Chi tiết";
-            // 
-            // dgvChiTiet
-            // 
-            this.dgvChiTiet.BackgroundColor = System.Drawing.Color.White;
-            this.dgvChiTiet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvChiTiet.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvChiTiet.Location = new System.Drawing.Point(3, 18);
-            this.dgvChiTiet.Name = "dgvChiTiet";
-            this.dgvChiTiet.Size = new System.Drawing.Size(1178, 179);
-            this.dgvChiTiet.TabIndex = 0;
-            // 
-            // grbBieuDo
-            // 
-            this.grbBieuDo.Controls.Add(this.chartDoanhThu);
-            this.grbBieuDo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grbBieuDo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.grbBieuDo.Location = new System.Drawing.Point(0, 435);
-            this.grbBieuDo.Name = "grbBieuDo";
-            this.grbBieuDo.Size = new System.Drawing.Size(1184, 266);
-            this.grbBieuDo.TabIndex = 9;
-            this.grbBieuDo.TabStop = false;
-            this.grbBieuDo.Text = "Biểu đồ";
-            // 
-            // chartDoanhThu
-            // 
-            chartArea5.Name = "ChartArea1";
-            this.chartDoanhThu.ChartAreas.Add(chartArea5);
-            this.chartDoanhThu.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Name = "Legend1";
-            this.chartDoanhThu.Legends.Add(legend5);
-            this.chartDoanhThu.Location = new System.Drawing.Point(3, 18);
-            this.chartDoanhThu.Name = "chartDoanhThu";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chartDoanhThu.Series.Add(series5);
-            this.chartDoanhThu.Size = new System.Drawing.Size(1178, 245);
-            this.chartDoanhThu.TabIndex = 0;
-            this.chartDoanhThu.Text = "chart1";
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.btnBoLoc);
-            this.panel3.Controls.Add(this.btnLoc);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(926, 18);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(255, 134);
-            this.panel3.TabIndex = 23;
             // 
             // panel5
             // 
@@ -362,6 +279,90 @@
             this.lblTuNgay.TabIndex = 32;
             this.lblTuNgay.Text = "Từ ngày";
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnBoLoc);
+            this.panel3.Controls.Add(this.btnLoc);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel3.Location = new System.Drawing.Point(926, 18);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(255, 134);
+            this.panel3.TabIndex = 23;
+            // 
+            // btnBoLoc
+            // 
+            this.btnBoLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnBoLoc.Location = new System.Drawing.Point(129, 93);
+            this.btnBoLoc.Name = "btnBoLoc";
+            this.btnBoLoc.Size = new System.Drawing.Size(112, 38);
+            this.btnBoLoc.TabIndex = 16;
+            this.btnBoLoc.Text = "Bỏ lọc";
+            this.btnBoLoc.UseVisualStyleBackColor = true;
+            this.btnBoLoc.Click += new System.EventHandler(this.btnBoLoc_Click);
+            // 
+            // btnLoc
+            // 
+            this.btnLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnLoc.Location = new System.Drawing.Point(3, 93);
+            this.btnLoc.Name = "btnLoc";
+            this.btnLoc.Size = new System.Drawing.Size(112, 38);
+            this.btnLoc.TabIndex = 15;
+            this.btnLoc.Text = "Lọc dữ liệu";
+            this.btnLoc.UseVisualStyleBackColor = true;
+            this.btnLoc.Click += new System.EventHandler(this.btnLoc_Click);
+            // 
+            // grbChiTiet
+            // 
+            this.grbChiTiet.Controls.Add(this.dgvChiTiet);
+            this.grbChiTiet.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grbChiTiet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.grbChiTiet.Location = new System.Drawing.Point(0, 235);
+            this.grbChiTiet.Name = "grbChiTiet";
+            this.grbChiTiet.Size = new System.Drawing.Size(1184, 200);
+            this.grbChiTiet.TabIndex = 8;
+            this.grbChiTiet.TabStop = false;
+            this.grbChiTiet.Text = "Chi tiết";
+            // 
+            // dgvChiTiet
+            // 
+            this.dgvChiTiet.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvChiTiet.BackgroundColor = System.Drawing.Color.White;
+            this.dgvChiTiet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvChiTiet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvChiTiet.Location = new System.Drawing.Point(3, 18);
+            this.dgvChiTiet.Name = "dgvChiTiet";
+            this.dgvChiTiet.Size = new System.Drawing.Size(1178, 179);
+            this.dgvChiTiet.TabIndex = 0;
+            // 
+            // grbBieuDo
+            // 
+            this.grbBieuDo.Controls.Add(this.chartDoanhThu);
+            this.grbBieuDo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grbBieuDo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.grbBieuDo.Location = new System.Drawing.Point(0, 435);
+            this.grbBieuDo.Name = "grbBieuDo";
+            this.grbBieuDo.Size = new System.Drawing.Size(1184, 266);
+            this.grbBieuDo.TabIndex = 9;
+            this.grbBieuDo.TabStop = false;
+            this.grbBieuDo.Text = "Biểu đồ";
+            // 
+            // chartDoanhThu
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chartDoanhThu.ChartAreas.Add(chartArea1);
+            this.chartDoanhThu.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chartDoanhThu.Legends.Add(legend1);
+            this.chartDoanhThu.Location = new System.Drawing.Point(3, 18);
+            this.chartDoanhThu.Name = "chartDoanhThu";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartDoanhThu.Series.Add(series1);
+            this.chartDoanhThu.Size = new System.Drawing.Size(1178, 245);
+            this.chartDoanhThu.TabIndex = 0;
+            this.chartDoanhThu.Text = "chart1";
+            // 
             // frmBaoCaoDoanhThu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,13 +383,13 @@
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.grbLoc.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.grbChiTiet.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).EndInit();
             this.grbBieuDo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -1,9 +1,9 @@
 ﻿using BTLQuanLyBanOTo.Classes;
 using System;
-using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
-using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -23,141 +23,188 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
         {
             dt = new DataProcesser();
 
-            LoadFLP();
+            LoadCBO();
             LoadDGV();
-            LoadChartTonKho();
         }
 
-        public void LoadFLP()
+        public void LoadCBO()
         {
-            string[] danhMuc = { "Hãng SX", "Loại xe", "Màu sắc", "Đời xe", "Số chỗ ngồi", "Nước SX", "Tình trạng" };
-            foreach (var item in danhMuc)
+            // --- Thời gian ---
+            cboTG.Items.Clear();
+            cboTG.Items.AddRange(new string[] { "Từ trước đến nay", "Theo ngày", "Theo tháng", "Theo năm" });
+            cboTG.SelectedIndex = 0;
+
+            // --- Nhân viên ---
+            string sqlNV = "SELECT MaNV, TenNV FROM NhanVien";
+            DataTable dtNV = dt.ExecuteQuery(sqlNV);
+            cboNV.DataSource = dtNV;
+            cboNV.DisplayMember = "TenNV";
+            cboNV.ValueMember = "MaNV";
+            cboNV.SelectedIndex = -1;
+
+            // --- Khách hàng ---
+            string sqlNCC = "SELECT MaNCC, TenNCC FROM NhaCungCap";
+            DataTable dtNCC = dt.ExecuteQuery(sqlNCC);
+            cboNCC.DataSource = dtNCC;
+            cboNCC.DisplayMember = "TenNCC";
+            cboNCC.ValueMember = "MaNCC";
+            cboNCC.SelectedIndex = -1;
+
+            // --- Danh mục chung ---
+            cboDMC.Items.Clear();
+            cboDMC.Items.AddRange(new string[]
             {
-                CheckBox cb = new CheckBox
-                {
-                    Text = item,
-                    AutoSize = true,
-                    Margin = new Padding(15, 5, 15, 5)
-                };
-                flpBoLoc.Controls.Add(cb);
-            }
+                "Tất cả",
+                "Hãng sản xuất",
+                "Loại xe",
+                "Màu sắc",
+                "Đời xe",
+                "Số chỗ ngồi",
+                "Nước sản xuất",
+                "Tình trạng"
+            });
+            cboDMC.SelectedIndex = 0;
         }
 
         public void LoadDGV()
         {
-            try
+            // --- Phần SELECT/GROUP BY cơ bản (linh hoạt) ---
+            StringBuilder selectParts = new StringBuilder();
+            StringBuilder groupParts = new StringBuilder();
+            StringBuilder fromParts = new StringBuilder();
+
+            // Khởi tạo các thành phần FROM và WHERE cơ bản
+            fromParts.AppendLine("FROM ChiTietHoaDonNhap ct");
+            fromParts.AppendLine("JOIN HoaDonNhap hdn ON ct.SoHDN = hdn.SoHDN");
+            fromParts.AppendLine("JOIN DanhMucHang h ON ct.MaHang = h.MaHang");
+            string where = "WHERE 1=1";
+
+            // Luôn bao gồm Mã/Tên hàng vào SELECT và GROUP BY (Báo cáo Sản phẩm)
+            selectParts.Append("h.MaHang AS [Mã hàng], h.TenHang AS [Tên hàng]");
+            groupParts.Append("h.MaHang, h.TenHang");
+
+            // --- Bộ lọc Khách hàng (Thêm cột Khách hàng vào báo cáo nếu có lọc) ---
+            if (cboNCC.SelectedIndex != -1 && cboNCC.SelectedValue != null)
             {
-                string sql = "SELECT MaHang, TenHang, SoLuong, DonGiaBan FROM DanhMucHang";
-                dgvChiTiet.DataSource = dt.ExecuteQuery(sql);
+                selectParts.Append(", ncc.TenNCC AS [Tên nhà cung cấp]");
+                groupParts.Append(", ncc.TenNCC");
+                fromParts.AppendLine("JOIN NhaCungCap ncc ON hdn.MaNCC = ncc.MaNCC");
+                where += $" AND hdn.MaNCC = '{cboNCC.SelectedValue}'"; // Lọc thêm vào WHERE
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        private string BuildSqlTheoBoLoc()
-        {
-            var checkedItems = flpBoLoc.Controls.OfType<CheckBox>().Where(c => c.Checked).ToList();
-
-            if (checkedItems.Count == 0)
+            // --- Bộ lọc Nhân viên (Thêm cột Nhân viên vào báo cáo nếu có lọc) ---
+            if (cboNV.SelectedIndex != -1 && cboNV.SelectedValue != null)
             {
-                return "SELECT MaHang, TenHang, SoLuong, DonGiaBan FROM DanhMucHang";
+                selectParts.Append(", nv.TenNV AS [Tên Nhân viên]");
+                groupParts.Append(", nv.TenNV");
+                fromParts.AppendLine("JOIN NhanVien nv ON hdn.MaNV = nv.MaNV");
+                where += $" AND hdn.MaNV = '{cboNV.SelectedValue}'"; // Lọc thêm vào WHERE
             }
 
-            List<string> joinParts = new List<string>();
-            List<string> selectParts = new List<string>();
-            List<string> groupParts = new List<string>();
-
-            foreach (var cb in checkedItems)
+            // --- Bộ lọc Thời gian ---
+            if (cboTG.SelectedItem != null)
             {
-                switch (cb.Text)
+                string loaiTG = cboTG.SelectedItem.ToString();
+                if (loaiTG == "Theo ngày")
                 {
-                    case "Hãng SX":
-                        joinParts.Add("JOIN HangSX h ON sp.MaHangSX = h.MaHangSX");
-                        selectParts.Add("h.TenHangSX AS [Hãng SX]");
-                        groupParts.Add("h.TenHangSX");
-                        break;
+                    where += $" AND CONVERT(date, hdn.NgayNhap) BETWEEN '{dtpTuNgay.Value:yyyy-MM-dd}' AND '{dtpDenNgay.Value:yyyy-MM-dd}'";
+                }
+                else if (loaiTG == "Theo tháng")
+                {
+                    where += $" AND MONTH(hdn.NgayNhap) = {dtpTuNgay.Value.Month} AND YEAR(hdn.NgayNhap) = {dtpTuNgay.Value.Year}";
+                }
+                else if (loaiTG == "Theo năm")
+                {
+                    where += $" AND YEAR(hdn.NgayNhap) = {dtpTuNgay.Value.Year}";
+                }
+            }
 
+            // --- Bộ lọc Danh mục chung (Thêm cột Danh mục vào báo cáo nếu được chọn) ---
+            string cboDM = cboDMC.SelectedItem?.ToString() ?? "Tất cả";
+            if (cboDM != "Tất cả")
+            {
+                switch (cboDM)
+                {
+                    case "Hãng sản xuất":
+                        selectParts.Append(", hsx.TenHangSX AS [Hãng sản xuất]");
+                        fromParts.AppendLine(" JOIN HangSX hsx ON h.MaHangSX = hsx.MaHangSX");
+                        groupParts.Append(", hsx.TenHangSX");
+                        break;
                     case "Loại xe":
-                        joinParts.Add("JOIN TheLoai l ON sp.MaLoai = l.MaLoai");
-                        selectParts.Add("l.TenLoai AS [Loại xe]");
-                        groupParts.Add("l.TenLoai");
+                        selectParts.Append(", lx.TenLoai AS [Loại xe]");
+                        fromParts.AppendLine(" JOIN TheLoai lx ON h.MaLoai = lx.MaLoai");
+                        groupParts.Append(", lx.TenLoai");
                         break;
-
                     case "Màu sắc":
-                        joinParts.Add("JOIN MauSac m ON sp.MaMau = m.MaMau");
-                        selectParts.Add("m.TenMau AS [Màu sắc]");
-                        groupParts.Add("m.TenMau");
+                        selectParts.Append(", ms.TenMau AS [Màu sắc]");
+                        fromParts.AppendLine(" JOIN MauSac ms ON h.MaMau = ms.MaMau");
+                        groupParts.Append(", ms.TenMau");
                         break;
-
                     case "Đời xe":
-                        joinParts.Add("JOIN DoiXe d ON sp.MaDoi = d.MaDoi");
-                        selectParts.Add("d.TenDoi AS [Đời xe]");
-                        groupParts.Add("d.TenDoi");
+                        selectParts.Append(", dx.TenDoi AS [Đời xe]");
+                        fromParts.AppendLine(" JOIN DoiXe dx ON h.MaDoi = dx.MaDoi");
+                        groupParts.Append(", dx.TenDoi");
                         break;
-
                     case "Số chỗ ngồi":
-                        joinParts.Add("JOIN SoChoNgoi sc ON sp.MaSoCho = sc.MaSoCho");
-                        selectParts.Add("sc.TenSoCho AS [Số chỗ]");
-                        groupParts.Add("sc.TenSoCho");
+                        selectParts.Append(", scn.TenSoCho AS [Số chỗ]");
+                        fromParts.AppendLine(" JOIN SoChoNgoi scn ON h.MaSoCho = scn.MaSoCho");
+                        groupParts.Append(", scn.TenSoCho");
                         break;
-
-                    case "Nước SX":
-                        joinParts.Add("JOIN NuocSX nsx ON sp.MaNuocSX = nsx.MaNuocSX");
-                        selectParts.Add("nsx.TenNuocSX AS [Nước SX]");
-                        groupParts.Add("nsx.TenNuocSX");
+                    case "Nước sản xuất":
+                        selectParts.Append(", nsx.TenNuocSX AS [Nước SX]");
+                        fromParts.AppendLine(" JOIN NuocSX nsx ON h.MaNuocSX = nsx.MaNuocSX");
+                        groupParts.Append(", nsx.TenNuocSX");
                         break;
-
                     case "Tình trạng":
-                        joinParts.Add("JOIN TinhTrang tt ON sp.MaTinhTrang = tt.MaTinhTrang");
-                        selectParts.Add("tt.TenTinhTrang AS [Tình trạng]");
-                        groupParts.Add("tt.TenTinhTrang");
+                        selectParts.Append(", tt.TenTinhTrang AS [Tình trạng]");
+                        fromParts.AppendLine(" JOIN TinhTrang tt ON h.MaTinhTrang = tt.MaTinhTrang");
+                        groupParts.Append(", tt.TenTinhTrang");
                         break;
                 }
             }
 
-            string sql = $@"
-                SELECT {string.Join(", ", selectParts)}, SUM(sp.SoLuong) AS [Tổng tồn]
-                FROM DanhMucHang sp
-                {string.Join("\n", joinParts)}
-                GROUP BY {string.Join(", ", groupParts)}";
+            // --- Ghép toàn bộ lại ---
+            string select = $"SELECT {selectParts.ToString()}, SUM(ct.SoLuong) AS [Số lượng nhập], sum(h.SoLuong) AS [Số lượng tồn]";
+            string group = $"GROUP BY {groupParts.ToString()}";
+            string order = "ORDER BY [Số lượng tồn] DESC";
 
-            return sql;
+            string sql = $"{select} {fromParts.ToString()} {where} {group} {order}";
+
+            DataTable data = dt.ExecuteQuery(sql);
+            dgvChiTiet.DataSource = data;
+
+            LoadChartTonKho(data);
         }
 
-        public void LoadChartTonKho()
+        public void LoadChartTonKho(DataTable data)
         {
-            DataTable tbl = dgvChiTiet.DataSource as DataTable;
-            if (tbl == null || tbl.Rows.Count == 0) return;
-
             chartTonKho.Series.Clear();
+            chartTonKho.ChartAreas[0].AxisX.Title = "Sản phẩm";
+            chartTonKho.ChartAreas[0].AxisY.Title = "Số lượng tồn";
             chartTonKho.ChartAreas[0].AxisX.Interval = 1;
-            chartTonKho.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chartTonKho.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
 
-            Series s = new Series("Tồn kho");
-            s.ChartType = SeriesChartType.Column;
-            s.XValueType = ChartValueType.String;
+            if (data == null || data.Rows.Count == 0)
+                return;
 
-            // Xác định cột hiển thị
-            string cotSoLuong = tbl.Columns.Contains("Tổng tồn") ? "Tổng tồn" : "SoLuong";
+            // Tạo series
+            var series = new Series("Tồn kho");
+            series.ChartType = SeriesChartType.Column;
+            series.IsValueShownAsLabel = true;
 
-            // Lấy danh sách các cột danh mục (trừ cột tổng)
-            var cotDanhMuc = tbl.Columns.Cast<DataColumn>()
-                                .Where(c => c.ColumnName != cotSoLuong)
-                                .Select(c => c.ColumnName)
-                                .ToList();
+            // Xác định tên cột hiển thị
+            string nameCol = "Tên hàng";
+            string valueCol = "Số lượng tồn";
 
-            foreach (DataRow r in tbl.Rows)
+            // Thêm điểm dữ liệu vào biểu đồ
+            foreach (DataRow row in data.Rows)
             {
-                // Ghép tên hiển thị từ các cột danh mục
-                string tenHienThi = string.Join(" - ", cotDanhMuc.Select(c => r[c].ToString()));
-
-                s.Points.AddXY(tenHienThi, Convert.ToDouble(r[cotSoLuong]));
+                string label = row[nameCol].ToString();
+                double value = 0;
+                double.TryParse(row[valueCol].ToString(), out value);
+                series.Points.AddXY(label, value);
             }
 
-            chartTonKho.Series.Add(s);
+            chartTonKho.Series.Add(series);
         }
 
         private void btnDong_Click(object sender, EventArgs e)
@@ -176,18 +223,19 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
 
         private void btnLoc_Click(object sender, EventArgs e)
         {
-            string sql = BuildSqlTheoBoLoc();
-            dgvChiTiet.DataSource = dt.ExecuteQuery(sql);
-            LoadChartTonKho();
+            LoadDGV();
         }
 
         private void btnBoLoc_Click(object sender, EventArgs e)
         {
-            foreach (CheckBox cb in flpBoLoc.Controls.OfType<CheckBox>())
-                cb.Checked = false;
+            cboTG.SelectedIndex = 0;
+            cboNV.SelectedIndex = -1;
+            cboNV.Text = "";
+            cboNCC.SelectedIndex = -1;
+            cboNCC.Text = "";
+            cboDMC.SelectedIndex = 0;
 
             LoadDGV();
-            LoadChartTonKho();
         }
 
         private void btnXuat_Click(object sender, EventArgs e)
@@ -231,7 +279,7 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
                 {
                     ws.Cells[3, i] = dgvChiTiet.Columns[i - 1].HeaderText;
                     ((Excel.Range)ws.Cells[3, i]).Font.Bold = true;
-                    ((Excel.Range)ws.Cells[3, i]).Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightSkyBlue);
+                    ((Excel.Range)ws.Cells[3, i]).Interior.Color = ColorTranslator.ToOle(Color.LightSkyBlue);
                 }
 
                 for (int i = 0; i < dgvChiTiet.Rows.Count; i++)

@@ -81,14 +81,13 @@ namespace BTLQuanLyBanOTo.NghiepVu
             //
             LoadCBO(cboMaNCC, "SELECT MaNCC, TenNCC FROM NhaCungCap", "MaNCC", "MaNCC");
             //
-            LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0", "MaHang", "MaHang");
+            LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang", "MaHang", "MaHang");
             //
             LoadCBOTimKiem();
         }
 
         public void resetGrbTTC()
         {
-            txtMa.Enabled = true;
             txtMa.Text = "";
             dtpNgayNhap.Enabled = true;
             dtpNgayNhap.Value = DateTime.Now;
@@ -451,7 +450,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                         }
 
                         string sqlDonHang = (action == "add") ?
-                            @"INSERT INTO HoaDonBan(SoHDN, MaNV, MaNCC, NgayNhap, TongTien, TrangThai)
+                            @"INSERT INTO HoaDonNhap(SoHDN, MaNV, MaNCC, NgayNhap, TongTien, TrangThai)
                             VALUES(@soHDN, @maNV, @maNCC, @ngayNhap, @tongTien, @trangThai)"
                             :
                             @"UPDATE HoaDonNhap SET MaNCC = @maNCC, NgayNhap = @ngayNhap,
@@ -491,7 +490,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
                     transaction.Commit();
 
                     //
-                    LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0", "TenHang", "MaHang");
+                    LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang", "TenHang", "MaHang");
                     LoadCBOTimKiem();
 
                     //reset();

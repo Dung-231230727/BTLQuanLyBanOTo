@@ -23,7 +23,6 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
         public void reset()
         {
-            txtMa.Enabled = true;
             txtMa.Focus();
             txtMa.Text = "";
             txtTen.Text = "";
@@ -34,6 +33,10 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             btnXoa.Enabled = false;
             btnLuu.Enabled = false;
             btnBoQua.Enabled = false;
+
+            radHD.Checked = false;
+            radKHD.Checked = false;
+            TrangThai_HienTai = 1;
 
             action = "";
         }
@@ -51,10 +54,44 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             }
         }
 
+        private string TaoMaTuDong()
+        {
+            string prefix = "CV";
+
+            string sql = "SELECT MAX(MaCV) FROM CongViec WHERE MaCV LIKE @prefix";
+            SqlParameter[] prms = new SqlParameter[] {
+                new SqlParameter("@prefix", prefix + "%")
+            };
+
+            object result = dt.ExecuteScalar(sql, prms);
+            int soThuTuMoi = 1;
+            int soChuSo = 4;
+
+            if (result != null && result != DBNull.Value)
+            {
+                string maLonNhat = result.ToString();
+
+                if (maLonNhat.StartsWith(prefix))
+                {
+                    string soCuoi = maLonNhat.Substring(prefix.Length);
+
+                    if (int.TryParse(soCuoi, out int soHienTai))
+                    {
+                        soThuTuMoi = soHienTai + 1;
+                    }
+                }
+            }
+
+            string maMoi = prefix + soThuTuMoi.ToString("D" + soChuSo);
+
+            return maMoi;
+        }
+
         private string action = "";
         private void btnThem_Click(object sender, EventArgs e)
         {
             reset();
+            txtMa.Text = TaoMaTuDong();
             btnLuu.Enabled = true;
             btnBoQua.Enabled = true;
             btnSua.Enabled = false;
@@ -83,6 +120,14 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
                 MessageBox.Show("Vui lòng chọn bản ghi cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            if (TrangThai_HienTai == 1)
+            {
+                // Trạng thái = 1: Đang hoạt động, KHÔNG CHO PHÉP XÓA VĨNH VIỄN
+                MessageBox.Show("Công việc đang được sử dụng (Trạng thái = 1). Vui lòng chuyển sang trạng thái 0 (Sửa -> Ngừng hoạt động) trước khi xóa vĩnh viễn.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
@@ -95,7 +140,7 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             try
             {
                 // Kiểm tra dữ liệu trống
-                if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text))
+                if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text) || (radHD.Checked == false && radKHD.Checked == false))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -124,12 +169,13 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
                         return;
                     }
 
-                    string sql = "insert into CongViec(MaCV,TenCV,LuongThang) values(@ma,@ten,@luong)";
+                    string sql = "insert into CongViec(MaCV,TenCV,LuongThang,TrangThai) values(@ma,@ten,@luong,@tt)";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
                         new SqlParameter("@ten", txtTen.Text.Trim()),
-                        new SqlParameter("@luong", luong)
+                        new SqlParameter("@luong", luong),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Thêm thành công!" : "Thêm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -137,12 +183,13 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
                 if (action == "edit")
                 {
-                    string sql = "update CongViec set TenCV = @ten, LuongThang = @luong where MaCV = @ma";
+                    string sql = "update CongViec set TenCV = @ten, LuongThang = @luong, TrangThai=@tt where MaCV = @ma";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
                         new SqlParameter("@ten", txtTen.Text.Trim()),
-                        new SqlParameter("@luong", luong)
+                        new SqlParameter("@luong", luong),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Sửa thành công!" : "Sửa thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -197,6 +244,7 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             }
         }
 
+        private int TrangThai_HienTai = 1;
         private void dgvCongViec_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -216,6 +264,10 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
                 txtMa.Text = row.Cells["MaCV"].Value?.ToString();
                 txtTen.Text = row.Cells["TenCV"].Value?.ToString();
                 txtLuong.Text = row.Cells["LuongThang"].Value?.ToString();
+                var trangThaiValue = row.Cells["TrangThai"].Value;
+                TrangThai_HienTai = (trangThaiValue != null && trangThaiValue != DBNull.Value) ? Convert.ToInt32(trangThaiValue) : 1;
+                radHD.Checked = (TrangThai_HienTai == 1);
+                radKHD.Checked = (TrangThai_HienTai == 0);
             }
             catch (Exception ex)
             {
