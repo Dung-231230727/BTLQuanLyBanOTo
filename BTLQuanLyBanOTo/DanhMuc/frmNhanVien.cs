@@ -15,7 +15,7 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         DataProcesser dt;
         private string action = "";
-
+        private int TrangThai_HienTai = 1;
         private void frmNhanVien_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
@@ -43,6 +43,10 @@ namespace BTLQuanLyBanOTo.DanhMuc
             btnLuu.Enabled = false;
             btnBoQua.Enabled = false;
 
+            radHD.Checked = false;
+            radKHD.Checked = false;
+            TrangThai_HienTai = 1;
+
             action = "";
         }
 
@@ -50,8 +54,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
         {
             try
             {
-                string sql = "SELECT nv.MaNV, nv.TenNV, nv.GioiTinh, nv.NgaySinh, nv.DienThoai, nv.DiaChi, nv.MatKhau, nv.MaCV, cv.TenCV " +
-                             "FROM NhanVien nv JOIN CongViec cv ON cv.MaCV = nv.MaCV";
+                string sql = @"SELECT nv.MaNV, nv.TenNV, nv.GioiTinh, nv.NgaySinh, nv.DienThoai, nv.DiaChi, cv.TenCV, nv.MatKhau, nv.TrangThai
+                             FROM NhanVien nv JOIN CongViec cv ON cv.MaCV = nv.MaCV";
                 dgvNhanVien.DataSource = dt.ExecuteQuery(sql);
             }
             catch (Exception ex)
@@ -65,7 +69,7 @@ namespace BTLQuanLyBanOTo.DanhMuc
         {
             try
             {
-                string sql = "SELECT * FROM CongViec";
+                string sql = "SELECT * FROM CongViec where TrangThai = 1";
                 var tbl = dt.ExecuteQuery(sql);
                 cboChucVu.DataSource = tbl;
                 cboChucVu.DisplayMember = "TenCV";
@@ -78,11 +82,6 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        //private string TaoMaTuDong()
-        //{
-
-        //}
 
         private void btnThem_Click(object sender, EventArgs e)
         {
@@ -119,7 +118,12 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if (TrangThai_HienTai == 1)
+            {
+                // Trạng thái = 1: Đang hoạt động, KHÔNG CHO PHÉP XÓA VĨNH VIỄN
+                MessageBox.Show("Nhân viên đang hoạt động (Trạng thái = 1). Vui lòng chuyển sang trạng thái 0 (Sửa -> Ngừng hoạt động) trước khi xóa vĩnh viễn.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
@@ -171,7 +175,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     (!radNam.Checked && !radNu.Checked) ||
                     string.IsNullOrEmpty(txtDienThoai.Text) ||
                     string.IsNullOrEmpty(txtDiaChi.Text) ||
-                    string.IsNullOrEmpty(txtMK.Text))
+                    string.IsNullOrEmpty(txtMK.Text) ||
+                    (radHD.Checked == false && radKHD.Checked == false))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!",
                         "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -212,8 +217,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
                         return;
                     }
 
-                    string sql = "INSERT INTO NhanVien(MaNV, TenNV, GioiTinh, NgaySinh, DienThoai, DiaChi, MaCV, MatKhau) " +
-                                 "VALUES(@ma, @ten, @gt, @ns, @dt, @dc, @macv, @mk)";
+                    string sql = "INSERT INTO NhanVien(MaNV, TenNV, GioiTinh, NgaySinh, DienThoai, DiaChi, MaCV, MatKhau, TrangThai) " +
+                                 "VALUES(@ma, @ten, @gt, @ns, @dt, @dc, @macv, @mk, @tt)";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
@@ -223,7 +228,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
                         new SqlParameter("@dt", txtDienThoai.Text.Trim()),
                         new SqlParameter("@dc", txtDiaChi.Text.Trim()),
                         new SqlParameter("@macv", cboChucVu.SelectedValue),
-                        new SqlParameter("@mk", txtMK.Text.Trim())
+                        new SqlParameter("@mk", txtMK.Text.Trim()),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Thêm nhân viên thành công!" : "Thêm thất bại!",
@@ -232,7 +238,7 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
                 if (action == "edit")
                 {
-                    string sql = "UPDATE NhanVien SET TenNV=@ten, GioiTinh=@gt, NgaySinh=@ns, DienThoai=@dt, DiaChi=@dc, MaCV=@macv, MatKhau=@mk WHERE MaNV=@ma";
+                    string sql = "UPDATE NhanVien SET TenNV=@ten, GioiTinh=@gt, NgaySinh=@ns, DienThoai=@dt, DiaChi=@dc, MaCV=@macv, MatKhau=@mk, TrangThai=@tt WHERE MaNV=@ma";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
@@ -242,7 +248,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
                         new SqlParameter("@dt", txtDienThoai.Text.Trim()),
                         new SqlParameter("@dc", txtDiaChi.Text.Trim()),
                         new SqlParameter("@macv", cboChucVu.SelectedValue),
-                        new SqlParameter("@mk", txtMK.Text.Trim())
+                        new SqlParameter("@mk", txtMK.Text.Trim()),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Sửa nhân viên thành công!" : "Sửa thất bại!",
@@ -325,6 +332,10 @@ namespace BTLQuanLyBanOTo.DanhMuc
                 txtDienThoai.Text = row.Cells["DienThoai"].Value?.ToString();
                 txtDiaChi.Text = row.Cells["DiaChi"].Value?.ToString();
                 txtMK.Text = row.Cells["MatKhau"].Value?.ToString();
+                var trangThaiValue = row.Cells["TrangThai"].Value;
+                TrangThai_HienTai = (trangThaiValue != null && trangThaiValue != DBNull.Value) ? Convert.ToInt32(trangThaiValue) : 1;
+                radHD.Checked = (TrangThai_HienTai == 1);
+                radKHD.Checked = (TrangThai_HienTai == 0);
             }
             catch (Exception ex)
             {

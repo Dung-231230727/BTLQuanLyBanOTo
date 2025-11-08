@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvDoiXe = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -40,15 +40,15 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.grbNhapLieu = new System.Windows.Forms.GroupBox();
+            this.radKHD = new System.Windows.Forms.RadioButton();
+            this.radHD = new System.Windows.Forms.RadioButton();
+            this.lblTrangThai = new System.Windows.Forms.Label();
             this.txtTen = new System.Windows.Forms.TextBox();
             this.txtMa = new System.Windows.Forms.TextBox();
             this.lblTen = new System.Windows.Forms.Label();
             this.lblMa = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
-            this.radKHD = new System.Windows.Forms.RadioButton();
-            this.radHD = new System.Windows.Forms.RadioButton();
-            this.lblTrangThai = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDoiXe)).BeginInit();
             this.panel2.SuspendLayout();
@@ -70,14 +70,14 @@
             // 
             this.dgvDoiXe.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDoiXe.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDoiXe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDoiXe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDoiXe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDoiXe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDoiXe.GridColor = System.Drawing.Color.Black;
@@ -195,9 +195,40 @@
             this.grbNhapLieu.TabStop = false;
             this.grbNhapLieu.Text = "Thông tin đời xe";
             // 
+            // radKHD
+            // 
+            this.radKHD.AutoSize = true;
+            this.radKHD.Location = new System.Drawing.Point(721, 33);
+            this.radKHD.Name = "radKHD";
+            this.radKHD.Size = new System.Drawing.Size(126, 20);
+            this.radKHD.TabIndex = 11;
+            this.radKHD.TabStop = true;
+            this.radKHD.Text = "Không hoạt động";
+            this.radKHD.UseVisualStyleBackColor = true;
+            // 
+            // radHD
+            // 
+            this.radHD.AutoSize = true;
+            this.radHD.Location = new System.Drawing.Point(609, 33);
+            this.radHD.Name = "radHD";
+            this.radHD.Size = new System.Drawing.Size(88, 20);
+            this.radHD.TabIndex = 10;
+            this.radHD.TabStop = true;
+            this.radHD.Text = "Hoạt động";
+            this.radHD.UseVisualStyleBackColor = true;
+            // 
+            // lblTrangThai
+            // 
+            this.lblTrangThai.AutoSize = true;
+            this.lblTrangThai.Location = new System.Drawing.Point(504, 35);
+            this.lblTrangThai.Name = "lblTrangThai";
+            this.lblTrangThai.Size = new System.Drawing.Size(67, 16);
+            this.lblTrangThai.TabIndex = 9;
+            this.lblTrangThai.Text = "Trạng thái";
+            // 
             // txtTen
             // 
-            this.txtTen.Location = new System.Drawing.Point(120, 77);
+            this.txtTen.Location = new System.Drawing.Point(120, 76);
             this.txtTen.Name = "txtTen";
             this.txtTen.Size = new System.Drawing.Size(292, 22);
             this.txtTen.TabIndex = 3;
@@ -213,7 +244,7 @@
             // lblTen
             // 
             this.lblTen.AutoSize = true;
-            this.lblTen.Location = new System.Drawing.Point(25, 80);
+            this.lblTen.Location = new System.Drawing.Point(25, 79);
             this.lblTen.Name = "lblTen";
             this.lblTen.Size = new System.Drawing.Size(53, 16);
             this.lblTen.TabIndex = 1;
@@ -248,37 +279,6 @@
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "DANH MỤC ĐỜI XE";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // radKHD
-            // 
-            this.radKHD.AutoSize = true;
-            this.radKHD.Location = new System.Drawing.Point(721, 33);
-            this.radKHD.Name = "radKHD";
-            this.radKHD.Size = new System.Drawing.Size(126, 20);
-            this.radKHD.TabIndex = 11;
-            this.radKHD.TabStop = true;
-            this.radKHD.Text = "Không hoạt động";
-            this.radKHD.UseVisualStyleBackColor = true;
-            // 
-            // radHD
-            // 
-            this.radHD.AutoSize = true;
-            this.radHD.Location = new System.Drawing.Point(609, 33);
-            this.radHD.Name = "radHD";
-            this.radHD.Size = new System.Drawing.Size(88, 20);
-            this.radHD.TabIndex = 10;
-            this.radHD.TabStop = true;
-            this.radHD.Text = "Hoạt động";
-            this.radHD.UseVisualStyleBackColor = true;
-            // 
-            // lblTrangThai
-            // 
-            this.lblTrangThai.AutoSize = true;
-            this.lblTrangThai.Location = new System.Drawing.Point(504, 35);
-            this.lblTrangThai.Name = "lblTrangThai";
-            this.lblTrangThai.Size = new System.Drawing.Size(67, 16);
-            this.lblTrangThai.TabIndex = 9;
-            this.lblTrangThai.Text = "Trạng thái";
             // 
             // frmDoiXe
             // 

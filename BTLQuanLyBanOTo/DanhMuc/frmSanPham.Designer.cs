@@ -71,6 +71,9 @@
             this.cboMauSac = new System.Windows.Forms.ComboBox();
             this.lblNuocSX = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.radKHD = new System.Windows.Forms.RadioButton();
+            this.radHD = new System.Windows.Forms.RadioButton();
+            this.lblTrangThai = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSanPham)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -300,6 +303,9 @@
             // 
             // grbNhapLieu
             // 
+            this.grbNhapLieu.Controls.Add(this.radKHD);
+            this.grbNhapLieu.Controls.Add(this.radHD);
+            this.grbNhapLieu.Controls.Add(this.lblTrangThai);
             this.grbNhapLieu.Controls.Add(this.txtTGBH);
             this.grbNhapLieu.Controls.Add(this.numSoLuong);
             this.grbNhapLieu.Controls.Add(this.btnAnh);
@@ -359,7 +365,7 @@
             // 
             // btnAnh
             // 
-            this.btnAnh.Location = new System.Drawing.Point(845, 83);
+            this.btnAnh.Location = new System.Drawing.Point(845, 131);
             this.btnAnh.Name = "btnAnh";
             this.btnAnh.Size = new System.Drawing.Size(75, 34);
             this.btnAnh.TabIndex = 36;
@@ -445,9 +451,9 @@
             // picAnh
             // 
             this.picAnh.BackColor = System.Drawing.Color.White;
-            this.picAnh.Location = new System.Drawing.Point(938, 83);
+            this.picAnh.Location = new System.Drawing.Point(938, 131);
             this.picAnh.Name = "picAnh";
-            this.picAnh.Size = new System.Drawing.Size(226, 216);
+            this.picAnh.Size = new System.Drawing.Size(226, 168);
             this.picAnh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picAnh.TabIndex = 24;
             this.picAnh.TabStop = false;
@@ -501,6 +507,37 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1184, 80);
             this.panel1.TabIndex = 4;
+            // 
+            // radKHD
+            // 
+            this.radKHD.AutoSize = true;
+            this.radKHD.Location = new System.Drawing.Point(1038, 84);
+            this.radKHD.Name = "radKHD";
+            this.radKHD.Size = new System.Drawing.Size(126, 20);
+            this.radKHD.TabIndex = 41;
+            this.radKHD.TabStop = true;
+            this.radKHD.Text = "Không hoạt động";
+            this.radKHD.UseVisualStyleBackColor = true;
+            // 
+            // radHD
+            // 
+            this.radHD.AutoSize = true;
+            this.radHD.Location = new System.Drawing.Point(938, 84);
+            this.radHD.Name = "radHD";
+            this.radHD.Size = new System.Drawing.Size(88, 20);
+            this.radHD.TabIndex = 40;
+            this.radHD.TabStop = true;
+            this.radHD.Text = "Hoạt động";
+            this.radHD.UseVisualStyleBackColor = true;
+            // 
+            // lblTrangThai
+            // 
+            this.lblTrangThai.AutoSize = true;
+            this.lblTrangThai.Location = new System.Drawing.Point(842, 86);
+            this.lblTrangThai.Name = "lblTrangThai";
+            this.lblTrangThai.Size = new System.Drawing.Size(67, 16);
+            this.lblTrangThai.TabIndex = 39;
+            this.lblTrangThai.Text = "Trạng thái";
             // 
             // frmSanPham
             // 
@@ -573,5 +610,8 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.RadioButton radKHD;
+        private System.Windows.Forms.RadioButton radHD;
+        private System.Windows.Forms.Label lblTrangThai;
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvNuocSX = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -46,6 +46,9 @@
             this.lblMa = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
+            this.radKHD = new System.Windows.Forms.RadioButton();
+            this.radHD = new System.Windows.Forms.RadioButton();
+            this.lblTrangThai = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNuocSX)).BeginInit();
             this.panel2.SuspendLayout();
@@ -68,14 +71,14 @@
             this.dgvNuocSX.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNuocSX.BackgroundColor = System.Drawing.Color.White;
             this.dgvNuocSX.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvNuocSX.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvNuocSX.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvNuocSX.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNuocSX.GridColor = System.Drawing.Color.Black;
             this.dgvNuocSX.Location = new System.Drawing.Point(0, 0);
@@ -176,6 +179,9 @@
             // 
             // grbNhapLieu
             // 
+            this.grbNhapLieu.Controls.Add(this.radKHD);
+            this.grbNhapLieu.Controls.Add(this.radHD);
+            this.grbNhapLieu.Controls.Add(this.lblTrangThai);
             this.grbNhapLieu.Controls.Add(this.txtTen);
             this.grbNhapLieu.Controls.Add(this.txtMa);
             this.grbNhapLieu.Controls.Add(this.lblTen);
@@ -191,7 +197,7 @@
             // 
             // txtTen
             // 
-            this.txtTen.Location = new System.Drawing.Point(115, 71);
+            this.txtTen.Location = new System.Drawing.Point(115, 74);
             this.txtTen.Name = "txtTen";
             this.txtTen.Size = new System.Drawing.Size(292, 22);
             this.txtTen.TabIndex = 3;
@@ -207,7 +213,7 @@
             // lblTen
             // 
             this.lblTen.AutoSize = true;
-            this.lblTen.Location = new System.Drawing.Point(20, 74);
+            this.lblTen.Location = new System.Drawing.Point(20, 77);
             this.lblTen.Name = "lblTen";
             this.lblTen.Size = new System.Drawing.Size(63, 16);
             this.lblTen.TabIndex = 1;
@@ -242,6 +248,37 @@
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "DANH MỤC NƯỚC SẢN XUẤT";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // radKHD
+            // 
+            this.radKHD.AutoSize = true;
+            this.radKHD.Location = new System.Drawing.Point(720, 33);
+            this.radKHD.Name = "radKHD";
+            this.radKHD.Size = new System.Drawing.Size(126, 20);
+            this.radKHD.TabIndex = 23;
+            this.radKHD.TabStop = true;
+            this.radKHD.Text = "Không hoạt động";
+            this.radKHD.UseVisualStyleBackColor = true;
+            // 
+            // radHD
+            // 
+            this.radHD.AutoSize = true;
+            this.radHD.Location = new System.Drawing.Point(608, 33);
+            this.radHD.Name = "radHD";
+            this.radHD.Size = new System.Drawing.Size(88, 20);
+            this.radHD.TabIndex = 22;
+            this.radHD.TabStop = true;
+            this.radHD.Text = "Hoạt động";
+            this.radHD.UseVisualStyleBackColor = true;
+            // 
+            // lblTrangThai
+            // 
+            this.lblTrangThai.AutoSize = true;
+            this.lblTrangThai.Location = new System.Drawing.Point(503, 35);
+            this.lblTrangThai.Name = "lblTrangThai";
+            this.lblTrangThai.Size = new System.Drawing.Size(67, 16);
+            this.lblTrangThai.TabIndex = 21;
+            this.lblTrangThai.Text = "Trạng thái";
             // 
             // frmNuocSanXuat
             // 
@@ -288,5 +325,8 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.RadioButton radKHD;
+        private System.Windows.Forms.RadioButton radHD;
+        private System.Windows.Forms.Label lblTrangThai;
     }
 }

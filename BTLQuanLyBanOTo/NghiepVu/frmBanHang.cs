@@ -19,6 +19,7 @@ namespace BTLQuanLyBanOTo.NghiepVu
 
         DataProcesser dt;
         DataTable tblChiTietDonHang;
+
         private void frmBanHang_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
@@ -64,9 +65,9 @@ namespace BTLQuanLyBanOTo.NghiepVu
             //nv
             //LoadCBO(cboMaNV, "SELECT MaNV, TenNV FROM NhanVien", "MaNV", "MaNV");
             //kh
-            LoadCBO(cboMaKH, "SELECT MaKhach, TenKhach FROM KhachHang", "MaKhach", "MaKhach");
+            LoadCBO(cboMaKH, "SELECT MaKhach, TenKhach FROM KhachHang where TrangThai = 1", "MaKhach", "MaKhach");
             //sp
-            LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0", "MaHang", "MaHang");
+            LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang WHERE SoLuong > 0 and TrangThai = 1", "MaHang", "MaHang");
             //tk
             LoadCBOTimKiem();
         }

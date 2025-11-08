@@ -35,7 +35,7 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
             cboTG.SelectedIndex = 0;
 
             // --- Nhân viên ---
-            string sqlNV = "SELECT MaNV, TenNV FROM NhanVien";
+            string sqlNV = "SELECT MaNV, TenNV FROM NhanVien where TrangThai = 1";
             DataTable dtNV = dt.ExecuteQuery(sqlNV);
             cboNV.DataSource = dtNV;
             cboNV.DisplayMember = "TenNV";
@@ -43,7 +43,7 @@ namespace BTLQuanLyBanOTo.BaoCaoThongKe
             cboNV.SelectedIndex = -1;
 
             // --- Khách hàng ---
-            string sqlNCC = "SELECT MaNCC, TenNCC FROM NhaCungCap";
+            string sqlNCC = "SELECT MaNCC, TenNCC FROM NhaCungCap where TrangThai = 1";
             DataTable dtNCC = dt.ExecuteQuery(sqlNCC);
             cboNCC.DataSource = dtNCC;
             cboNCC.DisplayMember = "TenNCC";

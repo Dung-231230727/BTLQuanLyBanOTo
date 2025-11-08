@@ -16,6 +16,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
         private string action = "";
         public bool IsFromNCC { get; set; } = false;
         public string DT_BanHang = "";
+        private int TrangThai_HienTai = 1;
+
         private void frmNhaCungCap_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
@@ -36,6 +38,10 @@ namespace BTLQuanLyBanOTo.DanhMuc
             btnXoa.Enabled = false;
             btnLuu.Enabled = false;
             btnBoQua.Enabled = false;
+
+            radHD.Checked = false;
+            radKHD.Checked = false;
+            TrangThai_HienTai = 1;
 
             action = "";
         }
@@ -126,7 +132,12 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if (TrangThai_HienTai == 1)
+            {
+                // Trạng thái = 1: Đang hoạt động, KHÔNG CHO PHÉP XÓA VĨNH VIỄN
+                MessageBox.Show("Nhà cung cấp đang hoạt động (Trạng thái = 1). Vui lòng chuyển sang trạng thái 0 (Sửa -> Ngừng hoạt động) trước khi xóa vĩnh viễn.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
@@ -141,7 +152,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
                 // Kiểm tra dữ liệu trống
                 if (string.IsNullOrEmpty(txtMa.Text) ||
                     string.IsNullOrEmpty(txtTen.Text) ||
-                    string.IsNullOrEmpty(txtDienThoai.Text))
+                    string.IsNullOrEmpty(txtDienThoai.Text) ||
+                    (radHD.Checked == false && radKHD.Checked == false))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!",
                         "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -172,14 +184,15 @@ namespace BTLQuanLyBanOTo.DanhMuc
                         return;
                     }
 
-                    string sql = "insert into NhaCungCap(MaNCC, TenNCC, DiaChi, DienThoai) " +
-                                 "values(@ma, @ten, @dc, @dt)";
+                    string sql = @"insert into NhaCungCap(MaNCC, TenNCC, DiaChi, DienThoai, TrangThai)
+                                 values(@ma, @ten, @dc, @dt, @tt)";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
                         new SqlParameter("@ten", txtTen.Text.Trim()),
                         new SqlParameter("@dc", txtDiaChi.Text.Trim()),
-                        new SqlParameter("@dt", txtDienThoai.Text.Trim())
+                        new SqlParameter("@dt", txtDienThoai.Text.Trim()),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Thêm nhà cung cấp thành công!"
@@ -194,13 +207,14 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
                 if (action == "edit")
                 {
-                    string sql = "update NhaCungCap set TenNCC = @ten, DiaChi = @dc, DienThoai = @dt where MaNCC = @ma";
+                    string sql = "update NhaCungCap set TenNCC = @ten, DiaChi = @dc, DienThoai = @dt, TrangThai=@tt where MaNCC = @ma";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
                         new SqlParameter("@ten", txtTen.Text.Trim()),
                         new SqlParameter("@dc", txtDiaChi.Text.Trim()),
-                        new SqlParameter("@dt", txtDienThoai.Text.Trim())
+                        new SqlParameter("@dt", txtDienThoai.Text.Trim()),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Sửa thành công!"
@@ -281,6 +295,10 @@ namespace BTLQuanLyBanOTo.DanhMuc
                 txtTen.Text = row.Cells["TenNCC"].Value?.ToString();
                 txtDiaChi.Text = row.Cells["DiaChi"].Value?.ToString();
                 txtDienThoai.Text = row.Cells["DienThoai"].Value?.ToString();
+                var trangThaiValue = row.Cells["TrangThai"].Value;
+                TrangThai_HienTai = (trangThaiValue != null && trangThaiValue != DBNull.Value) ? Convert.ToInt32(trangThaiValue) : 1;
+                radHD.Checked = (TrangThai_HienTai == 1);
+                radKHD.Checked = (TrangThai_HienTai == 0);
             }
             catch (Exception ex)
             {

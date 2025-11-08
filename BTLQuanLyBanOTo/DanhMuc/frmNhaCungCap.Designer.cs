@@ -51,6 +51,9 @@
             this.txtDienThoai = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTieuDe = new System.Windows.Forms.Label();
+            this.radKHD = new System.Windows.Forms.RadioButton();
+            this.radHD = new System.Windows.Forms.RadioButton();
+            this.lblTrangThai = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -239,6 +242,9 @@
             // 
             // grbNhapLieu
             // 
+            this.grbNhapLieu.Controls.Add(this.radKHD);
+            this.grbNhapLieu.Controls.Add(this.radHD);
+            this.grbNhapLieu.Controls.Add(this.lblTrangThai);
             this.grbNhapLieu.Controls.Add(this.txtDienThoai);
             this.grbNhapLieu.Controls.Add(this.txtDiaChi);
             this.grbNhapLieu.Controls.Add(this.txtTen);
@@ -283,6 +289,37 @@
             this.lblTieuDe.TabIndex = 0;
             this.lblTieuDe.Text = "QUẢN LÝ NHÀ CUNG CẤP";
             this.lblTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // radKHD
+            // 
+            this.radKHD.AutoSize = true;
+            this.radKHD.Location = new System.Drawing.Point(1029, 32);
+            this.radKHD.Name = "radKHD";
+            this.radKHD.Size = new System.Drawing.Size(126, 20);
+            this.radKHD.TabIndex = 22;
+            this.radKHD.TabStop = true;
+            this.radKHD.Text = "Không hoạt động";
+            this.radKHD.UseVisualStyleBackColor = true;
+            // 
+            // radHD
+            // 
+            this.radHD.AutoSize = true;
+            this.radHD.Location = new System.Drawing.Point(917, 32);
+            this.radHD.Name = "radHD";
+            this.radHD.Size = new System.Drawing.Size(88, 20);
+            this.radHD.TabIndex = 21;
+            this.radHD.TabStop = true;
+            this.radHD.Text = "Hoạt động";
+            this.radHD.UseVisualStyleBackColor = true;
+            // 
+            // lblTrangThai
+            // 
+            this.lblTrangThai.AutoSize = true;
+            this.lblTrangThai.Location = new System.Drawing.Point(812, 34);
+            this.lblTrangThai.Name = "lblTrangThai";
+            this.lblTrangThai.Size = new System.Drawing.Size(67, 16);
+            this.lblTrangThai.TabIndex = 20;
+            this.lblTrangThai.Text = "Trạng thái";
             // 
             // frmNhaCungCap
             // 
@@ -334,5 +371,8 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.RadioButton radKHD;
+        private System.Windows.Forms.RadioButton radHD;
+        private System.Windows.Forms.Label lblTrangThai;
     }
 }

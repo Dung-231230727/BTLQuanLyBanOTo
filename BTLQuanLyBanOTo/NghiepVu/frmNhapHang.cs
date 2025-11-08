@@ -79,9 +79,9 @@ namespace BTLQuanLyBanOTo.NghiepVu
             //
             //LoadCBO(cboMaNV, "SELECT MaNV, TenNV FROM NhanVien", "MaNV", "MaNV");
             //
-            LoadCBO(cboMaNCC, "SELECT MaNCC, TenNCC FROM NhaCungCap", "MaNCC", "MaNCC");
+            LoadCBO(cboMaNCC, "SELECT MaNCC, TenNCC FROM NhaCungCap where TrangThai = 1", "MaNCC", "MaNCC");
             //
-            LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang", "MaHang", "MaHang");
+            LoadCBO(cboMaSP, "SELECT MaHang, TenHang FROM DanhMucHang where TrangThai = 1", "MaHang", "MaHang");
             //
             LoadCBOTimKiem();
         }

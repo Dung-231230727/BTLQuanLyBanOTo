@@ -51,7 +51,7 @@ namespace BTLQuanLyBanOTo.HeThong
             string sql = @"SELECT nv.MaNV, nv.TenNV, nv.MaCV, cv.TenCV 
                             FROM NhanVien nv
                             Join CongViec cv on cv.MaCV = nv.MaCV
-                            WHERE nv.MaNV=@ma AND nv.MatKhau=@mk";
+                            WHERE nv.MaNV=@ma AND nv.MatKhau=@mk and nv.TrangThai = 1";
             SqlParameter[] prms = new SqlParameter[]
             {
                 new SqlParameter("@ma", txtTDN.Text),
@@ -82,12 +82,36 @@ namespace BTLQuanLyBanOTo.HeThong
             }
             else
             {
-                MessageBox.Show(
-                   "Sai tên đăng nhập hoặc mật khẩu. Vui lòng nhập lại!",
-                   "Cảnh báo",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Warning
-                );
+                string sqlInactive = @"SELECT nv.MaNV 
+                               FROM NhanVien nv
+                               WHERE nv.MaNV=@ma AND nv.MatKhau=@mk AND nv.TrangThai = 0";
+
+                var tblInactive = dt.ExecuteQuery(sqlInactive, new SqlParameter[]
+                {
+                    new SqlParameter("@ma", txtTDN.Text),
+                    new SqlParameter("@mk", txtMK.Text)
+                });
+
+                if (tblInactive.Rows.Count > 0)
+                {
+                    // Tài khoản tồn tại nhưng bị vô hiệu hóa
+                    MessageBox.Show(
+                       "Tài khoản này đã bị vô hiệu hóa. Vui lòng liên hệ quản trị viên!",
+                       "Lỗi Đăng nhập",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Error
+                    );
+                }
+                else
+                {
+                    // Tài khoản không tồn tại hoặc sai mật khẩu
+                    MessageBox.Show(
+                       "Sai tên đăng nhập hoặc mật khẩu. Vui lòng kiểm tra lại!",
+                       "Cảnh báo",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Warning
+                    );
+                }
                 frmMain.LoginSuccessful = false;
                 return;
             }

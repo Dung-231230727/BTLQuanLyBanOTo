@@ -16,7 +16,7 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         private DataProcesser dt;
         private string action = "";
-
+        private int TrangThai_HienTai = 1;
         private void frmSanPham_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
@@ -52,6 +52,10 @@ namespace BTLQuanLyBanOTo.DanhMuc
             btnLuu.Enabled = false;
             btnBoQua.Enabled = false;
 
+            radHD.Checked = false;
+            radKHD.Checked = false;
+            TrangThai_HienTai = 1;
+
             action = "";
             txtMa.Focus();
         }
@@ -65,7 +69,7 @@ namespace BTLQuanLyBanOTo.DanhMuc
                            h.TenHangSX, tl.TenLoai, ms.TenMau, dx.TenDoi,
                            scn.TenSoCho, ns.TenNuocSX, tt.TenTinhTrang,
                            sp.MaHangSX, sp.MaLoai, sp.MaMau, sp.MaDoi,
-                           sp.MaSoCho, sp.MaNuocSX, sp.MaTinhTrang
+                           sp.MaSoCho, sp.MaNuocSX, sp.MaTinhTrang, sp.TrangThai
                     FROM DanhMucHang AS sp
                     LEFT JOIN HangSX AS h ON sp.MaHangSX = h.MaHangSX
                     LEFT JOIN TheLoai AS tl ON sp.MaLoai = tl.MaLoai
@@ -109,13 +113,13 @@ namespace BTLQuanLyBanOTo.DanhMuc
 
         private void LoadAllCBO()
         {
-            LoadCBO(cboHangSX, "SELECT MaHangSX, TenHangSX FROM HangSX", "TenHangSX", "MaHangSX");
-            LoadCBO(cboLoaiXe, "SELECT MaLoai, TenLoai FROM TheLoai", "TenLoai", "MaLoai");
-            LoadCBO(cboMauSac, "SELECT MaMau, TenMau FROM MauSac", "TenMau", "MaMau");
-            LoadCBO(cboDoiXe, "SELECT MaDoi, TenDoi FROM DoiXe", "TenDoi", "MaDoi");
-            LoadCBO(cboSoCho, "SELECT MaSoCho, TenSoCho FROM SoChoNgoi", "TenSoCho", "MaSoCho");
-            LoadCBO(cboNuocSX, "SELECT MaNuocSX, TenNuocSX FROM NuocSX", "TenNuocSX", "MaNuocSX");
-            LoadCBO(cboTinhTrang, "SELECT MaTinhTrang, TenTinhTrang FROM TinhTrang", "TenTinhTrang", "MaTinhTrang");
+            LoadCBO(cboHangSX, "SELECT MaHangSX, TenHangSX FROM HangSX where TrangThai = 1", "TenHangSX", "MaHangSX");
+            LoadCBO(cboLoaiXe, "SELECT MaLoai, TenLoai FROM TheLoai where TrangThai = 1", "TenLoai", "MaLoai");
+            LoadCBO(cboMauSac, "SELECT MaMau, TenMau FROM MauSac where TrangThai = 1", "TenMau", "MaMau");
+            LoadCBO(cboDoiXe, "SELECT MaDoi, TenDoi FROM DoiXe where TrangThai = 1", "TenDoi", "MaDoi");
+            LoadCBO(cboSoCho, "SELECT MaSoCho, TenSoCho FROM SoChoNgoi where TrangThai = 1", "TenSoCho", "MaSoCho");
+            LoadCBO(cboNuocSX, "SELECT MaNuocSX, TenNuocSX FROM NuocSX where TrangThai = 1", "TenNuocSX", "MaNuocSX");
+            LoadCBO(cboTinhTrang, "SELECT MaTinhTrang, TenTinhTrang FROM TinhTrang where TrangThai = 1", "TenTinhTrang", "MaTinhTrang");
         }
 
         private void btnAnh_Click(object sender, EventArgs e)
@@ -220,7 +224,12 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if (TrangThai_HienTai == 1)
+            {
+                // Trạng thái = 1: Đang hoạt động, KHÔNG CHO PHÉP XÓA VĨNH VIỄN
+                MessageBox.Show("Sản phẩm đang được sử dụng (Trạng thái = 1). Vui lòng chuyển sang trạng thái 0 (Sửa -> Ngừng hoạt động) trước khi xóa vĩnh viễn.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
@@ -234,7 +243,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
             {
                 // Kiểm tra dữ liệu
                 if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text) ||
-                    cboHangSX.SelectedIndex == -1 || cboLoaiXe.SelectedIndex == -1)
+                    cboHangSX.SelectedIndex == -1 || cboLoaiXe.SelectedIndex == -1 ||
+                    (radHD.Checked == false && radKHD.Checked == false))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -268,7 +278,8 @@ namespace BTLQuanLyBanOTo.DanhMuc
                     new SqlParameter("@md", cboDoiXe.SelectedValue),
                     new SqlParameter("@msc", cboSoCho.SelectedValue),
                     new SqlParameter("@mnsx", cboNuocSX.SelectedValue),
-                    new SqlParameter("@mtt", cboTinhTrang.SelectedValue)
+                    new SqlParameter("@mtt", cboTinhTrang.SelectedValue),
+                    new SqlParameter("@tt", radHD.Checked==true? 1:0)
                 };
 
                 if (action == "add")
@@ -282,14 +293,14 @@ namespace BTLQuanLyBanOTo.DanhMuc
                         return;
                     }
 
-                    string sql = "INSERT INTO DanhMucHang(MaHang,TenHang,SoLuong,DonGiaNhap,DonGiaBan,ThoiGianBaoHanh,Anh,MaLoai,MaHangSX,MaMau,MaDoi,MaSoCho,MaNuocSX,MaTinhTrang) VALUES(@ma,@ten,@sl,@dgn,@dgb,@tgbh,@anh,@ml,@mhsx,@mm,@md,@msc,@mnsx,@mtt)";
+                    string sql = "INSERT INTO DanhMucHang(MaHang,TenHang,SoLuong,DonGiaNhap,DonGiaBan,ThoiGianBaoHanh,Anh,MaLoai,MaHangSX,MaMau,MaDoi,MaSoCho,MaNuocSX,MaTinhTrang,TrangThai) VALUES(@ma,@ten,@sl,@dgn,@dgb,@tgbh,@anh,@ml,@mhsx,@mm,@md,@msc,@mnsx,@mtt,@tt)";
                     int r = dt.ExecuteNonQuery(sql, prms);
                     MessageBox.Show(r > 0 ? "Thêm thành công!" : "Thêm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 if (action == "edit")
                 {
-                    string sql = "UPDATE DanhMucHang SET TenHang=@ten,SoLuong=@sl,DonGiaNhap=@dgn,DonGiaBan=@dgb,ThoiGianBaoHanh=@tgbh,Anh=@anh,MaLoai=@ml,MaHangSX=@mhsx,MaMau=@mm,MaDoi=@md,MaSoCho=@msc,MaNuocSX=@mnsx,MaTinhTrang=@mtt WHERE MaHang=@ma";
+                    string sql = "UPDATE DanhMucHang SET TenHang=@ten,SoLuong=@sl,DonGiaNhap=@dgn,DonGiaBan=@dgb,ThoiGianBaoHanh=@tgbh,Anh=@anh,MaLoai=@ml,MaHangSX=@mhsx,MaMau=@mm,MaDoi=@md,MaSoCho=@msc,MaNuocSX=@mnsx,MaTinhTrang=@mtt, TrangThai=@tt WHERE MaHang=@ma";
                     int r = dt.ExecuteNonQuery(sql, prms);
                     MessageBox.Show(r > 0 ? "Sửa thành công!" : "Sửa thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -370,6 +381,11 @@ namespace BTLQuanLyBanOTo.DanhMuc
                         picAnh.Tag = null;
                     }
                 }
+
+                var trangThaiValue = row.Cells["TrangThai"].Value;
+                TrangThai_HienTai = (trangThaiValue != null && trangThaiValue != DBNull.Value) ? Convert.ToInt32(trangThaiValue) : 1;
+                radHD.Checked = (TrangThai_HienTai == 1);
+                radKHD.Checked = (TrangThai_HienTai == 0);
             }
             catch { }
         }

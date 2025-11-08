@@ -11,8 +11,9 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
         {
             InitializeComponent();
         }
-        DataProcesser dt;
 
+        DataProcesser dt;
+        private int TrangThai_HienTai = 1;
         private void frmDoiXe_Load(object sender, EventArgs e)
         {
             dt = new DataProcesser();
@@ -32,6 +33,10 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             btnXoa.Enabled = false;
             btnLuu.Enabled = false;
             btnBoQua.Enabled = false;
+
+            radHD.Checked = false;
+            radKHD.Checked = false;
+            TrangThai_HienTai = 1;
 
             action = "";
         }
@@ -115,6 +120,12 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
                 MessageBox.Show("Vui lòng chọn bản ghi cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (TrangThai_HienTai == 1)
+            {
+                // Trạng thái = 1: Đang hoạt động, KHÔNG CHO PHÉP XÓA VĨNH VIỄN
+                MessageBox.Show("Đời xe đang được sử dụng (Trạng thái = 1). Vui lòng chuyển sang trạng thái 0 (Sửa -> Ngừng hoạt động) trước khi xóa vĩnh viễn.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             btnThem.Enabled = false;
             btnSua.Enabled = false;
             btnLuu.Enabled = true;
@@ -127,7 +138,7 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             try
             {
                 // Kiểm tra dữ liệu trống
-                if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text))
+                if (string.IsNullOrEmpty(txtMa.Text) || string.IsNullOrEmpty(txtTen.Text) || (radHD.Checked == false && radKHD.Checked == false))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -147,11 +158,12 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
                         return;
                     }
 
-                    string sql = "insert into DoiXe(MaDoi,TenDoi) values(@ma,@ten)";
+                    string sql = "insert into DoiXe(MaDoi,TenDoi,TrangThai) values(@ma,@ten,@tt)";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
-                        new SqlParameter("@ten", txtTen.Text.Trim())
+                        new SqlParameter("@ten", txtTen.Text.Trim()),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Thêm thành công!" : "Thêm thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -159,11 +171,12 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
 
                 if (action == "edit")
                 {
-                    string sql = "update DoiXe set TenDoi = @ten where MaDoi = @ma";
+                    string sql = "update DoiXe set TenDoi = @ten, TrangThai=@tt where MaDoi = @ma";
                     int r = dt.ExecuteNonQuery(sql, new SqlParameter[]
                     {
                         new SqlParameter("@ma", txtMa.Text.Trim()),
-                        new SqlParameter("@ten", txtTen.Text.Trim())
+                        new SqlParameter("@ten", txtTen.Text.Trim()),
+                        new SqlParameter("@tt", radHD.Checked==true? 1:0)
                     });
 
                     MessageBox.Show(r > 0 ? "Sửa thành công!" : "Sửa thất bại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -218,6 +231,7 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
             }
         }
 
+
         private void dgvDoiXe_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -236,6 +250,10 @@ namespace BTLQuanLyBanOTo.DanhMuc.DanhMucChung
                 var row = dgvDoiXe.Rows[e.RowIndex];
                 txtMa.Text = row.Cells["MaDoi"].Value?.ToString();
                 txtTen.Text = row.Cells["TenDoi"].Value?.ToString();
+                var trangThaiValue = row.Cells["TrangThai"].Value;
+                TrangThai_HienTai = (trangThaiValue != null && trangThaiValue != DBNull.Value) ? Convert.ToInt32(trangThaiValue) : 1;
+                radHD.Checked = (TrangThai_HienTai == 1);
+                radKHD.Checked = (TrangThai_HienTai == 0);
             }
             catch (Exception ex)
             {

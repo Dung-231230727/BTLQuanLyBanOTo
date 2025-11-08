@@ -60,12 +60,17 @@
             this.btnThem = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvNhanVien = new System.Windows.Forms.DataGridView();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.radKHD = new System.Windows.Forms.RadioButton();
+            this.radHD = new System.Windows.Forms.RadioButton();
+            this.lblTrangThai = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.grbNhapLieu.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNhanVien)).BeginInit();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -91,6 +96,7 @@
             // 
             // grbNhapLieu
             // 
+            this.grbNhapLieu.Controls.Add(this.panel5);
             this.grbNhapLieu.Controls.Add(this.dtpNgaySinh);
             this.grbNhapLieu.Controls.Add(this.radNu);
             this.grbNhapLieu.Controls.Add(this.radNam);
@@ -121,7 +127,7 @@
             // 
             this.dtpNgaySinh.CustomFormat = "yyyy-MM-dd";
             this.dtpNgaySinh.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpNgaySinh.Location = new System.Drawing.Point(544, 35);
+            this.dtpNgaySinh.Location = new System.Drawing.Point(538, 35);
             this.dtpNgaySinh.Name = "dtpNgaySinh";
             this.dtpNgaySinh.Size = new System.Drawing.Size(226, 22);
             this.dtpNgaySinh.TabIndex = 19;
@@ -157,7 +163,7 @@
             // 
             // txtMK
             // 
-            this.txtMK.Location = new System.Drawing.Point(544, 139);
+            this.txtMK.Location = new System.Drawing.Point(538, 139);
             this.txtMK.Name = "txtMK";
             this.txtMK.Size = new System.Drawing.Size(226, 22);
             this.txtMK.TabIndex = 14;
@@ -167,7 +173,7 @@
             this.txtDiaChi.Location = new System.Drawing.Point(941, 86);
             this.txtDiaChi.Multiline = true;
             this.txtDiaChi.Name = "txtDiaChi";
-            this.txtDiaChi.Size = new System.Drawing.Size(226, 71);
+            this.txtDiaChi.Size = new System.Drawing.Size(226, 24);
             this.txtDiaChi.TabIndex = 13;
             // 
             // txtTen
@@ -188,7 +194,7 @@
             // lblMatKhau
             // 
             this.lblMatKhau.AutoSize = true;
-            this.lblMatKhau.Location = new System.Drawing.Point(445, 142);
+            this.lblMatKhau.Location = new System.Drawing.Point(439, 142);
             this.lblMatKhau.Name = "lblMatKhau";
             this.lblMatKhau.Size = new System.Drawing.Size(61, 16);
             this.lblMatKhau.TabIndex = 8;
@@ -215,7 +221,7 @@
             // lblNgaySinh
             // 
             this.lblNgaySinh.AutoSize = true;
-            this.lblNgaySinh.Location = new System.Drawing.Point(445, 40);
+            this.lblNgaySinh.Location = new System.Drawing.Point(439, 40);
             this.lblNgaySinh.Name = "lblNgaySinh";
             this.lblNgaySinh.Size = new System.Drawing.Size(67, 16);
             this.lblNgaySinh.TabIndex = 5;
@@ -233,7 +239,7 @@
             // lblChucVu
             // 
             this.lblChucVu.AutoSize = true;
-            this.lblChucVu.Location = new System.Drawing.Point(445, 89);
+            this.lblChucVu.Location = new System.Drawing.Point(439, 89);
             this.lblChucVu.Name = "lblChucVu";
             this.lblChucVu.Size = new System.Drawing.Size(54, 16);
             this.lblChucVu.TabIndex = 3;
@@ -242,7 +248,7 @@
             // cboChucVu
             // 
             this.cboChucVu.FormattingEnabled = true;
-            this.cboChucVu.Location = new System.Drawing.Point(544, 86);
+            this.cboChucVu.Location = new System.Drawing.Point(538, 86);
             this.cboChucVu.Name = "cboChucVu";
             this.cboChucVu.Size = new System.Drawing.Size(226, 24);
             this.cboChucVu.TabIndex = 2;
@@ -384,6 +390,47 @@
             this.dgvNhanVien.TabIndex = 0;
             this.dgvNhanVien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvNhanVien_CellClick);
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.radKHD);
+            this.panel5.Controls.Add(this.radHD);
+            this.panel5.Controls.Add(this.lblTrangThai);
+            this.panel5.Location = new System.Drawing.Point(843, 139);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(324, 22);
+            this.panel5.TabIndex = 20;
+            // 
+            // radKHD
+            // 
+            this.radKHD.AutoSize = true;
+            this.radKHD.Location = new System.Drawing.Point(198, 1);
+            this.radKHD.Name = "radKHD";
+            this.radKHD.Size = new System.Drawing.Size(126, 20);
+            this.radKHD.TabIndex = 25;
+            this.radKHD.TabStop = true;
+            this.radKHD.Text = "Không hoạt động";
+            this.radKHD.UseVisualStyleBackColor = true;
+            // 
+            // radHD
+            // 
+            this.radHD.AutoSize = true;
+            this.radHD.Location = new System.Drawing.Point(102, 1);
+            this.radHD.Name = "radHD";
+            this.radHD.Size = new System.Drawing.Size(88, 20);
+            this.radHD.TabIndex = 24;
+            this.radHD.TabStop = true;
+            this.radHD.Text = "Hoạt động";
+            this.radHD.UseVisualStyleBackColor = true;
+            // 
+            // lblTrangThai
+            // 
+            this.lblTrangThai.AutoSize = true;
+            this.lblTrangThai.Location = new System.Drawing.Point(1, 3);
+            this.lblTrangThai.Name = "lblTrangThai";
+            this.lblTrangThai.Size = new System.Drawing.Size(67, 16);
+            this.lblTrangThai.TabIndex = 23;
+            this.lblTrangThai.Text = "Trạng thái";
+            // 
             // frmNhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,6 +454,8 @@
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvNhanVien)).EndInit();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -443,5 +492,9 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.RadioButton radKHD;
+        private System.Windows.Forms.RadioButton radHD;
+        private System.Windows.Forms.Label lblTrangThai;
     }
 }
